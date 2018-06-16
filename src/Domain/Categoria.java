@@ -9,7 +9,7 @@ package Domain;
  *
  * @author jeison
  */
-public class Categoria {
+public class Categoria { //HashMap Java - clave: String (nombre), valor: Objeto Categoria
     
     private int id;//autoincremental
     private String nombre;

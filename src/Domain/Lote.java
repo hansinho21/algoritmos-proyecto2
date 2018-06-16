@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author jeison
  */
-public class Lote {
+public class Lote {//TreeMap Java - clave: id, valor: Lote
     
     private int id;//autoincremental
     private String codigoLote;

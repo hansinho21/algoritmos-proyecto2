@@ -6,6 +6,8 @@
 package Logic;
 
 import Domain.Usuario;
+import TDA.BinaryTree.LinkedBinaryTree;
+import TDA.Graph.AdjacencyMatrixGraph;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,8 +19,10 @@ import java.util.LinkedList;
  * @author jeison
  */
 public class Data {
-    
+
+    private static LinkedBinaryTree arbolProductosMayoristas = new LinkedBinaryTree();
     private static LinkedList<Usuario> listaUsuarios = new LinkedList<>();
+    private static AdjacencyMatrixGraph grafoBodegas = new AdjacencyMatrixGraph(100);
 
     /**
      *
@@ -29,16 +33,6 @@ public class Data {
 //            fillListaUsuarios();
         }
     }
-
-    public static LinkedList<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public static void setListaUsuarios(LinkedList<Usuario> listaUsuarios) {
-        Data.listaUsuarios = listaUsuarios;
-    }
-    
-    
 
 //    private void fillListaUsuarios() throws FileNotFoundException, IOException {
 //        String sCadena;
@@ -55,4 +49,28 @@ public class Data {
 //        }
 //        bf.close();
 //    }
+    public LinkedBinaryTree getArbolProductosMayoristas() {
+        return arbolProductosMayoristas;
+    }
+
+    public void setArbolProductosMayoristas(LinkedBinaryTree arbolProductosMayoristas) {
+        Data.arbolProductosMayoristas = arbolProductosMayoristas;
+    }
+
+    public AdjacencyMatrixGraph getGrafoBodegas() {
+        return grafoBodegas;
+    }
+
+    public void setGrafoBodegas(AdjacencyMatrixGraph grafoBodegas) {
+        Data.grafoBodegas = grafoBodegas;
+    }
+
+    public LinkedList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public static void setListaUsuarios(LinkedList<Usuario> listaUsuarios) {
+        Data.listaUsuarios = listaUsuarios;
+    }
+
 }

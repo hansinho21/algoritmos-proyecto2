@@ -9,7 +9,7 @@ package Domain;
  *
  * @author jeison
  */
-public class UnidadTransporte {
+public class UnidadTransporte {//LinkedHashMap Java - clave: id, valor: UnidadTransporte
     private int id;//autoincremental
     private String placa;
     private String capacidad;

@@ -31,6 +31,7 @@ public class Pruebas {
         u.setUsuario("adasda");
         cruds.AgregarUsuario(u);
         cruds.AgregarUsuario(u);
+
     }
     
 }

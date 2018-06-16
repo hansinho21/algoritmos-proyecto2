@@ -9,7 +9,7 @@ package Domain;
  *
  * @author jeison
  */
-public class ProductoMayorista {
+public class ProductoMayorista { //Arbol binario
     
     private int id;
     private String nombre;

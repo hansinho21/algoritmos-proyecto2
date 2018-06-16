@@ -9,7 +9,7 @@ package Domain;
  *
  * @author jeison
  */
-public class Bodega {
+public class Bodega {//Grafo con matriz de adyacencia
     
     private int id;//autoincremental
     private String nombre;
