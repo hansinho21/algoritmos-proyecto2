@@ -5,6 +5,9 @@
  */
 package Logic;
 
+import Domain.Categoria;
+import Domain.Lote;
+import Domain.UnidadTransporte;
 import Domain.Usuario;
 import TDA.BinaryTree.LinkedBinaryTree;
 import TDA.Graph.AdjacencyMatrixGraph;
@@ -12,7 +15,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.TreeMap;
 
 /**
  *
@@ -23,6 +29,9 @@ public class Data {
     private static LinkedBinaryTree arbolProductosMayoristas = new LinkedBinaryTree();
     private static LinkedList<Usuario> listaUsuarios = new LinkedList<>();
     private static AdjacencyMatrixGraph grafoBodegas = new AdjacencyMatrixGraph(100);
+    private static HashMap<String, Categoria> hashMapCategoria = new HashMap<>();
+    private static TreeMap<Integer, Lote> treeMapLote = new TreeMap<>();
+    private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte = new LinkedHashMap<>();
 
     /**
      *
@@ -30,11 +39,11 @@ public class Data {
      */
     public Data() throws IOException {
         if (listaUsuarios.isEmpty()) {
-//            fillListaUsuarios();
+            fillListaUsuarios();
         }
     }
 
-//    private void fillListaUsuarios() throws FileNotFoundException, IOException {
+    private void fillListaUsuarios() throws FileNotFoundException, IOException {
 //        String sCadena;
 //        FileReader fr = new FileReader("Usuarios.txt");
 //        BufferedReader bf = new BufferedReader(fr);
@@ -48,7 +57,32 @@ public class Data {
 //            usuario.setContrasena(aux[4]);
 //        }
 //        bf.close();
-//    }
+    }
+
+    public HashMap<String, Categoria> getHashMapCategoria() {
+        return hashMapCategoria;
+    }
+
+    public void setHashMapCategoria(HashMap<String, Categoria> hashMapCategoria) {
+        Data.hashMapCategoria = hashMapCategoria;
+    }
+
+    public TreeMap<Integer, Lote> getTreeMapLote() {
+        return treeMapLote;
+    }
+
+    public void setTreeMapLote(TreeMap<Integer, Lote> treeMapLote) {
+        Data.treeMapLote = treeMapLote;
+    }
+
+    public LinkedHashMap<Integer, UnidadTransporte> getLinkedHashMapUnidadTransporte() {
+        return linkedHashMapUnidadTransporte;
+    }
+
+    public void setLinkedHashMapUnidadTransporte(LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte) {
+        Data.linkedHashMapUnidadTransporte = linkedHashMapUnidadTransporte;
+    }
+
     public LinkedBinaryTree getArbolProductosMayoristas() {
         return arbolProductosMayoristas;
     }
