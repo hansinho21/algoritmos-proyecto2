@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -87,7 +88,11 @@ public class Data {
     }
     
     private void llenarLotes(){
-        
+        Date date = new Date(1, 2, 3);
+        treeMapLote.put(1, new Lote(1, "A123", date, date));
+        treeMapLote.put(2, new Lote(2, "B456", date, date));
+        treeMapLote.put(3, new Lote(3, "C789", date, date));
+        treeMapLote.put(4, new Lote(4, "A433", date, date));
     }
     
     private void llenarUnidadesTransporte(){

@@ -16,6 +16,7 @@ import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -57,6 +58,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         this.jLabelIdBodega2.setVisible(false);
         this.jLabelIdCategoria2.setVisible(false);
+        this.jLabelIdLote2.setVisible(false);
         this.jLabelIdUnidadTransporte2.setVisible(false);
 
         //instancias
@@ -73,12 +75,14 @@ public class Mantenimiento extends javax.swing.JFrame {
         //autocopleter
         this.textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
         this.textAutoCompleterCategoria = new TextAutoCompleter(jTextFieldNombreCategoria);
+        this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLote);
         this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
 
-        //metodos
+        //llenar autocompleters
         llenarAutocompleterBodegas();
         llenarAutocompleterCategoria();
         llenarAutocompleterUnidadesTransporte();
+        llenarAutocompleterLote();
     }
 
     private void limpiarInformacionBodega() {
@@ -98,6 +102,15 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldDescripcionCategoria.setText("");
         
         jLabelIdCategoria2.setVisible(false);
+    }
+    
+    private void limpiarInformacionLote(){
+        jLabelIdLote.setText("");
+        jTextFieldCodigoLote.setText("");
+        jTextFieldFechaEmpacadoLote.setText("");
+        jTextFieldFechaVencimientoLote.setText("");
+        
+        jLabelIdLote2.setVisible(false);
     }
     
     private void limpiarInformacionUnidadTransporte(){
@@ -124,6 +137,16 @@ public class Mantenimiento extends javax.swing.JFrame {
     private boolean validarInformacionCategoria(){
         if (jTextFieldNombreCategoria.getText().equals("")
                 || jTextFieldDescripcionCategoria.getText().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private boolean validarInformacionLote() {
+        if (jTextFieldCodigoLote.getText().equals("")
+                || jTextFieldFechaEmpacadoLote.getText().equals("")
+                || jTextFieldFechaVencimientoLote.getText().equals("")) {
             return false;
         } else {
             return true;
@@ -162,6 +185,18 @@ public class Mantenimiento extends javax.swing.JFrame {
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
             textAutoCompleterCategoria.addItem(entry.getValue().getNombre());
+        }
+    }
+    
+    /**
+     *
+     * LLena el AutoCompleter con los lotes.
+     */
+    private void llenarAutocompleterLote() throws GraphException {
+        textAutoCompleterLote.removeAllItems();
+        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
+            textAutoCompleterLote.addItem(entry.getValue().getCodigoLote());
         }
     }
     
@@ -218,6 +253,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonEliminarBodega = new javax.swing.JButton();
         jButtonLimpiarBodega = new javax.swing.JButton();
         jTextFieldUrlBodega = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
         fondo2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -232,6 +268,19 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonLimpiarCategoria = new javax.swing.JButton();
         fondo6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
+        jLabelIdLote2 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabelIdLote = new javax.swing.JLabel();
+        jTextFieldFechaEmpacadoLote = new javax.swing.JTextField();
+        jTextFieldFechaVencimientoLote = new javax.swing.JTextField();
+        jTextFieldCodigoLote = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jButtonAgregarLote = new javax.swing.JButton();
+        jButtonEditarLote = new javax.swing.JButton();
+        jButtonEliminarLote = new javax.swing.JButton();
+        jButtonLimpiarLote = new javax.swing.JButton();
         fondo5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabelIdUnidadTransporte2 = new javax.swing.JLabel();
@@ -246,6 +295,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonEditarUnidadTransporte = new javax.swing.JButton();
         jButtonEliminarUnidadTransporte = new javax.swing.JButton();
         jButtonLimpiarUnidadTransporte = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         fondo7 = new javax.swing.JLabel();
@@ -386,6 +436,10 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel5.add(jButtonLimpiarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 430, -1, -1));
         jPanel5.add(jTextFieldUrlBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 130, -1));
 
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel20.setText("FileChooser en el url");
+        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
+
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
@@ -452,6 +506,68 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTabbedPane1.addTab("Categoria", jPanel8);
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelIdLote2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdLote2.setText("ID:");
+        jPanel7.add(jLabelIdLote2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel17.setText("Código:");
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel18.setText("Fecha de empacado:");
+        jPanel7.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel19.setText("Fecha de vencimiento:");
+        jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
+        jPanel7.add(jLabelIdLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 110, 30));
+        jPanel7.add(jTextFieldFechaEmpacadoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 180, 40));
+        jPanel7.add(jTextFieldFechaVencimientoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 180, 40));
+
+        jTextFieldCodigoLote.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldCodigoLoteFocusGained(evt);
+            }
+        });
+        jPanel7.add(jTextFieldCodigoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 180, 40));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("Hay que hacer bien los date");
+        jPanel7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 260, 40));
+
+        jButtonAgregarLote.setText("Agregar");
+        jButtonAgregarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarLoteActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButtonAgregarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, -1));
+
+        jButtonEditarLote.setText("Editar");
+        jButtonEditarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarLoteActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButtonEditarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, -1, -1));
+
+        jButtonEliminarLote.setText("Eliminar");
+        jButtonEliminarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarLoteActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButtonEliminarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, -1, -1));
+
+        jButtonLimpiarLote.setText("Limpiar");
+        jButtonLimpiarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarLoteActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButtonLimpiarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -520,6 +636,10 @@ public class Mantenimiento extends javax.swing.JFrame {
             }
         });
         jPanel6.add(jButtonLimpiarUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel21.setText("FileChooser en el url");
+        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
 
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -787,6 +907,82 @@ public class Mantenimiento extends javax.swing.JFrame {
         limpiarInformacionCategoria();
     }//GEN-LAST:event_jButtonLimpiarCategoriaActionPerformed
 
+    private void jTextFieldCodigoLoteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteFocusGained
+        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            if(jTextFieldCodigoLote.getText().equals(entry.getValue().getCodigoLote())){
+                jLabelIdLote.setText(String.valueOf(entry.getValue().getId()));
+                jTextFieldFechaEmpacadoLote.setText(entry.getValue().getFechaEmpacado().toString());
+                jTextFieldFechaVencimientoLote.setText(entry.getValue().getFechaVecimiento().toString());
+                
+                jLabelIdLote2.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldCodigoLoteFocusGained
+
+    private void jButtonAgregarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarLoteActionPerformed
+        if(validarInformacionLote() == true){
+            try {
+                Lote auxLote = new Lote();
+                Date date = new Date(2, 2, 2);
+                auxLote.setId(treeMapLote.size()+1);
+                auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
+                auxLote.setFechaEmpacado(date);
+                auxLote.setFechaVecimiento(date);
+                
+                cruds.agregarLote(auxLote);
+                
+                limpiarInformacionLote();
+                llenarAutocompleterLote();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonAgregarLoteActionPerformed
+
+    private void jButtonEditarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarLoteActionPerformed
+        if(validarInformacionLote() == true){
+            try {
+                Lote auxLote = new Lote();
+                Date date = new Date(2, 2, 2);
+                auxLote.setId(Integer.parseInt(jLabelIdLote.getText()));
+                auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
+                auxLote.setFechaEmpacado(date);
+                auxLote.setFechaVecimiento(date);
+                
+                cruds.editarLote(auxLote);
+                
+                limpiarInformacionLote();
+                llenarAutocompleterLote();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEditarLoteActionPerformed
+
+    private void jButtonEliminarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarLoteActionPerformed
+        if(validarInformacionLote() == true){
+            try {
+                Lote auxLote = new Lote();
+                Date date = new Date(2, 2, 2);
+                auxLote.setId(Integer.parseInt(jLabelIdLote.getText()));
+                auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
+                auxLote.setFechaEmpacado(date);
+                auxLote.setFechaVecimiento(date);
+                
+                cruds.eliminarLote(auxLote);
+                
+                limpiarInformacionLote();
+                llenarAutocompleterLote();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEliminarLoteActionPerformed
+
+    private void jButtonLimpiarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarLoteActionPerformed
+        limpiarInformacionLote();
+    }//GEN-LAST:event_jButtonLimpiarLoteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -841,15 +1037,19 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
+    private javax.swing.JButton jButtonAgregarLote;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
     private javax.swing.JButton jButtonEditarBodega;
     private javax.swing.JButton jButtonEditarCategoria;
+    private javax.swing.JButton jButtonEditarLote;
     private javax.swing.JButton jButtonEditarUnidadTransporte;
     private javax.swing.JButton jButtonEliminarBodega;
     private javax.swing.JButton jButtonEliminarCategoria;
+    private javax.swing.JButton jButtonEliminarLote;
     private javax.swing.JButton jButtonEliminarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarBodega;
     private javax.swing.JButton jButtonLimpiarCategoria;
+    private javax.swing.JButton jButtonLimpiarLote;
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private javax.swing.JLabel jLabel1;
@@ -860,10 +1060,16 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -871,6 +1077,8 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIdBodega2;
     private javax.swing.JLabel jLabelIdCategoria;
     private javax.swing.JLabel jLabelIdCategoria2;
+    private javax.swing.JLabel jLabelIdLote;
+    private javax.swing.JLabel jLabelIdLote2;
     private javax.swing.JLabel jLabelIdUnidadTransporte;
     private javax.swing.JLabel jLabelIdUnidadTransporte2;
     private javax.swing.JPanel jPanel1;
@@ -882,8 +1090,11 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldCapacidadUnidadTransporte;
+    private javax.swing.JTextField jTextFieldCodigoLote;
     private javax.swing.JTextField jTextFieldDescripcionCategoria;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
+    private javax.swing.JTextField jTextFieldFechaEmpacadoLote;
+    private javax.swing.JTextField jTextFieldFechaVencimientoLote;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
     private javax.swing.JTextField jTextFieldNombreBodega;
