@@ -56,6 +56,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         this.jLabelIdBodega2.setVisible(false);
+        this.jLabelIdCategoria2.setVisible(false);
         this.jLabelIdUnidadTransporte2.setVisible(false);
 
         //instancias
@@ -71,10 +72,12 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         //autocopleter
         this.textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
+        this.textAutoCompleterCategoria = new TextAutoCompleter(jTextFieldNombreCategoria);
         this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
 
         //metodos
         llenarAutocompleterBodegas();
+        llenarAutocompleterCategoria();
         llenarAutocompleterUnidadesTransporte();
     }
 
@@ -87,6 +90,14 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldNombreBodega.setText("");
         
         this.jLabelIdBodega2.setVisible(false);
+    }
+    
+    private void limpiarInformacionCategoria(){
+        jLabelIdCategoria.setText("");
+        jTextFieldNombreCategoria.setText("");
+        jTextFieldDescripcionCategoria.setText("");
+        
+        jLabelIdCategoria2.setVisible(false);
     }
     
     private void limpiarInformacionUnidadTransporte(){
@@ -104,6 +115,15 @@ public class Mantenimiento extends javax.swing.JFrame {
                 || jTextFieldDistanciaBodega.getText().equals("")
                 || jTextFieldUrlBodega.getText().equals("")
                 || jTextFieldNombreBodega.getText().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private boolean validarInformacionCategoria(){
+        if (jTextFieldNombreCategoria.getText().equals("")
+                || jTextFieldDescripcionCategoria.getText().equals("")) {
             return false;
         } else {
             return true;
@@ -130,6 +150,18 @@ public class Mantenimiento extends javax.swing.JFrame {
             System.out.println(grafoBodegas.getVertex(i).toString());
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
             textAutoCompleterBodega.addItem(auxBodega.getNombre());
+        }
+    }
+    
+    /**
+     *
+     * LLena el AutoCompleter con las categorias.
+     */
+    private void llenarAutocompleterCategoria() throws GraphException {
+        textAutoCompleterCategoria.removeAllItems();
+        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
+            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
+            textAutoCompleterCategoria.addItem(entry.getValue().getNombre());
         }
     }
     
@@ -188,6 +220,16 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldUrlBodega = new javax.swing.JTextField();
         fondo2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabelIdCategoria2 = new javax.swing.JLabel();
+        jLabelIdCategoria = new javax.swing.JLabel();
+        jTextFieldDescripcionCategoria = new javax.swing.JTextField();
+        jTextFieldNombreCategoria = new javax.swing.JTextField();
+        jButtonAgregarCategoria = new javax.swing.JButton();
+        jButtonEditarCategoria = new javax.swing.JButton();
+        jButtonEliminarCategoria = new javax.swing.JButton();
+        jButtonLimpiarCategoria = new javax.swing.JButton();
         fondo6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         fondo5 = new javax.swing.JLabel();
@@ -350,6 +392,59 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTabbedPane1.addTab("Bodega", jPanel5);
 
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setText("Descripción:");
+        jPanel8.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setText("Nombre:");
+        jPanel8.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+
+        jLabelIdCategoria2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdCategoria2.setText("ID:");
+        jPanel8.add(jLabelIdCategoria2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
+        jPanel8.add(jLabelIdCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 170, 30));
+        jPanel8.add(jTextFieldDescripcionCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, 140, 30));
+
+        jTextFieldNombreCategoria.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldNombreCategoriaFocusGained(evt);
+            }
+        });
+        jPanel8.add(jTextFieldNombreCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, 140, 30));
+
+        jButtonAgregarCategoria.setText("Agregar");
+        jButtonAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarCategoriaActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonAgregarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, -1, -1));
+
+        jButtonEditarCategoria.setText("Editar");
+        jButtonEditarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarCategoriaActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonEditarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, -1, -1));
+
+        jButtonEliminarCategoria.setText("Eliminar");
+        jButtonEliminarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarCategoriaActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonEliminarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, -1, -1));
+
+        jButtonLimpiarCategoria.setText("Limpiar");
+        jButtonLimpiarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarCategoriaActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonLimpiarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, -1, -1));
 
         fondo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel8.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -622,6 +717,76 @@ public class Mantenimiento extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonEliminarUnidadTransporteActionPerformed
 
+    private void jTextFieldNombreCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreCategoriaFocusGained
+        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
+            if(jTextFieldNombreCategoria.getText().equals(entry.getValue().getNombre())){
+                jLabelIdCategoria.setText(String.valueOf(entry.getValue().getId()));
+                jTextFieldNombreCategoria.setText(entry.getValue().getNombre());
+                jTextFieldDescripcionCategoria.setText(entry.getValue().getDescripcion());
+                
+                jLabelIdCategoria2.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldNombreCategoriaFocusGained
+
+    private void jButtonAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarCategoriaActionPerformed
+        if (validarInformacionCategoria()== true) {
+            try {
+                Categoria auxCategoria = new Categoria();
+                auxCategoria.setId(hashMapCategoria.size()+1);
+                auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
+                auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
+                
+                cruds.agregarCategoria(auxCategoria);
+                
+                limpiarInformacionCategoria();
+                llenarAutocompleterCategoria();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonAgregarCategoriaActionPerformed
+
+    private void jButtonEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCategoriaActionPerformed
+        if (validarInformacionCategoria()== true) {
+            try {
+                Categoria auxCategoria = new Categoria();
+                auxCategoria.setId(Integer.parseInt(jLabelIdCategoria.getText()));
+                auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
+                auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
+                
+                cruds.editarCategoria(auxCategoria);
+                
+                limpiarInformacionCategoria();
+                llenarAutocompleterCategoria();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEditarCategoriaActionPerformed
+
+    private void jButtonEliminarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCategoriaActionPerformed
+        if (validarInformacionCategoria()== true) {
+            try {
+                Categoria auxCategoria = new Categoria();
+                auxCategoria.setId(Integer.parseInt(jLabelIdCategoria.getText()));
+                auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
+                auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
+                
+                cruds.eliminarCategoria(auxCategoria);
+                
+                limpiarInformacionCategoria();
+                llenarAutocompleterCategoria();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEliminarCategoriaActionPerformed
+
+    private void jButtonLimpiarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarCategoriaActionPerformed
+        limpiarInformacionCategoria();
+    }//GEN-LAST:event_jButtonLimpiarCategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -675,20 +840,26 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAgregarBodega;
+    private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
     private javax.swing.JButton jButtonEditarBodega;
+    private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEditarUnidadTransporte;
     private javax.swing.JButton jButtonEliminarBodega;
+    private javax.swing.JButton jButtonEliminarCategoria;
     private javax.swing.JButton jButtonEliminarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarBodega;
+    private javax.swing.JButton jButtonLimpiarCategoria;
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -698,6 +869,8 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelIdBodega;
     private javax.swing.JLabel jLabelIdBodega2;
+    private javax.swing.JLabel jLabelIdCategoria;
+    private javax.swing.JLabel jLabelIdCategoria2;
     private javax.swing.JLabel jLabelIdUnidadTransporte;
     private javax.swing.JLabel jLabelIdUnidadTransporte2;
     private javax.swing.JPanel jPanel1;
@@ -709,10 +882,12 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldCapacidadUnidadTransporte;
+    private javax.swing.JTextField jTextFieldDescripcionCategoria;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
     private javax.swing.JTextField jTextFieldNombreBodega;
+    private javax.swing.JTextField jTextFieldNombreCategoria;
     private javax.swing.JTextField jTextFieldNombreUsuario;
     private javax.swing.JTextField jTextFieldPlacaUnidadTransporte;
     private javax.swing.JTextField jTextFieldUrlBodega;

@@ -45,6 +45,12 @@ public class Data {
         if (grafoBodegas.isEmpty()) {
             llenarBodegas();
         }
+        if(hashMapCategoria.isEmpty()){
+            llenarCategorias();
+        }
+        if(treeMapLote.isEmpty()){
+            llenarLotes();
+        }
         if(linkedHashMapUnidadTransporte.isEmpty()){
             llenarUnidadesTransporte();
         }
@@ -71,6 +77,17 @@ public class Data {
         grafoBodegas.insertVerex(new Bodega(2, "Bodega 2", "234.678", "3542", 55, "url bodega 2"));
         grafoBodegas.insertVerex(new Bodega(3, "Bodega 3", "4262.7", "55555", 6, "url bodega 3"));
         grafoBodegas.insertVerex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4")); 
+    }
+    
+    private void llenarCategorias(){
+        hashMapCategoria.put("Categoria 1", new Categoria(1, "Categoria 1", "aaaa"));
+        hashMapCategoria.put("Categoria 2", new Categoria(2, "Categoria 2", "bbbb"));
+        hashMapCategoria.put("Categoria 3", new Categoria(3, "Categoria 3", "cccc"));
+        hashMapCategoria.put("Categoria 4", new Categoria(4, "Categoria 4", "dddd"));
+    }
+    
+    private void llenarLotes(){
+        
     }
     
     private void llenarUnidadesTransporte(){
