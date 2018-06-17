@@ -45,6 +45,9 @@ public class Data {
         if (grafoBodegas.isEmpty()) {
             llenarBodegas();
         }
+        if(linkedHashMapUnidadTransporte.isEmpty()){
+            llenarUnidadesTransporte();
+        }
     }
 
     private void fillListaUsuarios() throws FileNotFoundException, IOException {
@@ -67,9 +70,15 @@ public class Data {
         grafoBodegas.insertVerex(new Bodega(1, "Bodega 1", "123.9214", "43543", 23, "url bodega 1"));
         grafoBodegas.insertVerex(new Bodega(2, "Bodega 2", "234.678", "3542", 55, "url bodega 2"));
         grafoBodegas.insertVerex(new Bodega(3, "Bodega 3", "4262.7", "55555", 6, "url bodega 3"));
-        grafoBodegas.insertVerex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4"));
-
-        
+        grafoBodegas.insertVerex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4")); 
+    }
+    
+    private void llenarUnidadesTransporte(){
+        linkedHashMapUnidadTransporte.put(1, new UnidadTransporte(1, "123-A", "100", "url Unidad 1"));
+        linkedHashMapUnidadTransporte.put(2, new UnidadTransporte(2, "456-B", "11", "url Unidad 2"));
+        linkedHashMapUnidadTransporte.put(3, new UnidadTransporte(3, "789-C", "45", "url Unidad 3"));
+        linkedHashMapUnidadTransporte.put(4, new UnidadTransporte(4, "0234-D", "65", "url Unidad 4"));
+        linkedHashMapUnidadTransporte.put(5, new UnidadTransporte(4, "1657-E", "77", "url Unidad 5"));
     }
 
     public HashMap<String, Categoria> getHashMapCategoria() {

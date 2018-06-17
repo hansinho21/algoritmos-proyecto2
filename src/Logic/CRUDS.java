@@ -66,11 +66,11 @@ public class CRUDS {
     }
 
     public void editarCategoria(Categoria categoria) {
-
+        hashMapCategoria.replace(categoria.getNombre(), categoria);
     }
 
     public void eliminarCategoria(Categoria categoria) {
-        if (hashMapCategoria.containsValue(categoria) == false) {
+        if (hashMapCategoria.containsKey(categoria.getNombre()) == false) {
             JOptionPane.showMessageDialog(null, "La categoria no existe");
         } else {
             hashMapCategoria.remove(categoria.getNombre());
@@ -97,11 +97,11 @@ public class CRUDS {
     }
 
     public void editarLote(Lote lote) {
-
+        treeMapLote.replace(lote.getId(), lote);
     }
 
     public void eliminarLote(Lote lote) {
-        if (treeMapLote.containsValue(lote) == false) {
+        if (treeMapLote.containsKey(lote.getId()) == false) {
             JOptionPane.showMessageDialog(null, "El lote no existe");
         } else {
             treeMapLote.remove(lote.getId());
@@ -128,11 +128,11 @@ public class CRUDS {
     }
 
     public void editarUnidadTransporte(UnidadTransporte unidadTransporte) {
-
+        linkedHashMapUnidadTransporte.replace(unidadTransporte.getId(), unidadTransporte);
     }
 
     public void eliminarUnidadTransporte(UnidadTransporte unidadTransporte) {
-        if (linkedHashMapUnidadTransporte.containsValue(unidadTransporte) == false) {
+        if (linkedHashMapUnidadTransporte.containsKey(unidadTransporte.getId()) == false) {
             JOptionPane.showMessageDialog(null, "La unidad de transporte no existe");
         } else {
             linkedHashMapUnidadTransporte.remove(unidadTransporte.getId());

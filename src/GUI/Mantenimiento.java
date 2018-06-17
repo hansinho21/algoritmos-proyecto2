@@ -6,6 +6,9 @@
 package GUI;
 
 import Domain.Bodega;
+import Domain.Categoria;
+import Domain.Lote;
+import Domain.UnidadTransporte;
 import Domain.Usuario;
 import Logic.CRUDS;
 import Logic.Data;
@@ -13,7 +16,11 @@ import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,8 +37,16 @@ public class Mantenimiento extends javax.swing.JFrame {
     //tda's
     private LinkedList<Usuario> listaUsuarios;
     private AdjacencyMatrixGraph grafoBodegas;
+    private HashMap<String, Categoria> hashMapCategoria;
+    private TreeMap<Integer, Lote> treeMapLote;
+    private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
 
+    private TextAutoCompleter textAutoCompleterUsuario;
     private TextAutoCompleter textAutoCompleterBodega;
+    private TextAutoCompleter textAutoCompleterCategoria;
+    private TextAutoCompleter textAutoCompleterLote;
+    private TextAutoCompleter textAutoCompleterUnidadTransorte;
+    private TextAutoCompleter textAutoCompleterProducto;
 
     /**
      * Creates new form Mantenimiento
@@ -40,33 +55,50 @@ public class Mantenimiento extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
 
-        jLabelIdBodega2.setVisible(false);
+        this.jLabelIdBodega2.setVisible(false);
+        this.jLabelIdUnidadTransporte2.setVisible(false);
 
         //instancias
-        data = new Data();
-        cruds = new CRUDS();
+        this.data = new Data();
+        this.cruds = new CRUDS();
 
         //tda's
-        listaUsuarios = data.getListaUsuarios();
-        grafoBodegas = this.data.getGrafoBodegas();
+        this.listaUsuarios = this.data.getListaUsuarios();
+        this.grafoBodegas = this.data.getGrafoBodegas();
+        this.hashMapCategoria = this.data.getHashMapCategoria();
+        this.treeMapLote = this.data.getTreeMapLote();
+        this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
 
         //autocopleter
-        textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
+        this.textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
+        this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
 
         //metodos
         llenarAutocompleterBodegas();
+        llenarAutocompleterUnidadesTransporte();
     }
 
-    private void limpiarInformacion() {
+    private void limpiarInformacionBodega() {
         jLabelIdBodega.setText("");
         jTextFieldLatitudBodega.setText("");
         jTextFieldLongitudBodega.setText("");
         jTextFieldDistanciaBodega.setText("");
         jTextFieldUrlBodega.setText("");
         jTextFieldNombreBodega.setText("");
+        
+        this.jLabelIdBodega2.setVisible(false);
+    }
+    
+    private void limpiarInformacionUnidadTransporte(){
+        jLabelIdUnidadTransporte.setText("");
+        jTextFieldPlacaUnidadTransporte.setText("");
+        jTextFieldCapacidadUnidadTransporte.setText("");
+        jTextFieldUrlUnidadTransporte.setText("");
+        
+        this.jLabelIdUnidadTransporte2.setVisible(false);
     }
 
-    private boolean validarInformacion() {
+    private boolean validarInformacionBodega() {
         if (jTextFieldLatitudBodega.getText().equals("")
                 || jTextFieldLongitudBodega.getText().equals("")
                 || jTextFieldDistanciaBodega.getText().equals("")
@@ -76,12 +108,21 @@ public class Mantenimiento extends javax.swing.JFrame {
         } else {
             return true;
         }
-
+    }
+    
+    private boolean validarInformacionUnidadTransporte() {
+        if (jTextFieldPlacaUnidadTransporte.getText().equals("")
+                || jTextFieldCapacidadUnidadTransporte.getText().equals("")
+                || jTextFieldUrlUnidadTransporte.getText().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
      *
-     * LLena el AutoCompleter con los correos.
+     * LLena el AutoCompleter con las Bodegas.
      */
     private void llenarAutocompleterBodegas() throws GraphException {
         textAutoCompleterBodega.removeAllItems();
@@ -89,6 +130,18 @@ public class Mantenimiento extends javax.swing.JFrame {
             System.out.println(grafoBodegas.getVertex(i).toString());
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
             textAutoCompleterBodega.addItem(auxBodega.getNombre());
+        }
+    }
+    
+    /**
+     *
+     * LLena el AutoCompleter con las unidades de transporte.
+     */
+    private void llenarAutocompleterUnidadesTransporte() throws GraphException {
+        textAutoCompleterUnidadTransorte.removeAllItems();
+        for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
+            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
+            textAutoCompleterUnidadTransorte.addItem(entry.getValue().getPlaca());
         }
     }
 
@@ -134,18 +187,24 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonLimpiarBodega = new javax.swing.JButton();
         jTextFieldUrlBodega = new javax.swing.JTextField();
         fondo2 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        fondo6 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        fondo5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabelIdUnidadTransporte2 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        jLabelIdUnidadTransporte = new javax.swing.JLabel();
+        jTextFieldPlacaUnidadTransporte = new javax.swing.JTextField();
+        jTextFieldCapacidadUnidadTransporte = new javax.swing.JTextField();
+        jTextFieldUrlUnidadTransporte = new javax.swing.JTextField();
+        jButtonAgregarUnidadTransporte = new javax.swing.JButton();
+        jButtonEditarUnidadTransporte = new javax.swing.JButton();
+        jButtonEliminarUnidadTransporte = new javax.swing.JButton();
+        jButtonLimpiarUnidadTransporte = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        fondo5 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        fondo6 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         fondo7 = new javax.swing.JLabel();
         fondo3 = new javax.swing.JLabel();
@@ -290,11 +349,25 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Bodega", jPanel5);
 
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fondo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
+        jPanel8.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+
+        jTabbedPane1.addTab("Categoria", jPanel8);
+
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
+        jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+
+        jTabbedPane1.addTab("Lote", jPanel7);
+
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel12.setText("ID:");
-        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, -1));
+        jLabelIdUnidadTransporte2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdUnidadTransporte2.setText("ID:");
+        jPanel6.add(jLabelIdUnidadTransporte2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel13.setText("Placa:");
@@ -307,31 +380,56 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel15.setText("URL fotografia:");
         jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, -1, -1));
+        jPanel6.add(jLabelIdUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 100, 30));
 
-        jTextField7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel6.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 120, 30));
+        jTextFieldPlacaUnidadTransporte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextFieldPlacaUnidadTransporte.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldPlacaUnidadTransporteFocusGained(evt);
+            }
+        });
+        jPanel6.add(jTextFieldPlacaUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 120, 30));
 
-        jTextField8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel6.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 120, 30));
+        jTextFieldCapacidadUnidadTransporte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel6.add(jTextFieldCapacidadUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 120, 30));
+        jPanel6.add(jTextFieldUrlUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, 110, 30));
+
+        jButtonAgregarUnidadTransporte.setText("Agregar");
+        jButtonAgregarUnidadTransporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarUnidadTransporteActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonAgregarUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 410, -1, -1));
+
+        jButtonEditarUnidadTransporte.setText("Editar");
+        jButtonEditarUnidadTransporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarUnidadTransporteActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonEditarUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 410, -1, -1));
+
+        jButtonEliminarUnidadTransporte.setText("Eliminar");
+        jButtonEliminarUnidadTransporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarUnidadTransporteActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonEliminarUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 410, -1, -1));
+
+        jButtonLimpiarUnidadTransporte.setText("Limpiar");
+        jButtonLimpiarUnidadTransporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarUnidadTransporteActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonLimpiarUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
 
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
         jTabbedPane1.addTab("Unidad de Transporte", jPanel6);
-
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
-
-        jTabbedPane1.addTab("Lote", jPanel7);
-
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        fondo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel8.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
-
-        jTabbedPane1.addTab("Categoria", jPanel8);
 
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -375,6 +473,8 @@ public class Mantenimiento extends javax.swing.JFrame {
                     jTextFieldLongitudBodega.setText(auxBodega.getLongitud());
                     jTextFieldDistanciaBodega.setText(String.valueOf(auxBodega.getDistanciaCentroOperaciones()));
                     jTextFieldUrlBodega.setText(auxBodega.getUrlFotografia());
+                    
+                    jLabelIdBodega.setVisible(true);
                 }
             }
         } catch (GraphException ex) {
@@ -383,7 +483,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNombreBodegaFocusGained
 
     private void jButtonAgregarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarBodegaActionPerformed
-        if (validarInformacion() == true) {
+        if (validarInformacionBodega() == true) {
             try {
                 Bodega auxBodega = new Bodega();
                 auxBodega.setId(grafoBodegas.getSize() + 1);
@@ -395,7 +495,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
                 cruds.agregarBodega(auxBodega);
 
-                limpiarInformacion();
+                limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
             } catch (GraphException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
@@ -404,12 +504,11 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAgregarBodegaActionPerformed
 
     private void jButtonLimpiarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarBodegaActionPerformed
-        limpiarInformacion();
-        jLabelIdBodega2.setVisible(false);
+        limpiarInformacionBodega();
     }//GEN-LAST:event_jButtonLimpiarBodegaActionPerformed
 
     private void jButtonEditarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarBodegaActionPerformed
-        if (validarInformacion() == true) {
+        if (validarInformacionBodega() == true) {
             try {
                 Bodega auxBodega = new Bodega();
                 auxBodega.setId(Integer.parseInt(jLabelIdBodega.getText()));
@@ -421,7 +520,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
                 cruds.editarBodega(auxBodega);
 
-                limpiarInformacion();
+                limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
             } catch (GraphException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
@@ -430,7 +529,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarBodegaActionPerformed
 
     private void jButtonEliminarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarBodegaActionPerformed
-        if (validarInformacion() == true) {
+        if (validarInformacionBodega() == true) {
             try {
                 Bodega auxBodega = new Bodega();
                 auxBodega.setId(Integer.parseInt(jLabelIdBodega.getText()));
@@ -442,13 +541,86 @@ public class Mantenimiento extends javax.swing.JFrame {
 
                 cruds.eliminarBodega(auxBodega);
 
-                limpiarInformacion();
+                limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
             } catch (GraphException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButtonEliminarBodegaActionPerformed
+
+    private void jTextFieldPlacaUnidadTransporteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPlacaUnidadTransporteFocusGained
+        for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
+            if(jTextFieldPlacaUnidadTransporte.getText().equals(entry.getValue().getPlaca())){
+                jLabelIdUnidadTransporte.setText(String.valueOf(entry.getValue().getId()));
+                jTextFieldCapacidadUnidadTransporte.setText(entry.getValue().getCapacidad());
+                jTextFieldUrlUnidadTransporte.setText(entry.getValue().getUrlFotografia());
+                
+                jLabelIdUnidadTransporte2.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldPlacaUnidadTransporteFocusGained
+
+    private void jButtonAgregarUnidadTransporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarUnidadTransporteActionPerformed
+        if (validarInformacionUnidadTransporte() == true) {
+            try {
+                UnidadTransporte auxUnidad = new UnidadTransporte();
+                auxUnidad.setId(linkedHashMapUnidadTransporte.size()+1);
+                auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
+                auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
+                auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
+                
+                cruds.agregarUnidadTransporte(auxUnidad);
+                
+                limpiarInformacionUnidadTransporte();
+                llenarAutocompleterUnidadesTransporte();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonAgregarUnidadTransporteActionPerformed
+
+    private void jButtonLimpiarUnidadTransporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarUnidadTransporteActionPerformed
+        limpiarInformacionUnidadTransporte();
+    }//GEN-LAST:event_jButtonLimpiarUnidadTransporteActionPerformed
+
+    private void jButtonEditarUnidadTransporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarUnidadTransporteActionPerformed
+        if (validarInformacionUnidadTransporte() == true) {
+            try {
+                UnidadTransporte auxUnidad = new UnidadTransporte();
+                auxUnidad.setId(Integer.parseInt(jLabelIdUnidadTransporte.getText()));
+                auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
+                auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
+                auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
+                
+                cruds.editarUnidadTransporte(auxUnidad);
+                
+                limpiarInformacionUnidadTransporte();
+                llenarAutocompleterUnidadesTransporte();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEditarUnidadTransporteActionPerformed
+
+    private void jButtonEliminarUnidadTransporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarUnidadTransporteActionPerformed
+        if (validarInformacionUnidadTransporte() == true) {
+            try {
+                UnidadTransporte auxUnidad = new UnidadTransporte();
+                auxUnidad.setId(Integer.parseInt(jLabelIdUnidadTransporte.getText()));
+                auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
+                auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
+                auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
+                
+                cruds.eliminarUnidadTransporte(auxUnidad);
+                
+                limpiarInformacionUnidadTransporte();
+                llenarAutocompleterUnidadesTransporte();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEliminarUnidadTransporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,14 +675,17 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAgregarBodega;
+    private javax.swing.JButton jButtonAgregarUnidadTransporte;
     private javax.swing.JButton jButtonEditarBodega;
+    private javax.swing.JButton jButtonEditarUnidadTransporte;
     private javax.swing.JButton jButtonEliminarBodega;
+    private javax.swing.JButton jButtonEliminarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarBodega;
+    private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -523,6 +698,8 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelIdBodega;
     private javax.swing.JLabel jLabelIdBodega2;
+    private javax.swing.JLabel jLabelIdUnidadTransporte;
+    private javax.swing.JLabel jLabelIdUnidadTransporte2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -531,14 +708,15 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextFieldCapacidadUnidadTransporte;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
     private javax.swing.JTextField jTextFieldNombreBodega;
     private javax.swing.JTextField jTextFieldNombreUsuario;
+    private javax.swing.JTextField jTextFieldPlacaUnidadTransporte;
     private javax.swing.JTextField jTextFieldUrlBodega;
+    private javax.swing.JTextField jTextFieldUrlUnidadTransporte;
     private javax.swing.JTextField jTextFieldUserUsuario;
     // End of variables declaration//GEN-END:variables
 }
