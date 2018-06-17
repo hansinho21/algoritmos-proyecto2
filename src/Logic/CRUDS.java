@@ -37,7 +37,7 @@ public class CRUDS {
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
 
-    public CRUDS() throws IOException {
+    public CRUDS() throws IOException, GraphException {
         this.data = new Data();
         this.listaUsuarios = this.data.getListaUsuarios();
         this.arbolProductosMayoristas = this.data.getArbolProductosMayoristas();

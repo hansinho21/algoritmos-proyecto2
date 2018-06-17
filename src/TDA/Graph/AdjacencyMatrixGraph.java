@@ -141,6 +141,7 @@ public class AdjacencyMatrixGraph implements Graph {
     @Override
     public void deleteVertex(Object element) throws GraphException {
         if (existVertex(element)) {
+            System.out.println("entré");
             for (int i = 0; i < this.counter; i++) {
                 if (this.vertexList[i].element.equals(element)) {
                     //eliminamos aristas disponibles
@@ -157,7 +158,7 @@ public class AdjacencyMatrixGraph implements Graph {
                     this.counter--;
                 }
             }
-        }
+        }System.out.println("xxxxxxxxxxxxxxxxxxx");
     }
 
     @Override

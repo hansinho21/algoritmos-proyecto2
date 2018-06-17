@@ -5,12 +5,14 @@
  */
 package Logic;
 
+import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import TDA.BinaryTree.LinkedBinaryTree;
 import TDA.Graph.AdjacencyMatrixGraph;
+import TDA.Graph.GraphException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,13 +35,15 @@ public class Data {
     private static TreeMap<Integer, Lote> treeMapLote = new TreeMap<>();
     private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte = new LinkedHashMap<>();
 
+    
+
     /**
      *
      * @throws IOException
      */
-    public Data() throws IOException {
-        if (listaUsuarios.isEmpty()) {
-            fillListaUsuarios();
+    public Data() throws IOException, GraphException {
+        if (grafoBodegas.isEmpty()) {
+            llenarBodegas();
         }
     }
 
@@ -57,6 +61,15 @@ public class Data {
 //            usuario.setContrasena(aux[4]);
 //        }
 //        bf.close();
+    }
+
+    private void llenarBodegas() throws GraphException {
+        grafoBodegas.insertVerex(new Bodega(1, "Bodega 1", "123.9214", "43543", 23, "url bodega 1"));
+        grafoBodegas.insertVerex(new Bodega(2, "Bodega 2", "234.678", "3542", 55, "url bodega 2"));
+        grafoBodegas.insertVerex(new Bodega(3, "Bodega 3", "4262.7", "55555", 6, "url bodega 3"));
+        grafoBodegas.insertVerex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4"));
+
+        
     }
 
     public HashMap<String, Categoria> getHashMapCategoria() {

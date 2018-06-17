@@ -5,9 +5,13 @@
  */
 package GUI;
 
+import Domain.Bodega;
 import Domain.Usuario;
 import Logic.CRUDS;
 import Logic.Data;
+import TDA.Graph.AdjacencyMatrixGraph;
+import TDA.Graph.GraphException;
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -19,22 +23,73 @@ import java.util.logging.Logger;
  */
 public class Mantenimiento extends javax.swing.JFrame {
 
-    
-    private LinkedList<Usuario> listaUsuarios;
+    //instancias
     private Data data;
     private CRUDS cruds;
-    
+
+    //tda's
+    private LinkedList<Usuario> listaUsuarios;
+    private AdjacencyMatrixGraph grafoBodegas;
+
+    private TextAutoCompleter textAutoCompleterBodega;
+
     /**
      * Creates new form Mantenimiento
      */
-    public Mantenimiento() throws IOException {
+    public Mantenimiento() throws IOException, GraphException {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
+
+        jLabelIdBodega2.setVisible(false);
+
         //instancias
         data = new Data();
-        cruds= new CRUDS();
-        
-        listaUsuarios= data.getListaUsuarios();
+        cruds = new CRUDS();
+
+        //tda's
+        listaUsuarios = data.getListaUsuarios();
+        grafoBodegas = this.data.getGrafoBodegas();
+
+        //autocopleter
+        textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
+
+        //metodos
+        llenarAutocompleterBodegas();
+    }
+
+    private void limpiarInformacion() {
+        jLabelIdBodega.setText("");
+        jTextFieldLatitudBodega.setText("");
+        jTextFieldLongitudBodega.setText("");
+        jTextFieldDistanciaBodega.setText("");
+        jTextFieldUrlBodega.setText("");
+        jTextFieldNombreBodega.setText("");
+    }
+
+    private boolean validarInformacion() {
+        if (jTextFieldLatitudBodega.getText().equals("")
+                || jTextFieldLongitudBodega.getText().equals("")
+                || jTextFieldDistanciaBodega.getText().equals("")
+                || jTextFieldUrlBodega.getText().equals("")
+                || jTextFieldNombreBodega.getText().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    /**
+     *
+     * LLena el AutoCompleter con los correos.
+     */
+    private void llenarAutocompleterBodegas() throws GraphException {
+        textAutoCompleterBodega.removeAllItems();
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            System.out.println(grafoBodegas.getVertex(i).toString());
+            Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
+            textAutoCompleterBodega.addItem(auxBodega.getNombre());
+        }
     }
 
     /**
@@ -62,16 +117,22 @@ public class Mantenimiento extends javax.swing.JFrame {
         Modificar = new javax.swing.JButton();
         fondo1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelIdBodega2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldNombreBodega = new javax.swing.JTextField();
+        jTextFieldLatitudBodega = new javax.swing.JTextField();
+        jTextFieldLongitudBodega = new javax.swing.JTextField();
+        jTextFieldDistanciaBodega = new javax.swing.JTextField();
+        jLabelIdBodega = new javax.swing.JLabel();
+        jButtonAgregarBodega = new javax.swing.JButton();
+        jButtonEditarBodega = new javax.swing.JButton();
+        jButtonEliminarBodega = new javax.swing.JButton();
+        jButtonLimpiarBodega = new javax.swing.JButton();
+        jTextFieldUrlBodega = new javax.swing.JTextField();
         fondo2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -96,49 +157,36 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("ID:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Contraseña:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Rol:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Usuario:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
 
-        jTextFieldNombreUsuario.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextFieldNombreUsuario.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 220, 30));
 
-        jComboBoxRolUsuario.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxRolUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jComboBoxRolUsuario.setForeground(new java.awt.Color(0, 0, 0));
         jComboBoxRolUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operador", "Administrador" }));
         jPanel1.add(jComboBoxRolUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 220, 30));
 
-        jTextFieldUserUsuario.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldUserUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextFieldUserUsuario.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jTextFieldUserUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 220, 30));
 
-        jPasswordFieldPasswordUsuario.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordFieldPasswordUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPasswordFieldPasswordUsuario.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jPasswordFieldPasswordUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 220, 30));
 
         jButton1.setText("Agregar");
@@ -162,59 +210,80 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("ID:");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
+        jLabelIdBodega2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdBodega2.setText("ID:");
+        jPanel5.add(jLabelIdBodega2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nombre:");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Latitud:");
         jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Distancia:");
         jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Longitud:");
         jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("URL fotografía:");
         jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, -1, -1));
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField3.setText("jTextField3");
-        jPanel5.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 150, 30));
+        jTextFieldNombreBodega.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldNombreBodega.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldNombreBodegaFocusGained(evt);
+            }
+        });
+        jPanel5.add(jTextFieldNombreBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 150, 30));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField4.setText("jTextField4");
-        jPanel5.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 150, 30));
+        jTextFieldLatitudBodega.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel5.add(jTextFieldLatitudBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 150, 30));
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField5.setText("jTextField5");
-        jPanel5.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 150, 30));
+        jTextFieldLongitudBodega.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel5.add(jTextFieldLongitudBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 150, 30));
 
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField6.setText("jTextField6");
-        jPanel5.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 150, 30));
+        jTextFieldDistanciaBodega.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel5.add(jTextFieldDistanciaBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 150, 30));
+        jPanel5.add(jLabelIdBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 140, 30));
+
+        jButtonAgregarBodega.setText("Agregar");
+        jButtonAgregarBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarBodegaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonAgregarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, -1, -1));
+
+        jButtonEditarBodega.setText("Editar");
+        jButtonEditarBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarBodegaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonEditarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
+
+        jButtonEliminarBodega.setText("Eliminar");
+        jButtonEliminarBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarBodegaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonEliminarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, -1));
+
+        jButtonLimpiarBodega.setText("Limpiar");
+        jButtonLimpiarBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarBodegaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonLimpiarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 430, -1, -1));
+        jPanel5.add(jTextFieldUrlBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 130, -1));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -224,35 +293,25 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("ID:");
         jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Placa:");
         jPanel6.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Capacidad:");
         jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("URL fotografia:");
         jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, -1, -1));
 
-        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
         jTextField7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField7.setText("jTextField7");
         jPanel6.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 120, 30));
 
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
         jTextField8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField8.setText("jTextField8");
         jPanel6.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 120, 30));
 
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
@@ -291,7 +350,8 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     /**
      * metodo para agregar un usuario a la lista
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -299,11 +359,96 @@ public class Mantenimiento extends javax.swing.JFrame {
         //agregar id autoincremental
         usuario.setId(2);
         usuario.setNombre(jTextFieldNombreUsuario.getText());
-        usuario.setRol((String)jComboBoxRolUsuario.getSelectedItem());
+        usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
         usuario.setUsuario(jTextFieldUserUsuario.getText());
         usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
         cruds.AgregarUsuario(usuario);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldNombreBodegaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaFocusGained
+        try {
+            for (int i = 0; i < grafoBodegas.getSize(); i++) {
+                Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
+                if (jTextFieldNombreBodega.getText().equals(auxBodega.getNombre())) {
+                    jLabelIdBodega.setText(String.valueOf(auxBodega.getId()));
+                    jTextFieldLatitudBodega.setText(auxBodega.getLatitud());
+                    jTextFieldLongitudBodega.setText(auxBodega.getLongitud());
+                    jTextFieldDistanciaBodega.setText(String.valueOf(auxBodega.getDistanciaCentroOperaciones()));
+                    jTextFieldUrlBodega.setText(auxBodega.getUrlFotografia());
+                }
+            }
+        } catch (GraphException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextFieldNombreBodegaFocusGained
+
+    private void jButtonAgregarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarBodegaActionPerformed
+        if (validarInformacion() == true) {
+            try {
+                Bodega auxBodega = new Bodega();
+                auxBodega.setId(grafoBodegas.getSize() + 1);
+                auxBodega.setNombre(jTextFieldNombreBodega.getText());
+                auxBodega.setLatitud(jTextFieldLatitudBodega.getText());
+                auxBodega.setLongitud(jTextFieldLongitudBodega.getText());
+                auxBodega.setDistanciaCentroOperaciones(Float.parseFloat(jTextFieldDistanciaBodega.getText()));
+                auxBodega.setUrlFotografia(jTextFieldUrlBodega.getText());
+
+                cruds.agregarBodega(auxBodega);
+
+                limpiarInformacion();
+                llenarAutocompleterBodegas();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonAgregarBodegaActionPerformed
+
+    private void jButtonLimpiarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarBodegaActionPerformed
+        limpiarInformacion();
+        jLabelIdBodega2.setVisible(false);
+    }//GEN-LAST:event_jButtonLimpiarBodegaActionPerformed
+
+    private void jButtonEditarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarBodegaActionPerformed
+        if (validarInformacion() == true) {
+            try {
+                Bodega auxBodega = new Bodega();
+                auxBodega.setId(Integer.parseInt(jLabelIdBodega.getText()));
+                auxBodega.setNombre(jTextFieldNombreBodega.getText());
+                auxBodega.setLatitud(jTextFieldLatitudBodega.getText());
+                auxBodega.setLongitud(jTextFieldLongitudBodega.getText());
+                auxBodega.setDistanciaCentroOperaciones(Float.parseFloat(jTextFieldDistanciaBodega.getText()));
+                auxBodega.setUrlFotografia(jTextFieldUrlBodega.getText());
+
+                cruds.editarBodega(auxBodega);
+
+                limpiarInformacion();
+                llenarAutocompleterBodegas();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEditarBodegaActionPerformed
+
+    private void jButtonEliminarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarBodegaActionPerformed
+        if (validarInformacion() == true) {
+            try {
+                Bodega auxBodega = new Bodega();
+                auxBodega.setId(Integer.parseInt(jLabelIdBodega.getText()));
+                auxBodega.setNombre(jTextFieldNombreBodega.getText());
+                auxBodega.setLatitud(jTextFieldLatitudBodega.getText());
+                auxBodega.setLongitud(jTextFieldLongitudBodega.getText());
+                auxBodega.setDistanciaCentroOperaciones(Float.parseFloat(jTextFieldDistanciaBodega.getText()));
+                auxBodega.setUrlFotografia(jTextFieldUrlBodega.getText());
+
+                cruds.eliminarBodega(auxBodega);
+
+                limpiarInformacion();
+                llenarAutocompleterBodegas();
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonEliminarBodegaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,6 +484,8 @@ public class Mantenimiento extends javax.swing.JFrame {
                     new Mantenimiento().setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (GraphException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -355,6 +502,10 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel fondo7;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAgregarBodega;
+    private javax.swing.JButton jButtonEditarBodega;
+    private javax.swing.JButton jButtonEliminarBodega;
+    private javax.swing.JButton jButtonLimpiarBodega;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -367,10 +518,11 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelIdBodega;
+    private javax.swing.JLabel jLabelIdBodega2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -379,13 +531,14 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextFieldDistanciaBodega;
+    private javax.swing.JTextField jTextFieldLatitudBodega;
+    private javax.swing.JTextField jTextFieldLongitudBodega;
+    private javax.swing.JTextField jTextFieldNombreBodega;
     private javax.swing.JTextField jTextFieldNombreUsuario;
+    private javax.swing.JTextField jTextFieldUrlBodega;
     private javax.swing.JTextField jTextFieldUserUsuario;
     // End of variables declaration//GEN-END:variables
 }
