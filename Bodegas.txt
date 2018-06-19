@@ -1,0 +1,4 @@
+1;Bodega 1;123.9214;43543;23.0;url bodega 1
+2;Bodega 2;234.678;3542;55.0;url bodega 2
+3;Bodega 3;4262.7;55555;6.0;url bodega 3
+4;Bodega 4;65675;464.77;122.0;url bodega 4

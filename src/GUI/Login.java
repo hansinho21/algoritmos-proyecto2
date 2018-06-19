@@ -5,17 +5,31 @@
  */
 package GUI;
 
+import Domain.Categoria;
+import Domain.Usuario;
+import Logic.Data;
+import Logic.Files;
+import TDA.Graph.GraphException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jeison
  */
 public class Login extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -34,11 +48,13 @@ public class Login extends javax.swing.JFrame {
         LoginPassword = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
+        jButtonSalirLogin = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -66,11 +82,46 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/1211811764.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 260, 270));
 
+        jButtonSalirLogin.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonSalirLogin.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonSalirLogin.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSalirLogin.setText("Salir");
+        jButtonSalirLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirLoginActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSalirLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonSalirLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirLoginActionPerformed
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            HashMap<String, Categoria> hashMapCategoria = new HashMap<>();
+            Files f = new Files();
+            f.ArchivoUsuarios();
+            f.ArchivoCategoria();
+            f.ArchivoTransporte();
+            f.ArchivoBodega();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonSalirLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -111,6 +162,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel LoginPassword;
     private javax.swing.JLabel LoginUser;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonSalirLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

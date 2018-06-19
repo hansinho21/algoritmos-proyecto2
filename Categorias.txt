@@ -1,0 +1,4 @@
+1;Enlatados;aaaa
+3;Lacteos;cccc
+2;Legumbres;bbbb
+4;Liquidos;agua, sirope, aceite, birra

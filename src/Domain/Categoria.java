@@ -50,7 +50,7 @@ public class Categoria { //HashMap Java - clave: String (nombre), valor: Objeto 
 
     @Override
     public String toString() {
-        return "Categoria{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
+        return  id + ";" + nombre + ";" + descripcion;
     }
     
     

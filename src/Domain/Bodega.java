@@ -80,7 +80,8 @@ public class Bodega {//Grafo con matriz de adyacencia
 
     @Override
     public String toString() {
-        return "Bodega{" + "id=" + id + ", nombre=" + nombre + ", latitud=" + latitud + ", longitud=" + longitud + ", distanciaCentroOperaciones=" + distanciaCentroOperaciones + ", urlFotografia=" + urlFotografia + '}';
+        return id + ";" + nombre + ";" + latitud + ";" + longitud + ";" +
+                distanciaCentroOperaciones + ";" + urlFotografia;
     }
 
     

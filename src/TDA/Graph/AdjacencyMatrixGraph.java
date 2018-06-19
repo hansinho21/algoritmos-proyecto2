@@ -89,7 +89,7 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     @Override
-    public void insertVerex(Object elemet) throws GraphException {
+    public void insertVertex(Object elemet) throws GraphException {
         if (this.counter >= this.vertexList.length) {
             throw new GraphException("El grafo está lleno");
         }
@@ -124,7 +124,7 @@ public class AdjacencyMatrixGraph implements Graph {
         String output = "GRAFO CON MATRICES DE ADYACENCIA\n";
 
         for (int i = 0; i < this.counter; i++) {
-            output += "Vértice eN posición " + i + " es: " + this.vertexList[i].element + "\n";
+            output += "Vértice en posición " + i + " es: " + this.vertexList[i].element + "\n";
         }
         output += "\nLISTA DE ARISTAS\n";
 
@@ -137,6 +137,17 @@ public class AdjacencyMatrixGraph implements Graph {
         }
         return output;
     }
+    
+    public String toString2() {
+        String output = "";
+
+        for (int i = 0; i < this.counter; i++) {
+            output += this.vertexList[i].element+"\n";
+        }
+        return output;
+    }
+    
+    
 
     @Override
     public void deleteVertex(Object element) throws GraphException {

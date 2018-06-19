@@ -7,7 +7,7 @@ package Test;
 
 import Domain.Lote;
 import Domain.Usuario;
-import Logic.CRUDS;
+import Logic.Cruds;
 import Logic.Data;
 import TDA.Graph.GraphException;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class Pruebas {
      */
     public static void main(String[] args) throws IOException, GraphException {
         // TODO code application logic here
-        CRUDS cruds = new CRUDS();
+        Cruds cruds = new Cruds();
         Data data = new Data();
 //        LinkedList<Usuario> lista= new LinkedList<>();
 //        Usuario u = new Usuario();
@@ -37,8 +37,17 @@ public class Pruebas {
 //        u.setNombre("adasda");
 //        u.setRol("asdsad");
 //        u.setUsuario("adasda");
+//        Usuario v = new Usuario();
+//        v.setContrasena("dgdfg");
+//        v.setId(4);
+//        v.setNombre("adasda");
+//        v.setRol("asdsad");
+//        v.setUsuario("adasda");
+////        cruds.AgregarUsuario(v);
 //        cruds.AgregarUsuario(u);
-//        cruds.AgregarUsuario(u);
+//        cruds.eliminarUsuario(u);
+        
+        
 
         TreeMap<Integer, Lote> datos = data.getTreeMapLote();
         Lote lote = new Lote(1, "A", new Date(0, 0, 0), new Date(1, 1, 1));
@@ -52,22 +61,22 @@ public class Pruebas {
         for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString() + "\n");
         }
-        
-        cruds.eliminarLote(lote);
-        
-        
-        for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
-            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
-        }
-        System.out.println("\n");
-        
-        Lote auxLote = new Lote(2, "BBBBB", new Date(0, 0, 0), new Date(1, 1, 1));
-        
-        datos.replace(2, auxLote);
-        
-        for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
-            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
-        }
+//        
+//        cruds.eliminarLote(lote);
+//        
+//        
+//        for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
+//            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
+//        }
+//        System.out.println("\n");
+//        
+//        Lote auxLote = new Lote(2, "BBBBB", new Date(0, 0, 0), new Date(1, 1, 1));
+//        
+//        datos.replace(2, auxLote);
+//        
+//        for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
+//            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
+//        }
     }
 
 }

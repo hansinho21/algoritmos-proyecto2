@@ -10,11 +10,13 @@ import Domain.Categoria;
 import Domain.Lote;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
-import Logic.CRUDS;
+import Logic.Cruds;
 import Logic.Data;
+import Logic.Files;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.ComponentOrientation;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +36,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     //instancias
     private Data data;
-    private CRUDS cruds;
+    private Cruds cruds;
 
     //tda's
     private LinkedList<Usuario> listaUsuarios;
@@ -63,7 +66,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         //instancias
         this.data = new Data();
-        this.cruds = new CRUDS();
+        this.cruds = new Cruds();
 
         //tda's
         this.listaUsuarios = this.data.getListaUsuarios();
@@ -73,6 +76,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
 
         //autocopleter
+        this.textAutoCompleterUsuario = new TextAutoCompleter(jTextFieldNombreUsuario);
         this.textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
         this.textAutoCompleterCategoria = new TextAutoCompleter(jTextFieldNombreCategoria);
         this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLote);
@@ -83,6 +87,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         llenarAutocompleterCategoria();
         llenarAutocompleterUnidadesTransporte();
         llenarAutocompleterLote();
+        llenarAutocompleterUsuarios();
     }
 
     private void limpiarInformacionBodega() {
@@ -104,12 +109,18 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabelIdCategoria2.setVisible(false);
     }
     
+    private void limpiarInformacionUsuario(){
+        jLabelIdUsuario.setText("");
+        jTextFieldNombreUsuario.setText("");
+        jTextFieldUserUsuario.setText("");
+        jPasswordFieldPasswordUsuario.setText("");
+    }
+    
     private void limpiarInformacionLote(){
         jLabelIdLote.setText("");
         jTextFieldCodigoLote.setText("");
-        jTextFieldFechaEmpacadoLote.setText("");
-        jTextFieldFechaVencimientoLote.setText("");
-        
+        jDateChooser1.setDateFormatString("");
+        jDateChooser2.setDateFormatString("");
         jLabelIdLote2.setVisible(false);
     }
     
@@ -145,8 +156,8 @@ public class Mantenimiento extends javax.swing.JFrame {
     
     private boolean validarInformacionLote() {
         if (jTextFieldCodigoLote.getText().equals("")
-                || jTextFieldFechaEmpacadoLote.getText().equals("")
-                || jTextFieldFechaVencimientoLote.getText().equals("")) {
+                || jDateChooser1.getDate().equals("")
+                || jDateChooser2.getDate().equals("")) {
             return false;
         } else {
             return true;
@@ -176,6 +187,15 @@ public class Mantenimiento extends javax.swing.JFrame {
         }
     }
     
+    private void llenarAutocompleterUsuarios(){
+        textAutoCompleterUsuario.removeAllItems();
+        for (int i = 0; i < listaUsuarios.size(); i++) {        
+            System.out.println(listaUsuarios.get(i).toString());
+            Usuario usuario= listaUsuarios.get(i);
+            textAutoCompleterUsuario.addItem(usuario.getNombre());
+        }
+    }
+    
     /**
      *
      * LLena el AutoCompleter con las categorias.
@@ -197,6 +217,9 @@ public class Mantenimiento extends javax.swing.JFrame {
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
             textAutoCompleterLote.addItem(entry.getValue().getCodigoLote());
+            textAutoCompleterLote.addItem(entry.getValue().getFechaEmpacado());
+            textAutoCompleterLote.addItem(entry.getValue().getFechaVecimiento());
+            
         }
     }
     
@@ -235,6 +258,9 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         Modificar = new javax.swing.JButton();
+        jLabelIdUsuario = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButtonLimpiarUsuario = new javax.swing.JButton();
         fondo1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabelIdBodega2 = new javax.swing.JLabel();
@@ -254,6 +280,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonLimpiarBodega = new javax.swing.JButton();
         jTextFieldUrlBodega = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         fondo2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -266,6 +293,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonEditarCategoria = new javax.swing.JButton();
         jButtonEliminarCategoria = new javax.swing.JButton();
         jButtonLimpiarCategoria = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         fondo6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabelIdLote2 = new javax.swing.JLabel();
@@ -273,14 +301,15 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabelIdLote = new javax.swing.JLabel();
-        jTextFieldFechaEmpacadoLote = new javax.swing.JTextField();
-        jTextFieldFechaVencimientoLote = new javax.swing.JTextField();
         jTextFieldCodigoLote = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButtonAgregarLote = new javax.swing.JButton();
         jButtonEditarLote = new javax.swing.JButton();
         jButtonEliminarLote = new javax.swing.JButton();
         jButtonLimpiarLote = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         fondo5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabelIdUnidadTransporte2 = new javax.swing.JLabel();
@@ -296,12 +325,15 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButtonEliminarUnidadTransporte = new javax.swing.JButton();
         jButtonLimpiarUnidadTransporte = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
         fondo7 = new javax.swing.JLabel();
         fondo3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -328,6 +360,11 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
 
         jTextFieldNombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldNombreUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldNombreUsuarioFocusGained(evt);
+            }
+        });
         jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 220, 30));
 
         jComboBoxRolUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -349,13 +386,46 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, -1, -1));
 
         jButton2.setText("Eliminar");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, -1, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, -1, -1));
 
         Modificar.setText("Modificar");
-        jPanel1.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, -1, -1));
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, -1, -1));
+
+        jLabelIdUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelIdUsuario.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jLabelIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 80, 30));
+
+        jButton3.setBackground(new java.awt.Color(0, 51, 51));
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Salir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
+
+        jButtonLimpiarUsuario.setText("Limpiar");
+        jButtonLimpiarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonLimpiarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, -1, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
 
         jTabbedPane1.addTab("Usuario", jPanel1);
 
@@ -389,6 +459,11 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldNombreBodega.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextFieldNombreBodegaFocusGained(evt);
+            }
+        });
+        jTextFieldNombreBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNombreBodegaActionPerformed(evt);
             }
         });
         jPanel5.add(jTextFieldNombreBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 150, 30));
@@ -439,6 +514,17 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel20.setText("FileChooser en el url");
         jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
+
+        jButton4.setBackground(new java.awt.Color(0, 51, 51));
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setText("Salir");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -500,6 +586,17 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel8.add(jButtonLimpiarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, -1, -1));
 
+        jButton5.setBackground(new java.awt.Color(0, 51, 51));
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Salir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
+
         fondo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel8.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
@@ -523,15 +620,13 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel19.setText("Fecha de vencimiento:");
         jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
         jPanel7.add(jLabelIdLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 110, 30));
-        jPanel7.add(jTextFieldFechaEmpacadoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 180, 40));
-        jPanel7.add(jTextFieldFechaVencimientoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 180, 40));
 
         jTextFieldCodigoLote.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextFieldCodigoLoteFocusGained(evt);
             }
         });
-        jPanel7.add(jTextFieldCodigoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 180, 40));
+        jPanel7.add(jTextFieldCodigoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 180, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Hay que hacer bien los date");
@@ -569,6 +664,19 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel7.add(jButtonLimpiarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
 
+        jButton6.setBackground(new java.awt.Color(0, 51, 51));
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Salir");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
+        jPanel7.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 180, -1));
+        jPanel7.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 180, -1));
+
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
@@ -599,11 +707,11 @@ public class Mantenimiento extends javax.swing.JFrame {
                 jTextFieldPlacaUnidadTransporteFocusGained(evt);
             }
         });
-        jPanel6.add(jTextFieldPlacaUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 120, 30));
+        jPanel6.add(jTextFieldPlacaUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 300, 30));
 
         jTextFieldCapacidadUnidadTransporte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel6.add(jTextFieldCapacidadUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 120, 30));
-        jPanel6.add(jTextFieldUrlUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, 110, 30));
+        jPanel6.add(jTextFieldCapacidadUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 300, 30));
+        jPanel6.add(jTextFieldUrlUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 300, 30));
 
         jButtonAgregarUnidadTransporte.setText("Agregar");
         jButtonAgregarUnidadTransporte.addActionListener(new java.awt.event.ActionListener() {
@@ -641,12 +749,34 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel21.setText("FileChooser en el url");
         jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
 
+        jButton7.setBackground(new java.awt.Color(0, 51, 51));
+        jButton7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Salir");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
+
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
         jTabbedPane1.addTab("Unidad de Transporte", jPanel6);
 
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton8.setBackground(new java.awt.Color(0, 51, 51));
+        jButton8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Salir");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
 
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -670,12 +800,15 @@ public class Mantenimiento extends javax.swing.JFrame {
         // TODO add your handling code here:
         Usuario usuario = new Usuario();
         //agregar id autoincremental
-        usuario.setId(2);
+        usuario.setId(listaUsuarios.size()+1);
         usuario.setNombre(jTextFieldNombreUsuario.getText());
         usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
         usuario.setUsuario(jTextFieldUserUsuario.getText());
         usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
         cruds.AgregarUsuario(usuario);
+        llenarAutocompleterUsuarios();
+        
+        JOptionPane.showMessageDialog(null, "Agregado correctamente!!");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextFieldNombreBodegaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaFocusGained
@@ -911,9 +1044,8 @@ public class Mantenimiento extends javax.swing.JFrame {
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             if(jTextFieldCodigoLote.getText().equals(entry.getValue().getCodigoLote())){
                 jLabelIdLote.setText(String.valueOf(entry.getValue().getId()));
-                jTextFieldFechaEmpacadoLote.setText(entry.getValue().getFechaEmpacado().toString());
-                jTextFieldFechaVencimientoLote.setText(entry.getValue().getFechaVecimiento().toString());
-                
+                jDateChooser1.setDate(entry.getValue().getFechaEmpacado());
+                jDateChooser2.setDate(entry.getValue().getFechaVecimiento());                
                 jLabelIdLote2.setVisible(true);
             }
         }
@@ -983,6 +1115,198 @@ public class Mantenimiento extends javax.swing.JFrame {
         limpiarInformacionLote();
     }//GEN-LAST:event_jButtonLimpiarLoteActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:  
+        Usuario usuario = new Usuario();
+        //agregar id autoincremental
+        usuario.setId(Integer.parseInt(jLabelIdUsuario.getText()));
+        usuario.setNombre(jTextFieldNombreUsuario.getText());
+        usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
+        usuario.setUsuario(jTextFieldUserUsuario.getText());
+        usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
+        cruds.eliminarUsuario(usuario);
+        limpiarInformacionUsuario();
+        llenarAutocompleterUsuarios();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextFieldNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioFocusGained
+        // TODO add your handling code here:
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(jTextFieldNombreUsuario.getText().equalsIgnoreCase(
+                    listaUsuarios.get(i).getNombre())){
+            jLabelIdUsuario.setText(String.valueOf(listaUsuarios.get(i).getId()));
+            jComboBoxRolUsuario.setSelectedItem(listaUsuarios.get(i).getRol());
+            jTextFieldUserUsuario.setText(listaUsuarios.get(i).getUsuario());
+            jPasswordFieldPasswordUsuario.setText(listaUsuarios.get(i).getContrasena());
+            }
+        }
+        
+    }//GEN-LAST:event_jTextFieldNombreUsuarioFocusGained
+
+    private void jTextFieldNombreBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreBodegaActionPerformed
+
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+        // TODO add your handling code here:
+        Usuario usuario = new Usuario();
+        //agregar id autoincremental
+        usuario.setId(Integer.parseInt(jLabelIdUsuario.getText()));
+        usuario.setNombre(jTextFieldNombreUsuario.getText());
+        usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
+        usuario.setUsuario(jTextFieldUserUsuario.getText());
+        usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
+        cruds.editarUsuario(usuario);
+        limpiarInformacionUsuario();
+        llenarAutocompleterUsuarios();
+        
+    }//GEN-LAST:event_ModificarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            Files f = new Files();
+            f.ArchivoUsuarios();
+            f.ArchivoTransporte();
+            f.ArchivoCategoria();
+            f.ArchivoTransporte();
+            f.ArchivoBodega();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            Files f = new Files();
+            f.ArchivoUsuarios();
+            f.ArchivoCategoria();
+            f.ArchivoBodega();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            Files f = new Files();
+            f.ArchivoBodega();
+            f.ArchivoUsuarios();
+            f.ArchivoCategoria();
+            f.ArchivoTransporte();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            Files f = new Files();
+            f.ArchivoBodega();
+            f.ArchivoUsuarios();
+            f.ArchivoCategoria();
+            f.ArchivoTransporte();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            Files f = new Files();
+            f.ArchivoBodega();
+            f.ArchivoUsuarios();
+            f.ArchivoCategoria();
+            f.ArchivoTransporte();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            Data d= new Data();
+            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+            Files f = new Files();
+            f.ArchivoBodega();
+            f.ArchivoUsuarios();
+            f.ArchivoCategoria();
+            f.ArchivoTransporte();
+            System.exit(0);
+        }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButtonLimpiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarUsuarioActionPerformed
+        // TODO add your handling code here:
+        limpiarInformacionUsuario();
+    }//GEN-LAST:event_jButtonLimpiarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1035,6 +1359,12 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel fondo7;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
@@ -1051,7 +1381,10 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLimpiarCategoria;
     private javax.swing.JButton jButtonLimpiarLote;
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
+    private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1081,6 +1414,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIdLote2;
     private javax.swing.JLabel jLabelIdUnidadTransporte;
     private javax.swing.JLabel jLabelIdUnidadTransporte2;
+    private javax.swing.JLabel jLabelIdUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1093,8 +1427,6 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCodigoLote;
     private javax.swing.JTextField jTextFieldDescripcionCategoria;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
-    private javax.swing.JTextField jTextFieldFechaEmpacadoLote;
-    private javax.swing.JTextField jTextFieldFechaVencimientoLote;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
     private javax.swing.JTextField jTextFieldNombreBodega;

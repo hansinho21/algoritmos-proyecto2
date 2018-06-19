@@ -1,0 +1,4 @@
+1;jans;Administrador;jansino;jansino21
+2;juam;Operador;panchito;jansino21
+3;julia;Administrador;juli;jansino21
+4;Jeison Segura;Administrador;jsegura;jsegura15

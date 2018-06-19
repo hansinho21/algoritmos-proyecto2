@@ -59,7 +59,7 @@ public class UnidadTransporte {//LinkedHashMap Java - clave: id, valor: UnidadTr
 
     @Override
     public String toString() {
-        return "UnidadTransporte{" + "id=" + id + ", placa=" + placa + ", capacidad=" + capacidad + ", urlFotografia=" + urlFotografia + '}';
+        return  id + ";" + placa + ";" + capacidad + ";" + urlFotografia;
     }
     
     

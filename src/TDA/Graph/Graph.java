@@ -21,7 +21,7 @@ public interface Graph {
 
     public boolean existEdge(Object v1, Object v2) throws GraphException;
 
-    public void insertVerex(Object elemet) throws GraphException;
+    public void insertVertex(Object elemet) throws GraphException;
 
     public void insertEdge(Object v1, Object v2) throws GraphException;
 
