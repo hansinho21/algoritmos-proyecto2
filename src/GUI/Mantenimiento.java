@@ -329,6 +329,30 @@ public class Mantenimiento extends javax.swing.JFrame {
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
+        jLabelIdProducto = new javax.swing.JLabel();
+        jLabelNombreProducto = new javax.swing.JLabel();
+        jLabelValorUnidad = new javax.swing.JLabel();
+        jLabelPesoProducto = new javax.swing.JLabel();
+        jLabelDescripcionProducto = new javax.swing.JLabel();
+        jLabelIdLoteProducto = new javax.swing.JLabel();
+        jLabelIdCategoriaProducto = new javax.swing.JLabel();
+        jLabelPrecioProducto = new javax.swing.JLabel();
+        jLabelUrlFotoProducto = new javax.swing.JLabel();
+        jLabelUnidadMedidasProducto = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        jTextField10 = new javax.swing.JTextField();
         fondo7 = new javax.swing.JLabel();
         fondo3 = new javax.swing.JLabel();
 
@@ -776,7 +800,151 @@ public class Mantenimiento extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel9.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
+        jPanel9.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 90, 30));
+
+        jLabelIdProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelIdProducto.setText("Id");
+        jPanel9.add(jLabelIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
+
+        jLabelNombreProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelNombreProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelNombreProducto.setText("Nombre");
+        jPanel9.add(jLabelNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, -1, -1));
+
+        jLabelValorUnidad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelValorUnidad.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelValorUnidad.setText("Valor Unidad");
+        jPanel9.add(jLabelValorUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, -1, -1));
+
+        jLabelPesoProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelPesoProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelPesoProducto.setText("Peso Total");
+        jPanel9.add(jLabelPesoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, -1, -1));
+
+        jLabelDescripcionProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelDescripcionProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelDescripcionProducto.setText("Descripcion");
+        jPanel9.add(jLabelDescripcionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
+
+        jLabelIdLoteProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdLoteProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelIdLoteProducto.setText("Id Lote");
+        jPanel9.add(jLabelIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, -1, -1));
+
+        jLabelIdCategoriaProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdCategoriaProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelIdCategoriaProducto.setText("Id Categoria");
+        jPanel9.add(jLabelIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
+
+        jLabelPrecioProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelPrecioProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelPrecioProducto.setText("Precio total");
+        jPanel9.add(jLabelPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, -1, -1));
+
+        jLabelUrlFotoProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelUrlFotoProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelUrlFotoProducto.setText("URL fotografia");
+        jPanel9.add(jLabelUrlFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
+
+        jLabelUnidadMedidasProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelUnidadMedidasProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelUnidadMedidasProducto.setText("Unidad Medidas");
+        jPanel9.add(jLabelUnidadMedidasProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+
+        jButton9.setBackground(new java.awt.Color(0, 51, 51));
+        jButton9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Eliminar");
+        jPanel9.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, -1));
+
+        jButton10.setBackground(new java.awt.Color(0, 51, 51));
+        jButton10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(255, 255, 255));
+        jButton10.setText("Agregar");
+        jPanel9.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, -1));
+
+        jButton11.setBackground(new java.awt.Color(0, 51, 51));
+        jButton11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(255, 255, 255));
+        jButton11.setText("Limpiar");
+        jPanel9.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
+
+        jButton12.setBackground(new java.awt.Color(0, 51, 51));
+        jButton12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton12.setForeground(new java.awt.Color(255, 255, 255));
+        jButton12.setText("Editar");
+        jPanel9.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, -1, -1));
+
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel9.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 30));
+
+        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 160, 30));
+
+        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel9.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 160, 30));
+
+        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel9.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 160, 30));
+
+        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 160, 30));
+
+        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField6.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel9.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 160, 30));
+
+        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField7.setForeground(new java.awt.Color(0, 0, 0));
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 160, 30));
+
+        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField8.setForeground(new java.awt.Color(0, 0, 0));
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 160, 30));
+
+        jTextField9.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField9.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel9.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 160, 30));
+
+        jTextField10.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField10.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel9.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 160, 30));
 
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -1307,6 +1475,22 @@ public class Mantenimiento extends javax.swing.JFrame {
         limpiarInformacionUsuario();
     }//GEN-LAST:event_jButtonLimpiarUsuarioActionPerformed
 
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1358,6 +1542,9 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel fondo6;
     private javax.swing.JLabel fondo7;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1365,6 +1552,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
@@ -1406,15 +1594,25 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelDescripcionProducto;
     private javax.swing.JLabel jLabelIdBodega;
     private javax.swing.JLabel jLabelIdBodega2;
     private javax.swing.JLabel jLabelIdCategoria;
     private javax.swing.JLabel jLabelIdCategoria2;
+    private javax.swing.JLabel jLabelIdCategoriaProducto;
     private javax.swing.JLabel jLabelIdLote;
     private javax.swing.JLabel jLabelIdLote2;
+    private javax.swing.JLabel jLabelIdLoteProducto;
+    private javax.swing.JLabel jLabelIdProducto;
     private javax.swing.JLabel jLabelIdUnidadTransporte;
     private javax.swing.JLabel jLabelIdUnidadTransporte2;
     private javax.swing.JLabel jLabelIdUsuario;
+    private javax.swing.JLabel jLabelNombreProducto;
+    private javax.swing.JLabel jLabelPesoProducto;
+    private javax.swing.JLabel jLabelPrecioProducto;
+    private javax.swing.JLabel jLabelUnidadMedidasProducto;
+    private javax.swing.JLabel jLabelUrlFotoProducto;
+    private javax.swing.JLabel jLabelValorUnidad;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1423,6 +1621,16 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextFieldCapacidadUnidadTransporte;
     private javax.swing.JTextField jTextFieldCodigoLote;
     private javax.swing.JTextField jTextFieldDescripcionCategoria;

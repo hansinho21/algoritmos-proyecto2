@@ -80,25 +80,25 @@ public class Data {
     }
 
     private void llenarBodegas() throws GraphException, FileNotFoundException, IOException {
-        grafoBodegas.insertVertex(new Bodega(1, "Bodega 1", "123.9214", "43543", 23, "url bodega 1"));
-        grafoBodegas.insertVertex(new Bodega(2, "Bodega 2", "234.678", "3542", 55, "url bodega 2"));
-        grafoBodegas.insertVertex(new Bodega(3, "Bodega 3", "4262.7", "55555", 6, "url bodega 3"));
-        grafoBodegas.insertVertex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4"));
-//        String sCadena;
-//        FileReader fr = new FileReader("Bodegas.txt");
-//        BufferedReader bf = new BufferedReader(fr);
-//        while ((sCadena = bf.readLine()) != null) {
-//                Bodega bodega = new Bodega();
-//                String[] aux = sCadena.split(";");
-//                bodega.setId(Integer.parseInt(aux[0]));
-//                bodega.setNombre(aux[1]);
-//                bodega.setLatitud(aux[2]);
-//                bodega.setLongitud(aux[3]);
-//                bodega.setDistanciaCentroOperaciones(Float.parseFloat(aux[4]));
-//                bodega.setUrlFotografia(aux[5]);
-//                grafoBodegas.insertVertex(bodega);
-//            }
-//            bf.close();
+//        grafoBodegas.insertVertex(new Bodega(1, "Bodega 1", "123.9214", "43543", 23, "url bodega 1"));
+//        grafoBodegas.insertVertex(new Bodega(2, "Bodega 2", "234.678", "3542", 55, "url bodega 2"));
+//        grafoBodegas.insertVertex(new Bodega(3, "Bodega 3", "4262.7", "55555", 6, "url bodega 3"));
+//        grafoBodegas.insertVertex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4"));
+        String sCadena;
+        FileReader fr = new FileReader("Bodegas.txt");
+        BufferedReader bf = new BufferedReader(fr);
+        while ((sCadena = bf.readLine()) != null) {
+                Bodega bodega = new Bodega();
+                String[] aux = sCadena.split(";");
+                bodega.setId(Integer.parseInt(aux[0]));
+                bodega.setNombre(aux[1]);
+                bodega.setLatitud(aux[2]);
+                bodega.setLongitud(aux[3]);
+                bodega.setDistanciaCentroOperaciones(Float.parseFloat(aux[4]));
+                bodega.setUrlFotografia(aux[5]);
+                grafoBodegas.insertVertex(bodega);
+            }
+            bf.close();
     }
 
     private void llenarCategorias() throws FileNotFoundException, IOException {
