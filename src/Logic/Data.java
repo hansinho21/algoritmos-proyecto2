@@ -8,6 +8,7 @@ package Logic;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import TDA.BinaryTree.LinkedBinaryTree;
@@ -35,6 +36,9 @@ public class Data {
     private static HashMap<String, Categoria> hashMapCategoria = new HashMap<>();
     private static TreeMap<Integer, Lote> treeMapLote = new TreeMap<>();
     private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte = new LinkedHashMap<>();
+    
+    //lista provisional mientras el profe sube el arbol arreglado
+    private static LinkedList<ProductoMayorista> listaProductos = new LinkedList<>();
 
     /**
      *
@@ -55,6 +59,9 @@ public class Data {
         }
         if (listaUsuarios.isEmpty()) {
             llenarListaUsuarios();
+        }
+        if(listaProductos.isEmpty()){
+            llenarProductos();
         }
     }
 
@@ -149,6 +156,21 @@ public class Data {
                 linkedHashMapUnidadTransporte.put(Integer.parseInt(aux[0]), transporte);
             }
             bf.close();
+    }
+    
+    private void llenarProductos() {
+        listaProductos.add(new ProductoMayorista(1, "Procucto 1", "kg", 1, 22, "x", 1, 1, 213, ""));
+        listaProductos.add(new ProductoMayorista(1, "Procucto 2", "kg", 1, 22, "x", 1, 1, 213, ""));
+        listaProductos.add(new ProductoMayorista(1, "Procucto 3", "kg", 1, 22, "x", 1, 1, 213, ""));
+        listaProductos.add(new ProductoMayorista(1, "Procucto 4", "kg", 1, 22, "x", 1, 1, 213, ""));
+    }
+
+    public LinkedList<ProductoMayorista> getListaProductos() {
+        return listaProductos;
+    }
+
+    public void setListaProductos(LinkedList<ProductoMayorista> listaProductos) {
+        Data.listaProductos = listaProductos;
     }
 
     public HashMap<String, Categoria> getHashMapCategoria() {

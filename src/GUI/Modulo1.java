@@ -5,20 +5,55 @@
  */
 package GUI;
 
+import Domain.ProductoMayorista;
+import Logic.Data;
+import TDA.Graph.GraphException;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author jeison
  */
 public class Modulo1 extends javax.swing.JFrame {
 
+    //Clases
+    private Data datos;
+    
+    //TDA's
+    private LinkedList<ProductoMayorista> listaProductos;
+    
+    //JList
+    private DefaultListModel defaultListModel;
+    
     /**
      * Creates new form Modulo1
      */
-    public Modulo1() {
+    public Modulo1() throws IOException, GraphException {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        //Clases
+        this.datos = new Data();
+        
+        //TDA's
+        this.listaProductos = this.datos.getListaProductos();
+        
+        //JList
+        this.defaultListModel = new DefaultListModel();
+        this.jListProductos.setModel(defaultListModel);
+        llenarJList();
     }
 
+    private void llenarJList(){
+        for (int i = 0; i < this.listaProductos.size(); i++) {
+            this.defaultListModel.addElement(this.listaProductos.get(i).getNombre());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,7 +68,7 @@ public class Modulo1 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListProductos = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         fondo1 = new javax.swing.JLabel();
@@ -73,7 +108,7 @@ public class Modulo1 extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(442, 30, 490, 190));
 
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(jListProductos);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 310, 190));
 
@@ -160,7 +195,11 @@ public class Modulo1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Modulo1().setVisible(true);
+                try {
+                    new Modulo1().setVisible(true);
+                } catch (IOException | GraphException ex) {
+                    Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -173,7 +212,7 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jListProductos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel5;
