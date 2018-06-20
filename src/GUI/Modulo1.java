@@ -7,12 +7,14 @@ package GUI;
 
 import Domain.ProductoMayorista;
 import Logic.Data;
+import Logic.Logica;
 import TDA.Graph.GraphException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,38 +24,82 @@ public class Modulo1 extends javax.swing.JFrame {
 
     //Clases
     private Data datos;
-    
+    private Logica logica;
+
     //TDA's
     private LinkedList<ProductoMayorista> listaProductos;
-    
+
     //JList
-    private DefaultListModel defaultListModel;
-    
+    private DefaultListModel listModel;
+
+    //JTable
+    private DefaultTableModel tableModel;
+    private int contTable;
+
+    //ProgressBar
+    private int progreso;
+
+    //Monto y Peso
+    private double precioTotal;
+    private int pesoTotal;
+
     /**
      * Creates new form Modulo1
      */
     public Modulo1() throws IOException, GraphException {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         //Clases
         this.datos = new Data();
-        
+        this.logica = new Logica();
+
         //TDA's
         this.listaProductos = this.datos.getListaProductos();
-        
+
         //JList
-        this.defaultListModel = new DefaultListModel();
-        this.jListProductos.setModel(defaultListModel);
+        this.listModel = new DefaultListModel();
+        this.jListProductos.setModel(listModel);
         llenarJList();
+
+        //JTable
+        this.tableModel = new DefaultTableModel();
+        this.contTable = 0;
+        inicializarJTable();
+
+        //Monto y peso
+        this.precioTotal = 0;
+        this.pesoTotal = 0;
+
     }
 
-    private void llenarJList(){
+    private void llenarJList() {
         for (int i = 0; i < this.listaProductos.size(); i++) {
-            this.defaultListModel.addElement(this.listaProductos.get(i).getNombre());
+            this.listModel.addElement(this.listaProductos.get(i).getNombre());
         }
     }
-    
+
+    private void inicializarJTable() {
+        String x[][] = {};
+        String columns[] = {"Producto", "Monto", "Peso"};
+        tableModel = new DefaultTableModel(x, columns);
+        jTableProductos.setModel(tableModel);
+    }
+
+    private void calcularPrecioYPeso() {
+        for (int i = 0; i < listaProductos.size(); i++) {
+            ProductoMayorista auxProducto = (ProductoMayorista) listaProductos.get(i);
+            if (auxProducto.getNombre().equals(jListProductos.getSelectedValue())) {
+
+                pesoTotal += auxProducto.getPesoTotal();
+                precioTotal += auxProducto.getPrecioTotal();
+                break;
+            }
+        }
+        jLabelPesoTotal.setText(String.valueOf(pesoTotal));
+        jLabelMontoTotal.setText(String.valueOf(precioTotal));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,11 +112,19 @@ public class Modulo1 extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableProductos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListProductos = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressBar = new javax.swing.JProgressBar();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButtonAgregar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabelMontoTotal = new javax.swing.JLabel();
+        jLabelPesoTotal = new javax.swing.JLabel();
+        jLabelCategoria = new javax.swing.JLabel();
         fondo1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -87,24 +141,24 @@ public class Modulo1 extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Producto", "Monto", "Peso", "Categoría"
+                "Producto", "Monto", "Peso"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableProductos);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(442, 30, 490, 190));
 
@@ -113,9 +167,50 @@ public class Modulo1 extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 310, 190));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("El tipo de vehiculo es:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, -1, -1));
-        jPanel1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 530, 40));
+        jLabel1.setText("Categoría del vehículo:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, -1, -1));
+        jPanel1.add(jProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 530, 40));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Peso total:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel7.setText("Monto total:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, -1, -1));
+
+        jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, -1, -1));
+
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 230, -1, -1));
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 450, -1, -1));
+
+        jLabelMontoTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel1.add(jLabelMontoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, 160, 20));
+
+        jLabelPesoTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel1.add(jLabelPesoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 160, 20));
+
+        jLabelCategoria.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel1.add(jLabelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 290, 180, 20));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -165,6 +260,24 @@ public class Modulo1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        String elemento = jListProductos.getSelectedValue();
+        this.logica.agergarProducto(elemento, tableModel, contTable, listaProductos, pesoTotal, precioTotal);
+        calcularPrecioYPeso();
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        if (jTableProductos.getSelectedRow() != -1) {
+            tableModel.removeRow(jTableProductos.getSelectedRow());
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.progreso += 10;
+        this.jProgressBar.setValue(progreso);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -209,17 +322,25 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JLabel fondo2;
     private javax.swing.JLabel fondo3;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAgregar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelCategoria;
+    private javax.swing.JLabel jLabelMontoTotal;
+    private javax.swing.JLabel jLabelPesoTotal;
     private javax.swing.JList<String> jListProductos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar jProgressBar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableProductos;
     // End of variables declaration//GEN-END:variables
 }
