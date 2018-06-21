@@ -7,6 +7,7 @@ package GUI;
 
 import Domain.Bodega;
 import Domain.ProductoMayorista;
+import Domain.UnidadTransporte;
 import Domain.Usuario;
 import Logic.Data;
 import Logic.Files;
@@ -17,7 +18,9 @@ import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import java.awt.BorderLayout;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -37,6 +40,7 @@ public class Modulo1 extends javax.swing.JFrame {
     //TDA's
     private LinkedList<ProductoMayorista> listaProductos;
     private AdjacencyMatrixGraph grafoBodegas;
+    private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
 
     //JList
     private DefaultListModel listModel;
@@ -58,6 +62,7 @@ public class Modulo1 extends javax.swing.JFrame {
     public Modulo1() throws IOException, GraphException {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.jProgressBar.setStringPainted(true);
 
         //Clases
         this.data = new Data();
@@ -66,6 +71,7 @@ public class Modulo1 extends javax.swing.JFrame {
         //TDA's
         this.listaProductos = this.data.getListaProductos();
         this.grafoBodegas = this.data.getGrafoBodegas();
+        this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
 
         //JList
         this.listModel = new DefaultListModel();
@@ -83,6 +89,7 @@ public class Modulo1 extends javax.swing.JFrame {
 
 //        browser();
         llenarComboBoxBodegas();
+        
     }
 
     private void llenarJList() {
@@ -321,6 +328,8 @@ public class Modulo1 extends javax.swing.JFrame {
         String elemento = jListProductos.getSelectedValue();
         this.logica.agergarProducto(elemento, tableModel, contTable, listaProductos, pesoTotal, precioTotal);
         calcularPrecioYPeso();
+        
+        
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed

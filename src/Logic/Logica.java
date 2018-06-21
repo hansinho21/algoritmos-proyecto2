@@ -6,7 +6,12 @@
 package Logic;
 
 import Domain.ProductoMayorista;
+import Domain.UnidadTransporte;
+import TDA.Graph.GraphException;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,8 +19,19 @@ import javax.swing.table.DefaultTableModel;
  * @author hvill
  */
 public class Logica {
+    
+    //Clases
+    private Data datos;
+    
+    //TDA's
+    private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
 
-    public Logica() {
+    public Logica() throws IOException, GraphException {
+        //Clases
+        this.datos = new Data();
+        
+        //TDA's
+        this.linkedHashMapUnidadTransporte = this.datos.getLinkedHashMapUnidadTransporte();
     }
     
     public void agergarProducto(String nombreProducto, DefaultTableModel tableModel, int contTable, LinkedList listaProductos, int peso, double precio) {
@@ -33,4 +49,12 @@ public class Logica {
             }
         }
     }
+    
+//    public UnidadTransporte getMenorCapacidad(){
+//        UnidadTransporte auxUnidad = new UnidadTransporte();
+//        auxUnidad =
+//        for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
+//            
+//        }
+//    }
 }

@@ -973,7 +973,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         // TODO add your handling code here:
         Usuario usuario = new Usuario();
         //agregar id autoincremental
-        usuario.setId(listaUsuarios.size()+1);
+        usuario.setId(listaUsuarios.get(listaUsuarios.size()-1).getId()+1);
         usuario.setNombre(jTextFieldNombreUsuario.getText());
         usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
         usuario.setUsuario(jTextFieldUserUsuario.getText());
@@ -1006,8 +1006,9 @@ public class Mantenimiento extends javax.swing.JFrame {
     private void jButtonAgregarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarBodegaActionPerformed
         if (validarInformacionBodega() == true) {
             try {
+                Bodega ultimaBodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize()-1);
                 Bodega auxBodega = new Bodega();
-                auxBodega.setId(grafoBodegas.getSize() + 1);
+                auxBodega.setId(ultimaBodega.getId()+1);
                 auxBodega.setNombre(jTextFieldNombreBodega.getText());
                 auxBodega.setLatitud(jTextFieldLatitudBodega.getText());
                 auxBodega.setLongitud(jTextFieldLongitudBodega.getText());
@@ -1086,7 +1087,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         if (validarInformacionUnidadTransporte() == true) {
             try {
                 UnidadTransporte auxUnidad = new UnidadTransporte();
-                auxUnidad.setId(linkedHashMapUnidadTransporte.size()+1);
+                auxUnidad.setId(linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size()-1).getId()+1);
                 auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
                 auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
                 auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
@@ -1159,7 +1160,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         if (validarInformacionCategoria()== true) {
             try {
                 Categoria auxCategoria = new Categoria();
-                auxCategoria.setId(hashMapCategoria.size()+1);
+                auxCategoria.setId(hashMapCategoria.get(hashMapCategoria.size()-1).getId()+1);
                 auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
                 auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
                 
@@ -1229,7 +1230,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             try {
                 Lote auxLote = new Lote();
                 Date date = new Date(2, 2, 2);
-                auxLote.setId(treeMapLote.size()+1);
+                auxLote.setId(treeMapLote.get(treeMapLote.size()-1).getId()+1);
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(date);
                 auxLote.setFechaVecimiento(date);

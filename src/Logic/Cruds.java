@@ -193,7 +193,8 @@ public class Cruds {
         boolean exist = false;
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
-            if (auxBodega.getId() == bodega.getId()) {
+            if (auxBodega.equals(bodega)) {
+                System.out.println(auxBodega.getNombre() + "<-------->" + bodega.getNombre());
                 exist = true;
                 grafoBodegas.deleteVertex(bodega);
                 this.data.setGrafoBodegas(grafoBodegas);
