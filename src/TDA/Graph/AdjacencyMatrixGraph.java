@@ -18,7 +18,7 @@ public class AdjacencyMatrixGraph implements Graph {
 
     public AdjacencyMatrixGraph(int num) {
         if (num <= 0) {
-            System.out.println("Tmaño invalido");
+            System.out.println("Tamaño invalido");
             System.exit(num);
         }
         this.num = num;
@@ -60,7 +60,7 @@ public class AdjacencyMatrixGraph implements Graph {
         }
 
         for (int i = 0; i < this.counter; i++) {
-            if (vertexList[i].element.equals(element)) {
+            if ((vertexList[i].element).equals(element)) {
                 return true;
             }
         }
@@ -80,6 +80,7 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     private int getPosition(Object v) {
+        
         for (int i = 0; i < this.counter; i++) {
             if (this.vertexList[i].element.equals(v)) {
                 return i;
@@ -89,11 +90,11 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     @Override
-    public void insertVertex(Object elemet) throws GraphException {
+    public void insertVertex(Object element) throws GraphException {
         if (this.counter >= this.vertexList.length) {
             throw new GraphException("El grafo está lleno");
         }
-        this.vertexList[counter++] = new Vertice(elemet);
+        this.vertexList[counter++] = new Vertice(element);
     }
 
     @Override
@@ -142,7 +143,7 @@ public class AdjacencyMatrixGraph implements Graph {
         String output = "";
 
         for (int i = 0; i < this.counter; i++) {
-            output += this.vertexList[i].element+"\n";
+            output += this.vertexList[i].element.toString()+"\n";
         }
         return output;
     }

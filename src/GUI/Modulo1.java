@@ -5,15 +5,23 @@
  */
 package GUI;
 
+import Domain.Bodega;
 import Domain.ProductoMayorista;
+import Domain.Usuario;
 import Logic.Data;
+import Logic.Files;
 import Logic.Logica;
+import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,11 +31,12 @@ import javax.swing.table.DefaultTableModel;
 public class Modulo1 extends javax.swing.JFrame {
 
     //Clases
-    private Data datos;
+    private Data data;
     private Logica logica;
 
     //TDA's
     private LinkedList<ProductoMayorista> listaProductos;
+    private AdjacencyMatrixGraph grafoBodegas;
 
     //JList
     private DefaultListModel listModel;
@@ -51,11 +60,12 @@ public class Modulo1 extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         //Clases
-        this.datos = new Data();
+        this.data = new Data();
         this.logica = new Logica();
 
         //TDA's
-        this.listaProductos = this.datos.getListaProductos();
+        this.listaProductos = this.data.getListaProductos();
+        this.grafoBodegas = this.data.getGrafoBodegas();
 
         //JList
         this.listModel = new DefaultListModel();
@@ -71,12 +81,22 @@ public class Modulo1 extends javax.swing.JFrame {
         this.precioTotal = 0;
         this.pesoTotal = 0;
 
+//        browser();
+        llenarComboBoxBodegas();
     }
 
     private void llenarJList() {
         for (int i = 0; i < this.listaProductos.size(); i++) {
             this.listModel.addElement(this.listaProductos.get(i).getNombre());
         }
+    }
+
+    private void llenarComboBoxBodegas() throws GraphException {
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
+            jComboBox6.addItem(auxBodega.getNombre());
+        }
+        browser();//tengo que corregir
     }
 
     private void inicializarJTable() {
@@ -98,6 +118,26 @@ public class Modulo1 extends javax.swing.JFrame {
         }
         jLabelPesoTotal.setText(String.valueOf(pesoTotal));
         jLabelMontoTotal.setText(String.valueOf(precioTotal));
+    }
+
+    public void browser() throws GraphException {
+        Browser browser = new Browser();
+        BrowserView view = new BrowserView(browser);
+        jPanel14.setLayout(new BorderLayout());
+        jPanel14.add(view, BorderLayout.CENTER);
+        String latitud = "9.7873748";
+        String longitud = "-83.849056";
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
+            System.out.println(jComboBox6.getSelectedItem());
+            if (jComboBox6.getSelectedItem().equals(auxBodega.getNombre())) {
+                latitud = auxBodega.getLatitud();
+                longitud = auxBodega.getLongitud();
+            }
+        }
+       
+        String url = "http://maps.google.es/?q=loc:" + latitud + "%20" + longitud;
+        browser.loadURL(url);
     }
 
     /**
@@ -131,6 +171,7 @@ public class Modulo1 extends javax.swing.JFrame {
         jComboBox6 = new javax.swing.JComboBox<>();
         jPanel14 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         fondo2 = new javax.swing.JLabel();
         fondo3 = new javax.swing.JLabel();
 
@@ -221,31 +262,47 @@ public class Modulo1 extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Seleccione la bodega:");
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jComboBox6.setBackground(new java.awt.Color(0, 51, 51));
         jComboBox6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBox6.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel5.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 190, 30));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 190, 30));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 710, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
-        jPanel5.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 900, 330));
+        jPanel5.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 710, 450));
 
         jButton1.setBackground(new java.awt.Color(0, 51, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Confirmar");
-        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 440, -1, -1));
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
+
+        jButton4.setBackground(new java.awt.Color(0, 51, 51));
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setText("Salir");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 90, 30));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -277,6 +334,33 @@ public class Modulo1 extends javax.swing.JFrame {
         this.progreso += 10;
         this.jProgressBar.setValue(progreso);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            int salida = JOptionPane.showConfirmDialog(null,
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                Data d = new Data();
+                LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoUsuarios();
+                f.ArchivoCategoria();
+                f.ArchivoBodega();
+                System.exit(0);
+            }
+            System.exit(0);
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,6 +407,7 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JLabel fondo3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBox6;

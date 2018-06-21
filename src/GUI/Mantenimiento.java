@@ -389,6 +389,11 @@ public class Mantenimiento extends javax.swing.JFrame {
                 jTextFieldNombreUsuarioFocusGained(evt);
             }
         });
+        jTextFieldNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNombreUsuarioActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 220, 30));
 
         jComboBoxRolUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -947,7 +952,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel9.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 160, 30));
 
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+        jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
 
         jTabbedPane1.addTab("Producto", jPanel9);
 
@@ -1490,6 +1495,10 @@ public class Mantenimiento extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void jTextFieldNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

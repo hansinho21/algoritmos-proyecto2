@@ -5,10 +5,12 @@
  */
 package Test;
 
+import Domain.Bodega;
 import Domain.Lote;
 import Domain.Usuario;
 import Logic.Cruds;
 import Logic.Data;
+import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.IOException;
 import java.util.Date;
@@ -30,6 +32,22 @@ public class Pruebas {
         // TODO code application logic here
         Cruds cruds = new Cruds();
         Data data = new Data();
+        AdjacencyMatrixGraph m = new AdjacencyMatrixGraph(3);
+        Bodega a = new Bodega(1, "b1", "324243", "343242", 0, "assdads");
+        Bodega b = new Bodega(2, "b2", "324243", "343242", 0, "assdads");
+        Bodega c = new Bodega(3, "b3", "324243", "343242", 0, "assdads");
+        m.insertVertex(a);
+        m.insertVertex(b);
+        m.insertVertex(c);
+        boolean x = m.existVertex(a);
+        System.out.println(x);
+        m.deleteVertex(a);
+        System.out.println(x);
+        
+       
+        
+        
+        
 //        LinkedList<Usuario> lista= new LinkedList<>();
 //        Usuario u = new Usuario();
 //        u.setContrasena("dgdfg");
@@ -49,18 +67,18 @@ public class Pruebas {
         
         
 
-        TreeMap<Integer, Lote> datos = data.getTreeMapLote();
-        Lote lote = new Lote(1, "A", new Date(0, 0, 0), new Date(1, 1, 1));
-        Lote lote2 = new Lote(2, "B", new Date(0, 0, 0), new Date(1, 1, 1));
-        cruds.agregarLote(lote);
-        cruds.agregarLote(lote2);
-        cruds.agregarLote(new Lote(3, "C", new Date(0, 0, 0), new Date(1, 1, 1)));
-        cruds.agregarLote(new Lote(4, "D", new Date(0, 0, 0), new Date(1, 1, 1)));
-        
-
-        for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
-            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString() + "\n");
-        }
+//        TreeMap<Integer, Lote> datos = data.getTreeMapLote();
+//        Lote lote = new Lote(1, "A", new Date(0, 0, 0), new Date(1, 1, 1));
+//        Lote lote2 = new Lote(2, "B", new Date(0, 0, 0), new Date(1, 1, 1));
+//        cruds.agregarLote(lote);
+//        cruds.agregarLote(lote2);
+//        cruds.agregarLote(new Lote(3, "C", new Date(0, 0, 0), new Date(1, 1, 1)));
+//        cruds.agregarLote(new Lote(4, "D", new Date(0, 0, 0), new Date(1, 1, 1)));
+//        
+//
+//        for (Map.Entry<Integer, Lote> entry : datos.entrySet()) {
+//            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString() + "\n");
+//        }
 //        
 //        cruds.eliminarLote(lote);
 //        

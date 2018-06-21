@@ -121,7 +121,6 @@ public class Login extends javax.swing.JFrame {
             f.ArchivoBodega();
             System.exit(0);
         }
-            System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
