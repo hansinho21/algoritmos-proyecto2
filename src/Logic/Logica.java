@@ -45,6 +45,21 @@ public class Logica {
         this.treeMapLote = this.datos.getTreeMapLote();
         this.listaUsuarios = this.datos.getListaUsuarios();
     }
+    
+    /**
+     * Valida si la tecla precionada es un número o no.
+     *
+     * @param event KeyEvent
+     * @return Retorna true si la tecla presionada es un número y un false si no
+     * lo es.
+     */
+    public boolean esNumero(java.awt.event.KeyEvent event) {
+        char charType = event.getKeyChar();
+        if (Character.isDigit(charType)) {
+            return true;
+        }
+        return false;
+    }
 
     public void agergarProducto(String nombreProducto, DefaultTableModel tableModel, int contTable, LinkedList listaProductos, int peso, double precio) {
         for (int i = 0; i < listaProductos.size(); i++) {

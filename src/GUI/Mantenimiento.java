@@ -62,6 +62,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
 
+        this.jLabelIdUsuario2.setVisible(false);
         this.jLabelIdBodega2.setVisible(false);
         this.jLabelIdCategoria2.setVisible(false);
         this.jLabelIdLote2.setVisible(false);
@@ -94,6 +95,15 @@ public class Mantenimiento extends javax.swing.JFrame {
         llenarAutocompleterUsuarios();
     }
 
+    private void limpiarInformacionUsuario() {
+        jLabelIdUsuario.setText("");
+        jTextFieldNombreUsuario.setText("");
+        jTextFieldUserUsuario.setText("");
+        jPasswordFieldPasswordUsuario.setText("");
+
+        this.jLabelIdUsuario2.setVisible(true);
+    }
+
     private void limpiarInformacionBodega() {
         jLabelIdBodega.setText("");
         jTextFieldLatitudBodega.setText("");
@@ -111,13 +121,6 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldDescripcionCategoria.setText("");
 
         jLabelIdCategoria2.setVisible(false);
-    }
-
-    private void limpiarInformacionUsuario() {
-        jLabelIdUsuario.setText("");
-        jTextFieldNombreUsuario.setText("");
-        jTextFieldUserUsuario.setText("");
-        jPasswordFieldPasswordUsuario.setText("");
     }
 
     private void limpiarInformacionLote() {
@@ -333,7 +336,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
-        jLabelIdProducto = new javax.swing.JLabel();
+        jLabelIdProducto2 = new javax.swing.JLabel();
         jLabelNombreProducto = new javax.swing.JLabel();
         jLabelValorUnidad = new javax.swing.JLabel();
         jLabelPesoProducto = new javax.swing.JLabel();
@@ -343,20 +346,20 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabelPrecioProducto = new javax.swing.JLabel();
         jLabelUrlFotoProducto = new javax.swing.JLabel();
         jLabelUnidadMedidasProducto = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        jButtonAgregarProducto = new javax.swing.JButton();
+        jButtonEditarProducto = new javax.swing.JButton();
+        jButtonEliminarProducto = new javax.swing.JButton();
+        jButtonLimpiarProducto = new javax.swing.JButton();
+        jLabelIdProducto = new javax.swing.JLabel();
+        jTextFieldNombreProducto = new javax.swing.JTextField();
+        jTextFieldDescripcionProducto = new javax.swing.JTextField();
+        jTextFieldMedidasProducto = new javax.swing.JTextField();
+        jTextFieldUrlProducto = new javax.swing.JTextField();
+        jTextFieldIdCategoriaProducto = new javax.swing.JTextField();
+        jTextFieldIdLoteProducto = new javax.swing.JTextField();
+        jTextFieldPesoProducto = new javax.swing.JTextField();
+        jTextFieldValorProducto = new javax.swing.JTextField();
+        jTextFieldPrecioProducto = new javax.swing.JTextField();
         fondo7 = new javax.swing.JLabel();
         fondo3 = new javax.swing.JLabel();
 
@@ -394,11 +397,6 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldNombreUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextFieldNombreUsuarioFocusGained(evt);
-            }
-        });
-        jTextFieldNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreUsuarioActionPerformed(evt);
             }
         });
         jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 220, 30));
@@ -742,6 +740,11 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel6.add(jTextFieldPlacaUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 300, 30));
 
         jTextFieldCapacidadUnidadTransporte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextFieldCapacidadUnidadTransporte.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldCapacidadUnidadTransporteKeyTyped(evt);
+            }
+        });
         jPanel6.add(jTextFieldCapacidadUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 300, 30));
         jPanel6.add(jTextFieldUrlUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 300, 30));
 
@@ -810,9 +813,9 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel9.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 90, 30));
 
-        jLabelIdProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelIdProducto.setText("Id");
-        jPanel9.add(jLabelIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
+        jLabelIdProducto2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdProducto2.setText("Id");
+        jPanel9.add(jLabelIdProducto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
 
         jLabelNombreProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelNombreProducto.setText("Nombre");
@@ -850,84 +853,82 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabelUnidadMedidasProducto.setText("Unidad Medidas");
         jPanel9.add(jLabelUnidadMedidasProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
-        jButton9.setBackground(new java.awt.Color(0, 51, 51));
-        jButton9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Eliminar");
-        jPanel9.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, -1));
-
-        jButton10.setBackground(new java.awt.Color(0, 51, 51));
-        jButton10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Agregar");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAgregarProducto.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonAgregarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonAgregarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonAgregarProducto.setText("Agregar");
+        jButtonAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                jButtonAgregarProductoActionPerformed(evt);
             }
         });
-        jPanel9.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, -1));
+        jPanel9.add(jButtonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, -1));
 
-        jButton11.setBackground(new java.awt.Color(0, 51, 51));
-        jButton11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Limpiar");
-        jPanel9.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
+        jButtonEditarProducto.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonEditarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonEditarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEditarProducto.setText("Editar");
+        jPanel9.add(jButtonEditarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, -1, -1));
 
-        jButton12.setBackground(new java.awt.Color(0, 51, 51));
-        jButton12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Editar");
-        jPanel9.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, -1, -1));
+        jButtonEliminarProducto.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonEliminarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEliminarProducto.setText("Eliminar");
+        jPanel9.add(jButtonEliminarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 30));
+        jButtonLimpiarProducto.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonLimpiarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonLimpiarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonLimpiarProducto.setText("Limpiar");
+        jPanel9.add(jButtonLimpiarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
+        jPanel9.add(jLabelIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 160, 30));
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombreProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel9.add(jTextFieldNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 30));
+
+        jTextFieldDescripcionProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldDescripcionProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextFieldDescripcionProductoActionPerformed(evt);
             }
         });
-        jPanel9.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 160, 30));
+        jPanel9.add(jTextFieldDescripcionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 160, 30));
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 160, 30));
+        jTextFieldMedidasProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel9.add(jTextFieldMedidasProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 160, 30));
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 160, 30));
+        jTextFieldUrlProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel9.add(jTextFieldUrlProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 160, 30));
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldIdCategoriaProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldIdCategoriaProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                jTextFieldIdCategoriaProductoActionPerformed(evt);
             }
         });
-        jPanel9.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 160, 30));
+        jPanel9.add(jTextFieldIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 160, 30));
 
-        jTextField6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 160, 30));
+        jTextFieldIdLoteProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel9.add(jTextFieldIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 160, 30));
 
-        jTextField7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldPesoProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldPesoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                jTextFieldPesoProductoActionPerformed(evt);
             }
         });
-        jPanel9.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 160, 30));
+        jPanel9.add(jTextFieldPesoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 160, 30));
 
-        jTextField8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldValorProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldValorProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                jTextFieldValorProductoActionPerformed(evt);
             }
         });
-        jPanel9.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 160, 30));
+        jPanel9.add(jTextFieldValorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 160, 30));
 
-        jTextField9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 160, 30));
-
-        jTextField10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 160, 30));
+        jTextFieldPrecioProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel9.add(jTextFieldPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 160, 30));
 
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
@@ -951,16 +952,28 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Usuario usuario = new Usuario();
-            //agregar id autoincremental
-            usuario.setId(listaUsuarios.get(listaUsuarios.size() - 1).getId() + 1);
+            int id = 0;
+            if (listaUsuarios.isEmpty()) {
+                id = 1;
+            } else {
+                id = listaUsuarios.get(listaUsuarios.size() - 1).getId() + 1;
+            }
+            usuario.setId(id);
             usuario.setNombre(jTextFieldNombreUsuario.getText());
             usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
             usuario.setUsuario(jTextFieldUserUsuario.getText());
             usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
-            cruds.AgregarUsuario(usuario);
-            llenarAutocompleterUsuarios();
 
-            JOptionPane.showMessageDialog(null, "Agregado correctamente!!");
+            if (this.logica.existeUsuario(usuario) == true) {
+                JOptionPane.showMessageDialog(null, "Nombre de usuario ya existe");
+            } else {
+                cruds.AgregarUsuario(usuario);
+                JOptionPane.showMessageDialog(null, "Agregado correctamente!!");
+            }
+
+            llenarAutocompleterUsuarios();
+            limpiarInformacionUsuario();
+
         } catch (IOException ex) {
             Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1325,6 +1338,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             usuario.setUsuario(jTextFieldUserUsuario.getText());
             usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
             cruds.eliminarUsuario(usuario);
+            
             limpiarInformacionUsuario();
             llenarAutocompleterUsuarios();
         } catch (IOException ex) {
@@ -1342,6 +1356,8 @@ public class Mantenimiento extends javax.swing.JFrame {
                 jComboBoxRolUsuario.setSelectedItem(listaUsuarios.get(i).getRol());
                 jTextFieldUserUsuario.setText(listaUsuarios.get(i).getUsuario());
                 jPasswordFieldPasswordUsuario.setText(listaUsuarios.get(i).getContrasena());
+
+                this.jLabelIdUsuario2.setVisible(true);
             }
         }
 
@@ -1362,6 +1378,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             usuario.setUsuario(jTextFieldUserUsuario.getText());
             usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
             cruds.editarUsuario(usuario);
+            
             limpiarInformacionUsuario();
             llenarAutocompleterUsuarios();
         } catch (IOException ex) {
@@ -1508,29 +1525,31 @@ public class Mantenimiento extends javax.swing.JFrame {
         limpiarInformacionUsuario();
     }//GEN-LAST:event_jButtonLimpiarUsuarioActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jTextFieldDescripcionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDescripcionProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jTextFieldDescripcionProductoActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void jTextFieldIdCategoriaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdCategoriaProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_jTextFieldIdCategoriaProductoActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void jTextFieldPesoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesoProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_jTextFieldPesoProductoActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void jTextFieldValorProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldValorProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_jTextFieldValorProductoActionPerformed
 
-    private void jTextFieldNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioActionPerformed
+    private void jButtonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreUsuarioActionPerformed
+    }//GEN-LAST:event_jButtonAgregarProductoActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    private void jTextFieldCapacidadUnidadTransporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCapacidadUnidadTransporteKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldCapacidadUnidadTransporteKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1579,33 +1598,33 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel fondo5;
     private javax.swing.JLabel fondo6;
     private javax.swing.JLabel fondo7;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
+    private javax.swing.JButton jButtonAgregarProducto;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
     private javax.swing.JButton jButtonAgregarUsuario;
     private javax.swing.JButton jButtonEditarBodega;
     private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEditarLote;
+    private javax.swing.JButton jButtonEditarProducto;
     private javax.swing.JButton jButtonEditarUnidadTransporte;
     private javax.swing.JButton jButtonEditarUsuario;
     private javax.swing.JButton jButtonEliminarBodega;
     private javax.swing.JButton jButtonEliminarCategoria;
     private javax.swing.JButton jButtonEliminarLote;
+    private javax.swing.JButton jButtonEliminarProducto;
     private javax.swing.JButton jButtonEliminarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarBodega;
     private javax.swing.JButton jButtonLimpiarCategoria;
     private javax.swing.JButton jButtonLimpiarLote;
+    private javax.swing.JButton jButtonLimpiarProducto;
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JButton jButtonModificarUsuario;
@@ -1642,6 +1661,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIdLote2;
     private javax.swing.JLabel jLabelIdLoteProducto;
     private javax.swing.JLabel jLabelIdProducto;
+    private javax.swing.JLabel jLabelIdProducto2;
     private javax.swing.JLabel jLabelIdUnidadTransporte;
     private javax.swing.JLabel jLabelIdUnidadTransporte2;
     private javax.swing.JLabel jLabelIdUsuario;
@@ -1660,28 +1680,27 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextFieldCapacidadUnidadTransporte;
     private javax.swing.JTextField jTextFieldCodigoLote;
     private javax.swing.JTextField jTextFieldDescripcionCategoria;
+    private javax.swing.JTextField jTextFieldDescripcionProducto;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
+    private javax.swing.JTextField jTextFieldIdCategoriaProducto;
+    private javax.swing.JTextField jTextFieldIdLoteProducto;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
+    private javax.swing.JTextField jTextFieldMedidasProducto;
     private javax.swing.JTextField jTextFieldNombreBodega;
     private javax.swing.JTextField jTextFieldNombreCategoria;
+    private javax.swing.JTextField jTextFieldNombreProducto;
     private javax.swing.JTextField jTextFieldNombreUsuario;
+    private javax.swing.JTextField jTextFieldPesoProducto;
     private javax.swing.JTextField jTextFieldPlacaUnidadTransporte;
+    private javax.swing.JTextField jTextFieldPrecioProducto;
     private javax.swing.JTextField jTextFieldUrlBodega;
+    private javax.swing.JTextField jTextFieldUrlProducto;
     private javax.swing.JTextField jTextFieldUrlUnidadTransporte;
     private javax.swing.JTextField jTextFieldUserUsuario;
+    private javax.swing.JTextField jTextFieldValorProducto;
     // End of variables declaration//GEN-END:variables
 }

@@ -34,7 +34,7 @@ public class Archivos {
         File archivoCategoria = new File("Categorias.txt");
         File archivoLote = new File("Lotes.txt");
         File archivoUnidadTransporte = new File("UnidadesTransporte.txt");
-        
+
         if(!archivoUsuario.exists()){
             escribirArchivoUsuarios(new LinkedList<>());
         }
