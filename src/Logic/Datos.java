@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -28,7 +29,7 @@ import java.util.TreeMap;
  *
  * @author jeison
  */
-public class Datos {
+public class Datos implements Serializable{
 
     //Clases
     private Archivos archivos = new Archivos();

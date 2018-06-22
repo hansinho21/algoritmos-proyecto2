@@ -10,7 +10,7 @@ import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import Logic.Datos;
-import Logic.Files;
+
 import Logic.Logica;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
@@ -348,23 +348,14 @@ public class Modulo1 extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoUsuarios();
-                f.ArchivoCategoria();
-                f.ArchivoBodega();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed

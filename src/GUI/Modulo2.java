@@ -6,6 +6,7 @@
 package GUI;
 
 import TDA.Graph.GraphException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,6 +129,8 @@ public class Modulo2 extends javax.swing.JFrame {
             mantenimiento.setVisible(true);
             dispose();
         } catch (IOException | GraphException ex) {
+            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

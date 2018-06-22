@@ -13,6 +13,7 @@ import Domain.Usuario;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -24,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hvill
  */
-public class Logica {
+public class Logica implements Serializable{
 
     //Clases
     private Datos datos;

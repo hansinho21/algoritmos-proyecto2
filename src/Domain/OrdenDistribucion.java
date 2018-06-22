@@ -5,13 +5,14 @@
  */
 package Domain;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  *
  * @author jeison
  */
-public class OrdenDistribucion {
+public class OrdenDistribucion implements Serializable{
 
     
     private int id;//autoincremental

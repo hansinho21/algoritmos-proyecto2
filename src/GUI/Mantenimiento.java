@@ -12,7 +12,6 @@ import Domain.UnidadTransporte;
 import Domain.Usuario;
 import Logic.Cruds;
 import Logic.Datos;
-import Logic.Files;
 import Logic.Logica;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
@@ -20,6 +19,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.ComponentOrientation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
  *
  * @author jeison
  */
-public class Mantenimiento extends javax.swing.JFrame {
+public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
     //instancias
     private Datos data;
@@ -1389,135 +1389,82 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoUsuarios();
-                f.ArchivoTransporte();
-                f.ArchivoCategoria();
-                f.ArchivoTransporte();
-                f.ArchivoBodega();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoUsuarios();
-                f.ArchivoCategoria();
-                f.ArchivoBodega();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoBodega();
-                f.ArchivoUsuarios();
-                f.ArchivoCategoria();
-                f.ArchivoTransporte();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            
+            
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoBodega();
-                f.ArchivoUsuarios();
-                f.ArchivoCategoria();
-                f.ArchivoTransporte();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoBodega();
-                f.ArchivoUsuarios();
-                f.ArchivoCategoria();
-                f.ArchivoTransporte();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
-                    "Realmente desea salir de la apilcación?", "Confirmar salida",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (salida == 0) {
-                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-                Files f = new Files();
-                f.ArchivoBodega();
-                f.ArchivoUsuarios();
-                f.ArchivoCategoria();
-                f.ArchivoTransporte();
-                System.exit(0);
-            }
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            
             System.exit(0);
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.exit(0);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButtonLimpiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarUsuarioActionPerformed

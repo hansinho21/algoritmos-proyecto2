@@ -16,6 +16,7 @@ import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -28,7 +29,7 @@ import javax.swing.JOptionPane;
  *
  * @author jeison
  */
-public class Cruds {
+public class Cruds implements Serializable{
 
     private Datos data;
     private LinkedBinaryTree arbolProductosMayoristas;

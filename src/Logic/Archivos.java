@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -27,7 +28,7 @@ import java.util.TreeMap;
  *
  * @author hvill
  */
-public class Archivos {
+public class Archivos implements Serializable{
     
     public Archivos() throws IOException{
         File archivoUsuario = new File("Usuarios.txt");
@@ -64,6 +65,7 @@ public class Archivos {
 
     //Archivo Categorias---------------------------------------------------
     public HashMap leerArchivoCategorias() throws FileNotFoundException, IOException, ClassNotFoundException {
+        
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Categorias.txt"));
         LinkedList<Categoria> linkedList = (LinkedList) objectIS.readObject();
 

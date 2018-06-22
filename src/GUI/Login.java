@@ -7,9 +7,8 @@ package GUI;
 
 import Domain.Categoria;
 import Domain.Usuario;
-import Logic.Datos;
-import Logic.Files;
 import TDA.Graph.GraphException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -105,24 +104,13 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalirLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirLoginActionPerformed
-        try {
-            // TODO add your handling code here:
-            int salida = JOptionPane.showConfirmDialog(null,
+        // TODO add your handling code here:
+        int salida = JOptionPane.showConfirmDialog(null,
                 "Realmente desea salir de la apilcación?", "Confirmar salida",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (salida == 0) {
-            Datos d= new Datos();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            HashMap<String, Categoria> hashMapCategoria = new HashMap<>();
-            Files f = new Files();
-            f.ArchivoUsuarios();
-            f.ArchivoCategoria();
-            f.ArchivoTransporte();
-            f.ArchivoBodega();
+            
             System.exit(0);
-        }
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButtonSalirLoginActionPerformed
