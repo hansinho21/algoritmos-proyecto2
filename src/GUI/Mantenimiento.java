@@ -13,6 +13,7 @@ import Domain.Usuario;
 import Logic.Cruds;
 import Logic.Datos;
 import Logic.Files;
+import Logic.Logica;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -38,6 +39,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     //instancias
     private Datos data;
     private Cruds cruds;
+    private Logica logica;
 
     //tda's
     private LinkedList<Usuario> listaUsuarios;
@@ -68,6 +70,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         //instancias
         this.data = new Datos();
         this.cruds = new Cruds();
+        this.logica = new Logica();
 
         //tda's
         this.listaUsuarios = this.data.getListaUsuarios();
@@ -247,21 +250,21 @@ public class Mantenimiento extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelIdUsuario2 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabelIdUsuario = new javax.swing.JLabel();
         jTextFieldNombreUsuario = new javax.swing.JTextField();
         jComboBoxRolUsuario = new javax.swing.JComboBox<>();
         jTextFieldUserUsuario = new javax.swing.JTextField();
         jPasswordFieldPasswordUsuario = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        Modificar = new javax.swing.JButton();
-        jLabelIdUsuario = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jButtonAgregarUsuario = new javax.swing.JButton();
+        jButtonEditarUsuario = new javax.swing.JButton();
+        jButtonModificarUsuario = new javax.swing.JButton();
         jButtonLimpiarUsuario = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         fondo1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabelIdBodega2 = new javax.swing.JLabel();
@@ -364,9 +367,9 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("ID:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, -1));
+        jLabelIdUsuario2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdUsuario2.setText("ID:");
+        jPanel1.add(jLabelIdUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Nombre:");
@@ -384,6 +387,9 @@ public class Mantenimiento extends javax.swing.JFrame {
         jLabel5.setText("Usuario:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
 
+        jLabelIdUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabelIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 80, 30));
+
         jTextFieldNombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextFieldNombreUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -395,44 +401,49 @@ public class Mantenimiento extends javax.swing.JFrame {
                 jTextFieldNombreUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 220, 30));
+        jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 220, 30));
 
         jComboBoxRolUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jComboBoxRolUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operador", "Administrador" }));
-        jPanel1.add(jComboBoxRolUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 220, 30));
+        jPanel1.add(jComboBoxRolUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 220, 30));
 
         jTextFieldUserUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jTextFieldUserUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 220, 30));
+        jPanel1.add(jTextFieldUserUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 220, 30));
 
         jPasswordFieldPasswordUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jPasswordFieldPasswordUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 220, 30));
+        jPanel1.add(jPasswordFieldPasswordUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 220, 30));
 
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAgregarUsuario.setText("Agregar");
+        jButtonAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAgregarUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, -1, -1));
+        jPanel1.add(jButtonAgregarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, -1, -1));
 
-        jButton2.setText("Eliminar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditarUsuario.setText("Eliminar");
+        jButtonEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonEditarUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, -1, -1));
+        jPanel1.add(jButtonEditarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, -1, -1));
 
-        Modificar.setText("Modificar");
-        Modificar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModificarUsuario.setText("Modificar");
+        jButtonModificarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModificarActionPerformed(evt);
+                jButtonModificarUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, -1, -1));
+        jPanel1.add(jButtonModificarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, -1, -1));
 
-        jLabelIdUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jLabelIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 80, 30));
+        jButtonLimpiarUsuario.setText("Limpiar");
+        jButtonLimpiarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonLimpiarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(0, 51, 51));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -444,14 +455,6 @@ public class Mantenimiento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
-
-        jButtonLimpiarUsuario.setText("Limpiar");
-        jButtonLimpiarUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarUsuarioActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButtonLimpiarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, -1, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
@@ -944,7 +947,7 @@ public class Mantenimiento extends javax.swing.JFrame {
      *
      * @param evt
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarUsuarioActionPerformed
         try {
             // TODO add your handling code here:
             Usuario usuario = new Usuario();
@@ -961,7 +964,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAgregarUsuarioActionPerformed
 
     private void jTextFieldNombreBodegaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaFocusGained
         try {
@@ -988,7 +991,7 @@ public class Mantenimiento extends javax.swing.JFrame {
                 Bodega ultimaBodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize() - 1);
                 Bodega auxBodega = new Bodega();
                 int id = 0;
-                if(linkedHashMapUnidadTransporte.isEmpty()){
+                if (linkedHashMapUnidadTransporte.isEmpty()) {
                     id = 1;
                 } else {
                     id = linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size() - 1).getId() + 1;
@@ -1073,17 +1076,23 @@ public class Mantenimiento extends javax.swing.JFrame {
             try {
                 UnidadTransporte auxUnidad = new UnidadTransporte();
                 int id = 0;
-                if(linkedHashMapUnidadTransporte.isEmpty()){
+                if (linkedHashMapUnidadTransporte.isEmpty()) {
                     id = 1;
                 } else {
-                    id = linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size() -1).getId() + 1;
+                    for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
+                        id = entry.getValue().getId() + 1;
+                    }
                 }
                 auxUnidad.setId(id);
                 auxUnidad.setCapacidad(Integer.parseInt(jTextFieldCapacidadUnidadTransporte.getText()));
                 auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
                 auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
 
-                cruds.agregarUnidadTransporte(auxUnidad);
+                if (this.logica.existeUnidadTransporte(auxUnidad) == true) {
+                    JOptionPane.showMessageDialog(null, "Esta categoria ya existe");
+                } else {
+                    cruds.agregarUnidadTransporte(auxUnidad);
+                }
 
                 limpiarInformacionUnidadTransporte();
                 llenarAutocompleterUnidadesTransporte();
@@ -1152,16 +1161,22 @@ public class Mantenimiento extends javax.swing.JFrame {
             try {
                 Categoria auxCategoria = new Categoria();
                 int id = 0;
-                if(hashMapCategoria.isEmpty()){
+                if (hashMapCategoria.isEmpty()) {
                     id = 1;
                 } else {
-                    id = hashMapCategoria.get(hashMapCategoria.size() - 1).getId() + 1;
+                    for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
+                        id = entry.getValue().getId() + 1;
+                    }
                 }
                 auxCategoria.setId(id);
                 auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
                 auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
 
-                cruds.agregarCategoria(auxCategoria);
+                if (this.logica.existeCategoria(auxCategoria) == true) {
+                    JOptionPane.showMessageDialog(null, "Esta categoria ya existe");
+                } else {
+                    cruds.agregarCategoria(auxCategoria);
+                }
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
@@ -1173,6 +1188,7 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void jButtonEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCategoriaActionPerformed
         if (validarInformacionCategoria() == true) {
+
             try {
                 Categoria auxCategoria = new Categoria();
                 auxCategoria.setId(Integer.parseInt(jLabelIdCategoria.getText()));
@@ -1228,17 +1244,23 @@ public class Mantenimiento extends javax.swing.JFrame {
                 Lote auxLote = new Lote();
                 Date date = new Date(2, 2, 2);
                 int id = 0;
-                if(treeMapLote.isEmpty()){
+                if (treeMapLote.isEmpty()) {
                     id = 1;
                 } else {
-                    id = treeMapLote.get(treeMapLote.size() - 1).getId() + 1;
+                    for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+                        id = entry.getValue().getId() + 1;
+                    }
                 }
                 auxLote.setId(id);
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(date);
                 auxLote.setFechaVecimiento(date);
 
-                cruds.agregarLote(auxLote);
+                if (this.logica.existeLote(auxLote) == true) {
+                    JOptionPane.showMessageDialog(null, "Este lote ya existe");
+                } else {
+                    cruds.agregarLote(auxLote);
+                }
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
@@ -1292,7 +1314,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         limpiarInformacionLote();
     }//GEN-LAST:event_jButtonLimpiarLoteActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarUsuarioActionPerformed
         try {
             // TODO add your handling code here:
             Usuario usuario = new Usuario();
@@ -1309,7 +1331,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonEditarUsuarioActionPerformed
 
     private void jTextFieldNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioFocusGained
         // TODO add your handling code here:
@@ -1329,7 +1351,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombreBodegaActionPerformed
 
-    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+    private void jButtonModificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarUsuarioActionPerformed
         try {
             // TODO add your handling code here:
             Usuario usuario = new Usuario();
@@ -1346,7 +1368,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_ModificarActionPerformed
+    }//GEN-LAST:event_jButtonModificarUsuarioActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -1550,7 +1572,6 @@ public class Mantenimiento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Modificar;
     private javax.swing.JLabel fondo1;
     private javax.swing.JLabel fondo2;
     private javax.swing.JLabel fondo3;
@@ -1558,11 +1579,9 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel fondo5;
     private javax.swing.JLabel fondo6;
     private javax.swing.JLabel fondo7;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1574,10 +1593,12 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
+    private javax.swing.JButton jButtonAgregarUsuario;
     private javax.swing.JButton jButtonEditarBodega;
     private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEditarLote;
     private javax.swing.JButton jButtonEditarUnidadTransporte;
+    private javax.swing.JButton jButtonEditarUsuario;
     private javax.swing.JButton jButtonEliminarBodega;
     private javax.swing.JButton jButtonEliminarCategoria;
     private javax.swing.JButton jButtonEliminarLote;
@@ -1587,10 +1608,10 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLimpiarLote;
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarUsuario;
+    private javax.swing.JButton jButtonModificarUsuario;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1624,6 +1645,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIdUnidadTransporte;
     private javax.swing.JLabel jLabelIdUnidadTransporte2;
     private javax.swing.JLabel jLabelIdUsuario;
+    private javax.swing.JLabel jLabelIdUsuario2;
     private javax.swing.JLabel jLabelNombreProducto;
     private javax.swing.JLabel jLabelPesoProducto;
     private javax.swing.JLabel jLabelPrecioProducto;

@@ -207,7 +207,7 @@ public class Cruds {
     }
 
     //CRUDs Usuario ----------------------------------------------------------------------------------------
-    public LinkedList AgregarUsuario(Usuario usuario) throws IOException {
+    public void AgregarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         if (listaUsuarios.isEmpty()) {
             listaUsuarios.add(usuario);
@@ -229,10 +229,9 @@ public class Cruds {
         for (int i = 0; i < listaUsuarios.size(); i++) {
             System.out.println(listaUsuarios.get(i).toString());
         }
-        return listaUsuarios;
     }
 
-    public LinkedList eliminarUsuario(Usuario usuario) throws IOException {
+    public void eliminarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         System.out.println(listaUsuarios.size() + "Inicio");
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -247,13 +246,10 @@ public class Cruds {
         if (exist == false) {
             JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
         }
-
-        System.out.println(listaUsuarios.size() + "Final");
-        return listaUsuarios;
     }
     
 
-    public LinkedList editarUsuario(Usuario usuario) throws IOException {
+    public void editarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if (listaUsuarios.get(i).getId() == (usuario.getId())) {
@@ -266,7 +262,6 @@ public class Cruds {
        if (exist == false) {
             JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
         }
-        return listaUsuarios;
     }
 
 }

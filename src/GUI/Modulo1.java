@@ -17,6 +17,7 @@ import TDA.Graph.GraphException;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import java.awt.BorderLayout;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -59,7 +60,7 @@ public class Modulo1 extends javax.swing.JFrame {
     /**
      * Creates new form Modulo1
      */
-    public Modulo1() throws IOException, GraphException {
+    public Modulo1() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.jProgressBar.setStringPainted(true);
@@ -353,8 +354,7 @@ public class Modulo1 extends javax.swing.JFrame {
                     "Realmente desea salir de la apilcación?", "Confirmar salida",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (salida == 0) {
-             Datos d = new Datos();
-                LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
                 Files f = new Files();
                 f.ArchivoUsuarios();
                 f.ArchivoCategoria();
@@ -404,6 +404,8 @@ public class Modulo1 extends javax.swing.JFrame {
                 try {
                     new Modulo1().setVisible(true);
                 } catch (IOException | GraphException ex) {
+                    Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
