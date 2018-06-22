@@ -26,14 +26,14 @@ import java.util.Map;
  */
 public class Files {
 
-    private Data data;
+    private Datos data;
     private LinkedList<Usuario> listaUsuarios;
     private HashMap<String, Categoria> hashMapCategoria;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapTransporte;
     private AdjacencyMatrixGraph grafoBodegas;
 
     public Files() throws IOException, GraphException {
-        data = new Data();
+        data = new Datos();
         this.listaUsuarios = this.data.getListaUsuarios();
         this.hashMapCategoria = this.data.getHashMapCategoria();
         this.linkedHashMapTransporte = this.data.getLinkedHashMapUnidadTransporte();

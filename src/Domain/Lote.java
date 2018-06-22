@@ -5,13 +5,14 @@
  */
 package Domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author jeison
  */
-public class Lote {//TreeMap Java - clave: id, valor: Lote
+public class Lote implements Serializable{//TreeMap Java - clave: id, valor: Lote
     
     private int id;//autoincremental
     private String codigoLote;

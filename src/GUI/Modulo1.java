@@ -9,7 +9,7 @@ import Domain.Bodega;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
-import Logic.Data;
+import Logic.Datos;
 import Logic.Files;
 import Logic.Logica;
 import TDA.Graph.AdjacencyMatrixGraph;
@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
 public class Modulo1 extends javax.swing.JFrame {
 
     //Clases
-    private Data data;
+    private Datos data;
     private Logica logica;
 
     //TDA's
@@ -65,7 +65,7 @@ public class Modulo1 extends javax.swing.JFrame {
         this.jProgressBar.setStringPainted(true);
 
         //Clases
-        this.data = new Data();
+        this.data = new Datos();
         this.logica = new Logica();
 
         //TDA's
@@ -353,7 +353,7 @@ public class Modulo1 extends javax.swing.JFrame {
                     "Realmente desea salir de la apilcación?", "Confirmar salida",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (salida == 0) {
-                Data d = new Data();
+             Datos d = new Datos();
                 LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
                 Files f = new Files();
                 f.ArchivoUsuarios();

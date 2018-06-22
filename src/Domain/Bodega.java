@@ -5,11 +5,13 @@
  */
 package Domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jeison
  */
-public class Bodega {//Grafo con matriz de adyacencia
+public class Bodega implements Serializable{//Grafo con matriz de adyacencia
     
     private int id;//autoincremental
     private String nombre;

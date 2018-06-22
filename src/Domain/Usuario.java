@@ -5,11 +5,13 @@
  */
 package Domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jeison
  */
-public class Usuario { 
+public class Usuario implements Serializable{ 
     
     private int id;//autoincremental
     private String nombre;

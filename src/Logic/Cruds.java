@@ -14,6 +14,7 @@ import Domain.Usuario;
 import TDA.BinaryTree.LinkedBinaryTree;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,7 +30,7 @@ import javax.swing.JOptionPane;
  */
 public class Cruds {
 
-    private Data data;
+    private Datos data;
     private LinkedBinaryTree arbolProductosMayoristas;
     private LinkedList<Usuario> listaUsuarios;
     private AdjacencyMatrixGraph grafoBodegas;
@@ -37,8 +38,8 @@ public class Cruds {
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
 
-    public Cruds() throws IOException, GraphException {
-        this.data = new Data();
+    public Cruds() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+        this.data = new Datos();
         this.listaUsuarios = this.data.getListaUsuarios();
         this.arbolProductosMayoristas = this.data.getArbolProductosMayoristas();
         this.grafoBodegas = this.data.getGrafoBodegas();
@@ -48,7 +49,7 @@ public class Cruds {
     }
 
     //CRUDs Categorías ----------------------------------------------------------------------------------------
-    public void agregarCategoria(Categoria categoria) {
+    public void agregarCategoria(Categoria categoria) throws IOException {
         if (hashMapCategoria.isEmpty()) {
             hashMapCategoria.put(categoria.getNombre(), categoria);
             this.data.setHashMapCategoria(hashMapCategoria);
@@ -69,7 +70,7 @@ public class Cruds {
         hashMapCategoria.replace(categoria.getNombre(), categoria);
     }
 
-    public void eliminarCategoria(Categoria categoria) {
+    public void eliminarCategoria(Categoria categoria) throws IOException {
         if (hashMapCategoria.containsKey(categoria.getNombre()) == false) {
             JOptionPane.showMessageDialog(null, "La categoria no existe");
         } else {
@@ -79,7 +80,7 @@ public class Cruds {
     }
 
     //CRUDs Lotes ---------------------------------------------------------------------------------------
-    public void agregarLote(Lote lote) {
+    public void agregarLote(Lote lote) throws IOException {
         if (treeMapLote.isEmpty()) {
             treeMapLote.put(lote.getId(), lote);
             this.data.setTreeMapLote(treeMapLote);
@@ -100,7 +101,7 @@ public class Cruds {
         treeMapLote.replace(lote.getId(), lote);
     }
 
-    public void eliminarLote(Lote lote) {
+    public void eliminarLote(Lote lote) throws IOException {
         if (treeMapLote.containsKey(lote.getId()) == false) {
             JOptionPane.showMessageDialog(null, "El lote no existe");
         } else {
@@ -110,7 +111,7 @@ public class Cruds {
     }
 
     //CRUDs Unidades de transporte ----------------------------------------------------------------------------------------
-    public void agregarUnidadTransporte(UnidadTransporte unidadTransporte) {
+    public void agregarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         if (linkedHashMapUnidadTransporte.isEmpty()) {
             linkedHashMapUnidadTransporte.put(unidadTransporte.getId(), unidadTransporte);
             this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
@@ -131,7 +132,7 @@ public class Cruds {
         linkedHashMapUnidadTransporte.replace(unidadTransporte.getId(), unidadTransporte);
     }
 
-    public void eliminarUnidadTransporte(UnidadTransporte unidadTransporte) {
+    public void eliminarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         if (linkedHashMapUnidadTransporte.containsKey(unidadTransporte.getId()) == false) {
             JOptionPane.showMessageDialog(null, "La unidad de transporte no existe");
         } else {
@@ -206,11 +207,11 @@ public class Cruds {
     }
 
     //CRUDs Usuario ----------------------------------------------------------------------------------------
-    public LinkedList AgregarUsuario(Usuario usuario) {
+    public LinkedList AgregarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         if (listaUsuarios.isEmpty()) {
             listaUsuarios.add(usuario);
-            Data.setListaUsuarios(listaUsuarios);
+            this.data.setListaUsuarios(listaUsuarios);
             exist = true;
         } else {
             for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -222,7 +223,7 @@ public class Cruds {
         }
         if (exist == false) {
             listaUsuarios.add(usuario);
-            Data.setListaUsuarios(listaUsuarios);
+            this.data.setListaUsuarios(listaUsuarios);
         }
         System.out.println(listaUsuarios.size());
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -231,7 +232,7 @@ public class Cruds {
         return listaUsuarios;
     }
 
-    public LinkedList eliminarUsuario(Usuario usuario) {
+    public LinkedList eliminarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         System.out.println(listaUsuarios.size() + "Inicio");
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -252,7 +253,7 @@ public class Cruds {
     }
     
 
-    public LinkedList editarUsuario(Usuario usuario) {
+    public LinkedList editarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if (listaUsuarios.get(i).getId() == (usuario.getId())) {

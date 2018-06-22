@@ -5,11 +5,13 @@
  */
 package Domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jeison
  */
-public class ProductoMayorista { //Arbol binario
+public class ProductoMayorista implements Serializable{ //Arbol binario
     
     private int id;
     private String nombre;

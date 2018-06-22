@@ -21,14 +21,14 @@ import javax.swing.table.DefaultTableModel;
 public class Logica {
     
     //Clases
-    private Data datos;
+    private Datos datos;
     
     //TDA's
     private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
 
     public Logica() throws IOException, GraphException {
         //Clases
-        this.datos = new Data();
+        this.datos = new Datos();
         
         //TDA's
         this.linkedHashMapUnidadTransporte = this.datos.getLinkedHashMapUnidadTransporte();
@@ -50,11 +50,16 @@ public class Logica {
         }
     }
     
-//    public UnidadTransporte getMenorCapacidad(){
-//        UnidadTransporte auxUnidad = new UnidadTransporte();
-//        auxUnidad =
+//    public UnidadTransporte getSiguienteCapacidadTransporte(UnidadTransporte unidadTransporte){
+//        UnidadTransporte auxTransporte = new UnidadTransporte();
+//        UnidadTransporte salida = new UnidadTransporte();
+//        int cont1 = 0;
+//        int cont2 = 0;
 //        for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
-//            
+//            auxTransporte = entry.getValue();
+//            for (Map.Entry<Integer, UnidadTransporte> entry1 : linkedHashMapUnidadTransporte.entrySet()) {
+//                
+//            }
 //        }
 //    }
 }

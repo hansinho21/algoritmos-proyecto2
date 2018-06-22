@@ -5,11 +5,13 @@
  */
 package Domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jeison
  */
-public class Categoria { //HashMap Java - clave: String (nombre), valor: Objeto Categoria
+public class Categoria implements Serializable{ //HashMap Java - clave: String (nombre), valor: Objeto Categoria
     
     private int id;//autoincremental
     private String nombre;

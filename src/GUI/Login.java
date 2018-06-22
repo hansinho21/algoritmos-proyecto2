@@ -7,7 +7,7 @@ package GUI;
 
 import Domain.Categoria;
 import Domain.Usuario;
-import Logic.Data;
+import Logic.Datos;
 import Logic.Files;
 import TDA.Graph.GraphException;
 import java.io.IOException;
@@ -111,7 +111,7 @@ public class Login extends javax.swing.JFrame {
                 "Realmente desea salir de la apilcación?", "Confirmar salida",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (salida == 0) {
-            Data d= new Data();
+            Datos d= new Datos();
             LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
             HashMap<String, Categoria> hashMapCategoria = new HashMap<>();
             Files f = new Files();

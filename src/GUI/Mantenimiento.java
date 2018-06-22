@@ -11,12 +11,13 @@ import Domain.Lote;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import Logic.Cruds;
-import Logic.Data;
+import Logic.Datos;
 import Logic.Files;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.ComponentOrientation;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ import javax.swing.JOptionPane;
 public class Mantenimiento extends javax.swing.JFrame {
 
     //instancias
-    private Data data;
+    private Datos data;
     private Cruds cruds;
 
     //tda's
@@ -55,7 +56,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     /**
      * Creates new form Mantenimiento
      */
-    public Mantenimiento() throws IOException, GraphException {
+    public Mantenimiento() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -65,7 +66,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         this.jLabelIdUnidadTransporte2.setVisible(false);
 
         //instancias
-        this.data = new Data();
+        this.data = new Datos();
         this.cruds = new Cruds();
 
         //tda's
@@ -97,39 +98,39 @@ public class Mantenimiento extends javax.swing.JFrame {
         jTextFieldDistanciaBodega.setText("");
         jTextFieldUrlBodega.setText("");
         jTextFieldNombreBodega.setText("");
-        
+
         this.jLabelIdBodega2.setVisible(false);
     }
-    
-    private void limpiarInformacionCategoria(){
+
+    private void limpiarInformacionCategoria() {
         jLabelIdCategoria.setText("");
         jTextFieldNombreCategoria.setText("");
         jTextFieldDescripcionCategoria.setText("");
-        
+
         jLabelIdCategoria2.setVisible(false);
     }
-    
-    private void limpiarInformacionUsuario(){
+
+    private void limpiarInformacionUsuario() {
         jLabelIdUsuario.setText("");
         jTextFieldNombreUsuario.setText("");
         jTextFieldUserUsuario.setText("");
         jPasswordFieldPasswordUsuario.setText("");
     }
-    
-    private void limpiarInformacionLote(){
+
+    private void limpiarInformacionLote() {
         jLabelIdLote.setText("");
         jTextFieldCodigoLote.setText("");
         jDateChooser1.setDateFormatString("");
         jDateChooser2.setDateFormatString("");
         jLabelIdLote2.setVisible(false);
     }
-    
-    private void limpiarInformacionUnidadTransporte(){
+
+    private void limpiarInformacionUnidadTransporte() {
         jLabelIdUnidadTransporte.setText("");
         jTextFieldPlacaUnidadTransporte.setText("");
         jTextFieldCapacidadUnidadTransporte.setText("");
         jTextFieldUrlUnidadTransporte.setText("");
-        
+
         this.jLabelIdUnidadTransporte2.setVisible(false);
     }
 
@@ -144,8 +145,8 @@ public class Mantenimiento extends javax.swing.JFrame {
             return true;
         }
     }
-    
-    private boolean validarInformacionCategoria(){
+
+    private boolean validarInformacionCategoria() {
         if (jTextFieldNombreCategoria.getText().equals("")
                 || jTextFieldDescripcionCategoria.getText().equals("")) {
             return false;
@@ -153,7 +154,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             return true;
         }
     }
-    
+
     private boolean validarInformacionLote() {
         if (jTextFieldCodigoLote.getText().equals("")
                 || jDateChooser1.getDate().equals("")
@@ -163,7 +164,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             return true;
         }
     }
-    
+
     private boolean validarInformacionUnidadTransporte() {
         if (jTextFieldPlacaUnidadTransporte.getText().equals("")
                 || jTextFieldCapacidadUnidadTransporte.getText().equals("")
@@ -186,16 +187,16 @@ public class Mantenimiento extends javax.swing.JFrame {
             textAutoCompleterBodega.addItem(auxBodega.getNombre());
         }
     }
-    
-    private void llenarAutocompleterUsuarios(){
+
+    private void llenarAutocompleterUsuarios() {
         textAutoCompleterUsuario.removeAllItems();
-        for (int i = 0; i < listaUsuarios.size(); i++) {        
+        for (int i = 0; i < listaUsuarios.size(); i++) {
             System.out.println(listaUsuarios.get(i).toString());
-            Usuario usuario= listaUsuarios.get(i);
+            Usuario usuario = listaUsuarios.get(i);
             textAutoCompleterUsuario.addItem(usuario.getNombre());
         }
     }
-    
+
     /**
      *
      * LLena el AutoCompleter con las categorias.
@@ -207,7 +208,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             textAutoCompleterCategoria.addItem(entry.getValue().getNombre());
         }
     }
-    
+
     /**
      *
      * LLena el AutoCompleter con los lotes.
@@ -219,10 +220,10 @@ public class Mantenimiento extends javax.swing.JFrame {
             textAutoCompleterLote.addItem(entry.getValue().getCodigoLote());
             textAutoCompleterLote.addItem(entry.getValue().getFechaEmpacado());
             textAutoCompleterLote.addItem(entry.getValue().getFechaVecimiento());
-            
+
         }
     }
-    
+
     /**
      *
      * LLena el AutoCompleter con las unidades de transporte.
@@ -431,7 +432,6 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel1.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, -1, -1));
 
         jLabelIdUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelIdUsuario.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jLabelIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 80, 30));
 
         jButton3.setBackground(new java.awt.Color(0, 51, 51));
@@ -808,52 +808,42 @@ public class Mantenimiento extends javax.swing.JFrame {
         jPanel9.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 90, 30));
 
         jLabelIdProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelIdProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelIdProducto.setText("Id");
         jPanel9.add(jLabelIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
 
         jLabelNombreProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelNombreProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelNombreProducto.setText("Nombre");
         jPanel9.add(jLabelNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, -1, -1));
 
         jLabelValorUnidad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelValorUnidad.setForeground(new java.awt.Color(0, 0, 0));
         jLabelValorUnidad.setText("Valor Unidad");
         jPanel9.add(jLabelValorUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, -1, -1));
 
         jLabelPesoProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelPesoProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelPesoProducto.setText("Peso Total");
         jPanel9.add(jLabelPesoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, -1, -1));
 
         jLabelDescripcionProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelDescripcionProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelDescripcionProducto.setText("Descripcion");
         jPanel9.add(jLabelDescripcionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
 
         jLabelIdLoteProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelIdLoteProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelIdLoteProducto.setText("Id Lote");
         jPanel9.add(jLabelIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, -1, -1));
 
         jLabelIdCategoriaProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelIdCategoriaProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelIdCategoriaProducto.setText("Id Categoria");
         jPanel9.add(jLabelIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
 
         jLabelPrecioProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelPrecioProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelPrecioProducto.setText("Precio total");
         jPanel9.add(jLabelPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, -1, -1));
 
         jLabelUrlFotoProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelUrlFotoProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelUrlFotoProducto.setText("URL fotografia");
         jPanel9.add(jLabelUrlFotoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
 
         jLabelUnidadMedidasProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelUnidadMedidasProducto.setForeground(new java.awt.Color(0, 0, 0));
         jLabelUnidadMedidasProducto.setText("Unidad Medidas");
         jPanel9.add(jLabelUnidadMedidasProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
@@ -867,6 +857,11 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
         jButton10.setText("Agregar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
         jPanel9.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, -1, -1));
 
         jButton11.setBackground(new java.awt.Color(0, 51, 51));
@@ -881,14 +876,10 @@ public class Mantenimiento extends javax.swing.JFrame {
         jButton12.setText("Editar");
         jPanel9.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, -1, -1));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel9.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 30));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -896,19 +887,13 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel9.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 160, 30));
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
         jPanel9.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 160, 30));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jPanel9.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 160, 30));
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
@@ -916,14 +901,10 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel9.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 160, 30));
 
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
         jTextField6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(0, 0, 0));
         jPanel9.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 160, 30));
 
-        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
         jTextField7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(0, 0, 0));
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
@@ -931,9 +912,7 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel9.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 160, 30));
 
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
         jTextField8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(0, 0, 0));
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField8ActionPerformed(evt);
@@ -941,14 +920,10 @@ public class Mantenimiento extends javax.swing.JFrame {
         });
         jPanel9.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 160, 30));
 
-        jTextField9.setBackground(new java.awt.Color(255, 255, 255));
         jTextField9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField9.setForeground(new java.awt.Color(0, 0, 0));
         jPanel9.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 160, 30));
 
-        jTextField10.setBackground(new java.awt.Color(255, 255, 255));
         jTextField10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField10.setForeground(new java.awt.Color(0, 0, 0));
         jPanel9.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 160, 30));
 
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
@@ -970,18 +945,22 @@ public class Mantenimiento extends javax.swing.JFrame {
      * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        //agregar id autoincremental
-        usuario.setId(listaUsuarios.get(listaUsuarios.size()-1).getId()+1);
-        usuario.setNombre(jTextFieldNombreUsuario.getText());
-        usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
-        usuario.setUsuario(jTextFieldUserUsuario.getText());
-        usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
-        cruds.AgregarUsuario(usuario);
-        llenarAutocompleterUsuarios();
-        
-        JOptionPane.showMessageDialog(null, "Agregado correctamente!!");
+        try {
+            // TODO add your handling code here:
+            Usuario usuario = new Usuario();
+            //agregar id autoincremental
+            usuario.setId(listaUsuarios.get(listaUsuarios.size() - 1).getId() + 1);
+            usuario.setNombre(jTextFieldNombreUsuario.getText());
+            usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
+            usuario.setUsuario(jTextFieldUserUsuario.getText());
+            usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
+            cruds.AgregarUsuario(usuario);
+            llenarAutocompleterUsuarios();
+
+            JOptionPane.showMessageDialog(null, "Agregado correctamente!!");
+        } catch (IOException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextFieldNombreBodegaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaFocusGained
@@ -994,7 +973,7 @@ public class Mantenimiento extends javax.swing.JFrame {
                     jTextFieldLongitudBodega.setText(auxBodega.getLongitud());
                     jTextFieldDistanciaBodega.setText(String.valueOf(auxBodega.getDistanciaCentroOperaciones()));
                     jTextFieldUrlBodega.setText(auxBodega.getUrlFotografia());
-                    
+
                     jLabelIdBodega.setVisible(true);
                 }
             }
@@ -1006,9 +985,15 @@ public class Mantenimiento extends javax.swing.JFrame {
     private void jButtonAgregarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarBodegaActionPerformed
         if (validarInformacionBodega() == true) {
             try {
-                Bodega ultimaBodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize()-1);
+                Bodega ultimaBodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize() - 1);
                 Bodega auxBodega = new Bodega();
-                auxBodega.setId(ultimaBodega.getId()+1);
+                int id = 0;
+                if(linkedHashMapUnidadTransporte.isEmpty()){
+                    id = 1;
+                } else {
+                    id = linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size() - 1).getId() + 1;
+                }
+                auxBodega.setId(id);
                 auxBodega.setNombre(jTextFieldNombreBodega.getText());
                 auxBodega.setLatitud(jTextFieldLatitudBodega.getText());
                 auxBodega.setLongitud(jTextFieldLongitudBodega.getText());
@@ -1073,11 +1058,11 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void jTextFieldPlacaUnidadTransporteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPlacaUnidadTransporteFocusGained
         for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
-            if(jTextFieldPlacaUnidadTransporte.getText().equals(entry.getValue().getPlaca())){
+            if (jTextFieldPlacaUnidadTransporte.getText().equals(entry.getValue().getPlaca())) {
                 jLabelIdUnidadTransporte.setText(String.valueOf(entry.getValue().getId()));
-                jTextFieldCapacidadUnidadTransporte.setText(entry.getValue().getCapacidad());
+                jTextFieldCapacidadUnidadTransporte.setText(String.valueOf(entry.getValue().getCapacidad()));
                 jTextFieldUrlUnidadTransporte.setText(entry.getValue().getUrlFotografia());
-                
+
                 jLabelIdUnidadTransporte2.setVisible(true);
             }
         }
@@ -1087,16 +1072,22 @@ public class Mantenimiento extends javax.swing.JFrame {
         if (validarInformacionUnidadTransporte() == true) {
             try {
                 UnidadTransporte auxUnidad = new UnidadTransporte();
-                auxUnidad.setId(linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size()-1).getId()+1);
-                auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
+                int id = 0;
+                if(linkedHashMapUnidadTransporte.isEmpty()){
+                    id = 1;
+                } else {
+                    id = linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size() -1).getId() + 1;
+                }
+                auxUnidad.setId(id);
+                auxUnidad.setCapacidad(Integer.parseInt(jTextFieldCapacidadUnidadTransporte.getText()));
                 auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
                 auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
-                
+
                 cruds.agregarUnidadTransporte(auxUnidad);
-                
+
                 limpiarInformacionUnidadTransporte();
                 llenarAutocompleterUnidadesTransporte();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1111,12 +1102,12 @@ public class Mantenimiento extends javax.swing.JFrame {
             try {
                 UnidadTransporte auxUnidad = new UnidadTransporte();
                 auxUnidad.setId(Integer.parseInt(jLabelIdUnidadTransporte.getText()));
-                auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
+                auxUnidad.setCapacidad(Integer.parseInt(jTextFieldCapacidadUnidadTransporte.getText()));
                 auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
                 auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
-                
+
                 cruds.editarUnidadTransporte(auxUnidad);
-                
+
                 limpiarInformacionUnidadTransporte();
                 llenarAutocompleterUnidadesTransporte();
             } catch (GraphException ex) {
@@ -1130,15 +1121,15 @@ public class Mantenimiento extends javax.swing.JFrame {
             try {
                 UnidadTransporte auxUnidad = new UnidadTransporte();
                 auxUnidad.setId(Integer.parseInt(jLabelIdUnidadTransporte.getText()));
-                auxUnidad.setCapacidad(jTextFieldCapacidadUnidadTransporte.getText());
+                auxUnidad.setCapacidad(Integer.parseInt(jTextFieldCapacidadUnidadTransporte.getText()));
                 auxUnidad.setPlaca(jTextFieldPlacaUnidadTransporte.getText());
                 auxUnidad.setUrlFotografia(jTextFieldUrlUnidadTransporte.getText());
-                
+
                 cruds.eliminarUnidadTransporte(auxUnidad);
-                
+
                 limpiarInformacionUnidadTransporte();
                 llenarAutocompleterUnidadesTransporte();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1146,44 +1137,50 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void jTextFieldNombreCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreCategoriaFocusGained
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
-            if(jTextFieldNombreCategoria.getText().equals(entry.getValue().getNombre())){
+            if (jTextFieldNombreCategoria.getText().equals(entry.getValue().getNombre())) {
                 jLabelIdCategoria.setText(String.valueOf(entry.getValue().getId()));
                 jTextFieldNombreCategoria.setText(entry.getValue().getNombre());
                 jTextFieldDescripcionCategoria.setText(entry.getValue().getDescripcion());
-                
+
                 jLabelIdCategoria2.setVisible(true);
             }
         }
     }//GEN-LAST:event_jTextFieldNombreCategoriaFocusGained
 
     private void jButtonAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarCategoriaActionPerformed
-        if (validarInformacionCategoria()== true) {
+        if (validarInformacionCategoria() == true) {
             try {
                 Categoria auxCategoria = new Categoria();
-                auxCategoria.setId(hashMapCategoria.get(hashMapCategoria.size()-1).getId()+1);
+                int id = 0;
+                if(hashMapCategoria.isEmpty()){
+                    id = 1;
+                } else {
+                    id = hashMapCategoria.get(hashMapCategoria.size() - 1).getId() + 1;
+                }
+                auxCategoria.setId(id);
                 auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
                 auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
-                
+
                 cruds.agregarCategoria(auxCategoria);
-                
+
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButtonAgregarCategoriaActionPerformed
 
     private void jButtonEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCategoriaActionPerformed
-        if (validarInformacionCategoria()== true) {
+        if (validarInformacionCategoria() == true) {
             try {
                 Categoria auxCategoria = new Categoria();
                 auxCategoria.setId(Integer.parseInt(jLabelIdCategoria.getText()));
                 auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
                 auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
-                
+
                 cruds.editarCategoria(auxCategoria);
-                
+
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
             } catch (GraphException ex) {
@@ -1193,18 +1190,18 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarCategoriaActionPerformed
 
     private void jButtonEliminarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCategoriaActionPerformed
-        if (validarInformacionCategoria()== true) {
+        if (validarInformacionCategoria() == true) {
             try {
                 Categoria auxCategoria = new Categoria();
                 auxCategoria.setId(Integer.parseInt(jLabelIdCategoria.getText()));
                 auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
                 auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
-                
+
                 cruds.eliminarCategoria(auxCategoria);
-                
+
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1216,37 +1213,43 @@ public class Mantenimiento extends javax.swing.JFrame {
 
     private void jTextFieldCodigoLoteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteFocusGained
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-            if(jTextFieldCodigoLote.getText().equals(entry.getValue().getCodigoLote())){
+            if (jTextFieldCodigoLote.getText().equals(entry.getValue().getCodigoLote())) {
                 jLabelIdLote.setText(String.valueOf(entry.getValue().getId()));
                 jDateChooser1.setDate(entry.getValue().getFechaEmpacado());
-                jDateChooser2.setDate(entry.getValue().getFechaVecimiento());                
+                jDateChooser2.setDate(entry.getValue().getFechaVecimiento());
                 jLabelIdLote2.setVisible(true);
             }
         }
     }//GEN-LAST:event_jTextFieldCodigoLoteFocusGained
 
     private void jButtonAgregarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarLoteActionPerformed
-        if(validarInformacionLote() == true){
+        if (validarInformacionLote() == true) {
             try {
                 Lote auxLote = new Lote();
                 Date date = new Date(2, 2, 2);
-                auxLote.setId(treeMapLote.get(treeMapLote.size()-1).getId()+1);
+                int id = 0;
+                if(treeMapLote.isEmpty()){
+                    id = 1;
+                } else {
+                    id = treeMapLote.get(treeMapLote.size() - 1).getId() + 1;
+                }
+                auxLote.setId(id);
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(date);
                 auxLote.setFechaVecimiento(date);
-                
+
                 cruds.agregarLote(auxLote);
-                
+
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButtonAgregarLoteActionPerformed
 
     private void jButtonEditarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarLoteActionPerformed
-        if(validarInformacionLote() == true){
+        if (validarInformacionLote() == true) {
             try {
                 Lote auxLote = new Lote();
                 Date date = new Date(2, 2, 2);
@@ -1254,9 +1257,9 @@ public class Mantenimiento extends javax.swing.JFrame {
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(date);
                 auxLote.setFechaVecimiento(date);
-                
+
                 cruds.editarLote(auxLote);
-                
+
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
             } catch (GraphException ex) {
@@ -1266,7 +1269,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarLoteActionPerformed
 
     private void jButtonEliminarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarLoteActionPerformed
-        if(validarInformacionLote() == true){
+        if (validarInformacionLote() == true) {
             try {
                 Lote auxLote = new Lote();
                 Date date = new Date(2, 2, 2);
@@ -1274,12 +1277,12 @@ public class Mantenimiento extends javax.swing.JFrame {
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(date);
                 auxLote.setFechaVecimiento(date);
-                
+
                 cruds.eliminarLote(auxLote);
-                
+
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1290,32 +1293,36 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLimpiarLoteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:  
-        Usuario usuario = new Usuario();
-        //agregar id autoincremental
-        usuario.setId(Integer.parseInt(jLabelIdUsuario.getText()));
-        usuario.setNombre(jTextFieldNombreUsuario.getText());
-        usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
-        usuario.setUsuario(jTextFieldUserUsuario.getText());
-        usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
-        cruds.eliminarUsuario(usuario);
-        limpiarInformacionUsuario();
-        llenarAutocompleterUsuarios();
-        
+        try {
+            // TODO add your handling code here:
+            Usuario usuario = new Usuario();
+            //agregar id autoincremental
+            usuario.setId(Integer.parseInt(jLabelIdUsuario.getText()));
+            usuario.setNombre(jTextFieldNombreUsuario.getText());
+            usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
+            usuario.setUsuario(jTextFieldUserUsuario.getText());
+            usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
+            cruds.eliminarUsuario(usuario);
+            limpiarInformacionUsuario();
+            llenarAutocompleterUsuarios();
+        } catch (IOException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioFocusGained
         // TODO add your handling code here:
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(jTextFieldNombreUsuario.getText().equalsIgnoreCase(
-                    listaUsuarios.get(i).getNombre())){
-            jLabelIdUsuario.setText(String.valueOf(listaUsuarios.get(i).getId()));
-            jComboBoxRolUsuario.setSelectedItem(listaUsuarios.get(i).getRol());
-            jTextFieldUserUsuario.setText(listaUsuarios.get(i).getUsuario());
-            jPasswordFieldPasswordUsuario.setText(listaUsuarios.get(i).getContrasena());
+            if (jTextFieldNombreUsuario.getText().equalsIgnoreCase(
+                    listaUsuarios.get(i).getNombre())) {
+                jLabelIdUsuario.setText(String.valueOf(listaUsuarios.get(i).getId()));
+                jComboBoxRolUsuario.setSelectedItem(listaUsuarios.get(i).getRol());
+                jTextFieldUserUsuario.setText(listaUsuarios.get(i).getUsuario());
+                jPasswordFieldPasswordUsuario.setText(listaUsuarios.get(i).getContrasena());
             }
         }
-        
+
     }//GEN-LAST:event_jTextFieldNombreUsuarioFocusGained
 
     private void jTextFieldNombreBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaActionPerformed
@@ -1323,18 +1330,22 @@ public class Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNombreBodegaActionPerformed
 
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
-        // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        //agregar id autoincremental
-        usuario.setId(Integer.parseInt(jLabelIdUsuario.getText()));
-        usuario.setNombre(jTextFieldNombreUsuario.getText());
-        usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
-        usuario.setUsuario(jTextFieldUserUsuario.getText());
-        usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
-        cruds.editarUsuario(usuario);
-        limpiarInformacionUsuario();
-        llenarAutocompleterUsuarios();
-        
+        try {
+            // TODO add your handling code here:
+            Usuario usuario = new Usuario();
+            //agregar id autoincremental
+            usuario.setId(Integer.parseInt(jLabelIdUsuario.getText()));
+            usuario.setNombre(jTextFieldNombreUsuario.getText());
+            usuario.setRol((String) jComboBoxRolUsuario.getSelectedItem());
+            usuario.setUsuario(jTextFieldUserUsuario.getText());
+            usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
+            cruds.editarUsuario(usuario);
+            limpiarInformacionUsuario();
+            llenarAutocompleterUsuarios();
+        } catch (IOException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_ModificarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -1342,19 +1353,18 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            Data d= new Data();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            Files f = new Files();
-            f.ArchivoUsuarios();
-            f.ArchivoTransporte();
-            f.ArchivoCategoria();
-            f.ArchivoTransporte();
-            f.ArchivoBodega();
-            System.exit(0);
-        }
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoUsuarios();
+                f.ArchivoTransporte();
+                f.ArchivoCategoria();
+                f.ArchivoTransporte();
+                f.ArchivoBodega();
+                System.exit(0);
+            }
             System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1367,17 +1377,16 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            Data d= new Data();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            Files f = new Files();
-            f.ArchivoUsuarios();
-            f.ArchivoCategoria();
-            f.ArchivoBodega();
-            System.exit(0);
-        }
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoUsuarios();
+                f.ArchivoCategoria();
+                f.ArchivoBodega();
+                System.exit(0);
+            }
             System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1389,18 +1398,17 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            Data d= new Data();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            Files f = new Files();
-            f.ArchivoBodega();
-            f.ArchivoUsuarios();
-            f.ArchivoCategoria();
-            f.ArchivoTransporte();
-            System.exit(0);
-        }
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoBodega();
+                f.ArchivoUsuarios();
+                f.ArchivoCategoria();
+                f.ArchivoTransporte();
+                System.exit(0);
+            }
             System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1412,18 +1420,17 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            Data d= new Data();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            Files f = new Files();
-            f.ArchivoBodega();
-            f.ArchivoUsuarios();
-            f.ArchivoCategoria();
-            f.ArchivoTransporte();
-            System.exit(0);
-        }
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoBodega();
+                f.ArchivoUsuarios();
+                f.ArchivoCategoria();
+                f.ArchivoTransporte();
+                System.exit(0);
+            }
             System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1435,18 +1442,17 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            Data d= new Data();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            Files f = new Files();
-            f.ArchivoBodega();
-            f.ArchivoUsuarios();
-            f.ArchivoCategoria();
-            f.ArchivoTransporte();
-            System.exit(0);
-        }
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoBodega();
+                f.ArchivoUsuarios();
+                f.ArchivoCategoria();
+                f.ArchivoTransporte();
+                System.exit(0);
+            }
             System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1458,18 +1464,17 @@ public class Mantenimiento extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            Data d= new Data();
-            LinkedList<Usuario> listaUsuarios = d.getListaUsuarios();
-            Files f = new Files();
-            f.ArchivoBodega();
-            f.ArchivoUsuarios();
-            f.ArchivoCategoria();
-            f.ArchivoTransporte();
-            System.exit(0);
-        }
+                    "Realmente desea salir de la apilcación?", "Confirmar salida",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (salida == 0) {
+                LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+                Files f = new Files();
+                f.ArchivoBodega();
+                f.ArchivoUsuarios();
+                f.ArchivoCategoria();
+                f.ArchivoTransporte();
+                System.exit(0);
+            }
             System.exit(0);
         } catch (IOException | GraphException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -1500,6 +1505,10 @@ public class Mantenimiento extends javax.swing.JFrame {
     private void jTextFieldNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombreUsuarioActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1533,9 +1542,7 @@ public class Mantenimiento extends javax.swing.JFrame {
             public void run() {
                 try {
                     new Mantenimiento().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (GraphException ex) {
+                } catch (IOException | GraphException | ClassNotFoundException ex) {
                     Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

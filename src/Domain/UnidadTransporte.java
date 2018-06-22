@@ -5,17 +5,19 @@
  */
 package Domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jeison
  */
-public class UnidadTransporte {//LinkedHashMap Java - clave: id, valor: UnidadTransporte
+public class UnidadTransporte implements Serializable{//LinkedHashMap Java - clave: id, valor: UnidadTransporte
     private int id;//autoincremental
     private String placa;
-    private String capacidad;
+    private int capacidad;
     private String urlFotografia;
 
-    public UnidadTransporte(int id, String placa, String capacidad, String urlFotografia) {
+    public UnidadTransporte(int id, String placa, int capacidad, String urlFotografia) {
         this.id = id;
         this.placa = placa;
         this.capacidad = capacidad;
@@ -41,11 +43,11 @@ public class UnidadTransporte {//LinkedHashMap Java - clave: id, valor: UnidadTr
         this.placa = placa;
     }
 
-    public String getCapacidad() {
+    public int getCapacidad() {
         return capacidad;
     }
 
-    public void setCapacidad(String capacidad) {
+    public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }
 
