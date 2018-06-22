@@ -80,10 +80,10 @@ public class Datos implements Serializable{
     }
 
     private void llenarBodegas() throws GraphException, FileNotFoundException, IOException {
-//        grafoBodegas.insertVertex(new Bodega(1, "Bodega 1", "123.9214", "43543", 23, "url bodega 1"));
-//        grafoBodegas.insertVertex(new Bodega(2, "Bodega 2", "234.678", "3542", 55, "url bodega 2"));
-//        grafoBodegas.insertVertex(new Bodega(3, "Bodega 3", "4262.7", "55555", 6, "url bodega 3"));
-//        grafoBodegas.insertVertex(new Bodega(4, "Bodega 4", "65675", "464.77", 122, "url bodega 4"));
+        grafoBodegas.insertVertex(new Bodega(23, "Bodega Test", "9.8273563", "-83.8706482", 23, "url bodega 1"));
+//        grafoBodegas.insertVertex(new Bodega(24, "Bodega sdf", "234.678", "3542", 55, "url bodega 2"));
+//        grafoBodegas.insertVertex(new Bodega(35, "Bodega dgdf", "4262.7", "55555", 6, "url bodega 3"));
+//        grafoBodegas.insertVertex(new Bodega(47, "Bodega jfjhgjh", "65675", "464.77", 122, "url bodega 4"));
         String sCadena;
         FileReader fr = new FileReader("Bodegas.txt");
         BufferedReader bf = new BufferedReader(fr);

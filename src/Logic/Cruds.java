@@ -195,10 +195,10 @@ public class Cruds implements Serializable{
         boolean exist = false;
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
-            if (auxBodega.equals(bodega)) {
+            if (auxBodega.getNombre().equals(bodega.getNombre())) {
                 System.out.println(auxBodega.getNombre() + "<-------->" + bodega.getNombre());
                 exist = true;
-                grafoBodegas.deleteVertex(bodega);
+                grafoBodegas.deleteVertex(auxBodega);
                 this.data.setGrafoBodegas(grafoBodegas);
             }
         }

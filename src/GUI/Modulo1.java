@@ -104,7 +104,7 @@ public class Modulo1 extends javax.swing.JFrame {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
             jComboBox6.addItem(auxBodega.getNombre());
         }
-        browser();//tengo que corregir
+  
     }
 
     private void inicializarJTable() {
@@ -133,18 +133,19 @@ public class Modulo1 extends javax.swing.JFrame {
         BrowserView view = new BrowserView(browser);
         jPanel14.setLayout(new BorderLayout());
         jPanel14.add(view, BorderLayout.CENTER);
-        String latitud = "9.7873748";
-        String longitud = "-83.849056";
+        String latitud = "";
+        String longitud = "";
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
-            System.out.println(jComboBox6.getSelectedItem());
             if (jComboBox6.getSelectedItem().equals(auxBodega.getNombre())) {
+                System.out.println(jComboBox6.getSelectedItem());
                 latitud = auxBodega.getLatitud();
                 longitud = auxBodega.getLongitud();
+                
             }
         }
-       
-        String url = "http://maps.google.es/?q=loc:" + latitud + "%20" + longitud;
+        String url = "http://" + "maps.google.es/?q=loc:" + latitud + "%20" + longitud;
+        System.out.println(url);
         browser.loadURL(url);
     }
 
@@ -359,7 +360,13 @@ public class Modulo1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            browser();
+          
+        } catch (GraphException ex) {
+            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     /**
