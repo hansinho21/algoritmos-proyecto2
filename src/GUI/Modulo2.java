@@ -6,12 +6,14 @@
 package GUI;
 
 import Domain.Lote;
+import Domain.ProductoMayorista;
 import Logic.Datos;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -21,11 +23,11 @@ import java.util.logging.Logger;
  *
  * @author jeison
  */
-public class Modulo2 extends javax.swing.JFrame implements Serializable{
-    
+public class Modulo2 extends javax.swing.JFrame implements Serializable {
+
     private Datos data;
     private TreeMap<Integer, Lote> treeMapLote;
-    private TextAutoCompleter textAutoCompleterLote;
+    private LinkedList<ProductoMayorista> listaProductos;
 
     /**
      * Creates new form Modulo2
@@ -35,8 +37,11 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         this.setLocationRelativeTo(null);
         this.data = new Datos();
         this.treeMapLote = this.data.getTreeMapLote();
-        this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLoteM2);
-        llenarAutocompleterLote();
+        this.listaProductos = this.data.getListaProductos();
+        this.treeMapLote = this.data.getTreeMapLote();
+        llenarComboLotesM2();
+        llenarComboProductosM2();
+
     }
 
     /**
@@ -51,17 +56,29 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextFieldCodigoLoteM2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jComboBox5 = new javax.swing.JComboBox<>();
         fondo1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         fondo4 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        fondo5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
 
@@ -73,21 +90,8 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Ingrese un codigo de lote:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
-
-        jTextFieldCodigoLoteM2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextFieldCodigoLoteM2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldCodigoLoteM2FocusGained(evt);
-            }
-        });
-        jTextFieldCodigoLoteM2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldCodigoLoteM2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldCodigoLoteM2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 130, 30));
+        jLabel1.setText("Seleccione un producto:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,16 +146,14 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 51));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Buscar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 170, -1));
+
+        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jComboBox5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
+        jPanel1.add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 180, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -171,12 +173,79 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         });
         jPanel6.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 450, -1, -1));
 
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Producto", "Fecha"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
+
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 660, 190));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel6.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 170, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel6.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 170, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel6.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 170, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Lote:");
+        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Operador:");
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Categoria:");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
+
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
         jTabbedPane1.addTab("Historial de productos", jPanel6);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 960, 520));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton6.setBackground(new java.awt.Color(0, 51, 51));
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Mantenimiento");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 450, -1, -1));
+
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("CHART");
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, -1));
+
+        fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
+        jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+
+        jTabbedPane1.addTab("Detalle", jPanel7);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 960, 510));
 
         jButton3.setBackground(new java.awt.Color(0, 51, 51));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -190,7 +259,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 130, -1));
 
         fondo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        getContentPane().add(fondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 530));
+        getContentPane().add(fondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -198,7 +267,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            Mantenimiento mantenimiento= new Mantenimiento();
+            Mantenimiento mantenimiento = new Mantenimiento();
             mantenimiento.setVisible(true);
             dispose();
         } catch (IOException | GraphException ex) {
@@ -208,20 +277,26 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextFieldCodigoLoteM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteM2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldCodigoLoteM2ActionPerformed
-
-    private void jTextFieldCodigoLoteM2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteM2FocusGained
-        // TODO add your handling code here:
-         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-            if (jTextFieldCodigoLoteM2.getText().equals(entry.getValue().getCodigoLote())) {
-                System.out.println(":v");
-                
-                
-            }
+    private void llenarComboProductosM2() {
+        jComboBox4.removeAllItems();
+        for (int i = 0; i < listaProductos.size(); i++) {
+            ProductoMayorista productoMayorista = listaProductos.get(i);
+            if(Integer.parseInt((String) jComboBox5.getSelectedItem())==productoMayorista.getIdLote()){
+                 System.out.println("hans puto");
+                 jComboBox4.addItem(productoMayorista.getNombre());
         }
-    }//GEN-LAST:event_jTextFieldCodigoLoteM2FocusGained
+        
+        }
+    }
+
+    private void llenarComboLotesM2() {
+        jComboBox5.removeAllItems();
+        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            jComboBox5.addItem(String.valueOf(entry.getValue().getId()));
+        }
+    }
+//        System.out.println(jComboBox5.getSelectedItem());
+
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -232,20 +307,15 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void llenarAutocompleterLote() throws GraphException {
-        System.out.println("----LOTES----");
-        textAutoCompleterLote.removeAllItems();
-        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
-            textAutoCompleterLote.addItem(entry.getValue().getCodigoLote());
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        // TODO add your handling code here:
+        llenarComboProductosM2();
+    }//GEN-LAST:event_jComboBox5ActionPerformed
 
-        }
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -292,18 +362,30 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable{
     private javax.swing.JLabel fondo1;
     private javax.swing.JLabel fondo3;
     private javax.swing.JLabel fondo4;
+    private javax.swing.JLabel fondo5;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextFieldCodigoLoteM2;
+    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }
