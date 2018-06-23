@@ -8,6 +8,7 @@ package GUI;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
@@ -34,6 +35,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -56,6 +59,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
     private LinkedList<ProductoMayorista> listaProducto;
+    private LinkedList<OrdenDistribucion> listaOrdenes;
 
     private TextAutoCompleter textAutoCompleterUsuario;
     private TextAutoCompleter textAutoCompleterBodega;
@@ -63,6 +67,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private TextAutoCompleter textAutoCompleterLote;
     private TextAutoCompleter textAutoCompleterUnidadTransorte;
     private TextAutoCompleter textAutoCompleterProducto;
+    private TextAutoCompleter textAutoCompleterOrden;
+    
+    private DefaultListModel listModel;
     
 
     /**
@@ -78,6 +85,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdLote2.setVisible(false);
         this.jLabelIdUnidadTransporte2.setVisible(false);
         this.jLabelIdProducto2.setVisible(false);
+        this.jLabelIdOrden2.setVisible(false);
 
         //instancias
         this.data = new Datos();
@@ -91,6 +99,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.treeMapLote = this.data.getTreeMapLote();
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
         this.listaProducto = this.data.getListaProductos();
+        this.listaOrdenes = this.data.getListaOrdenes();
 
         //autocopleter
         this.textAutoCompleterUsuario = new TextAutoCompleter(jTextFieldUserUsuario);
@@ -99,6 +108,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLote);
         this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
         this.textAutoCompleterProducto = new TextAutoCompleter(jTextFieldNombreProducto);
+        this.textAutoCompleterOrden = new TextAutoCompleter(jTextFieldCodigoOrden);
+        
+        this.listModel = new DefaultListModel();
+        this.jListProductosOrden.setModel(listModel);
 
         //llenar autocompleters
         llenarAutocompleterBodegas();
@@ -107,11 +120,20 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         llenarAutocompleterLote();
         llenarAutocompleterUsuarios();
         llenarAutocompleterProductos();
+        llenarAutocompleterOrden();
         
-        //ComboBox
-        llenarComboBoxCategoriaProducto();
-        llenarComboBoxLoteProducto();
-        llenarConboBoxBodegaLote();
+        //ComboBox - Producto
+        llenarComboBoxCategoria();
+        llenarComboBoxLote();
+        
+        //ComboBox - Lote
+        llenarComboBoxBodega(jComboBoxBodegaLote);
+        
+        //ComboBox - Orden
+        llenarComboBoxBodega(jComboBoxBodegaProcedenciaOrden);
+        llenarComboBoxBodega(jComboBoxBodegaDestinoOrden);
+        llenarComboBoxProductos(jComboBoxProductosOrden);
+        llenarComboBoxOperador(jComboBoxOperadorOrden);
     }
 
     private void limpiarInformacionUsuario() {
@@ -170,6 +192,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jTextFieldPrecioProducto.setText("");
         
         this.jLabelIdProducto2.setVisible(false);
+    }
+    
+    private void limpiarInformacionOrden(){
+        jTextFieldCodigoOrden.setText("");
+        jDateChooserFechaOrden.setDateFormatString("");
+        jTextFieldPesoOrden.setText("");
+        jTextFieldMontoOrden.setText("");
+        listModel.clear();
+        
+        this.jLabelIdOrden2.setVisible(false);
     }
 
     private boolean validarInformacionBodega() {
@@ -286,7 +318,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
     
-    private void llenarComboBoxCategoriaProducto(){
+    private void llenarAutocompleterOrden(){
+        System.out.println("----ORDENES----");
+        textAutoCompleterOrden.removeAllItems();
+        for (int i = 0; i < listaOrdenes.size(); i++) {
+            System.out.println(listaOrdenes.get(i).toString());
+            textAutoCompleterOrden.addItem(listaOrdenes.get(i).getCodigo());
+        }
+    }
+    
+    private void llenarComboBoxCategoria(){
         jComboBoxIdCategoriaProducto.removeAllItems();
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             jComboBoxIdCategoriaProducto.addItem(String.valueOf(entry.getValue().getId()));
@@ -294,7 +335,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
     
-    private void llenarComboBoxLoteProducto(){
+    private void llenarComboBoxLote(){
         jComboBoxIdLoteProducto.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             jComboBoxIdLoteProducto.addItem(String.valueOf(entry.getValue().getId()));
@@ -302,13 +343,30 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
     
-    private void llenarConboBoxBodegaLote() throws GraphException{
-        jComboBoxBodegaLote.removeAllItems();
+    private void llenarComboBoxBodega(JComboBox comboBox) throws GraphException{
+        comboBox.removeAllItems();
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
-            jComboBoxBodegaLote.addItem(bodega.getNombre());
+            comboBox.addItem(bodega.getNombre());
         }
     }
+    
+    private void llenarComboBoxProductos(JComboBox comboBox){
+        comboBox.removeAllItems();
+        for (int i = 0; i < listaProducto.size(); i++) {
+            comboBox.addItem(listaProducto.get(i).getNombre());
+        }
+    }
+    
+    private void llenarComboBoxOperador(JComboBox comboBox){
+        comboBox.removeAllItems();
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getRol().equals("Operador")){
+                comboBox.addItem(listaUsuarios.get(i).getNombre());
+            }
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -435,20 +493,26 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        jLabelIdOrden2 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabelIdOrdenDistribucion = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jComboBoxOperadorOrden = new javax.swing.JComboBox<>();
+        jComboBoxBodegaDestinoOrden = new javax.swing.JComboBox<>();
+        jComboBoxProductosOrden = new javax.swing.JComboBox<>();
+        jDateChooserFechaOrden = new com.toedter.calendar.JDateChooser();
+        jComboBoxBodegaProcedenciaOrden = new javax.swing.JComboBox<>();
+        jTextFieldMontoOrden = new javax.swing.JTextField();
+        jTextFieldPesoOrden = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListProductosOrden = new javax.swing.JList<>();
+        jButtonAgregarProductoOrden = new javax.swing.JButton();
+        jButtonEliminarProductoOrden = new javax.swing.JButton();
+        jButtonEditarOrden = new javax.swing.JButton();
+        jButtonEliminarOrden = new javax.swing.JButton();
+        jButtonLimpiarOrden = new javax.swing.JButton();
+        jButtonAgregarOrden = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
+        jTextFieldCodigoOrden = new javax.swing.JTextField();
         fondo8 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
@@ -1030,72 +1094,111 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Lista Productos:");
-        jPanel10.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, -1, -1));
+        jPanel10.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, -1, -1));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(0, 0, 0));
         jLabel23.setText("Operador:");
         jPanel10.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel24.setText("Bodega Procedencia:");
-        jPanel10.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
+        jLabel24.setText("Código:");
+        jPanel10.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, -1, -1));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
         jLabel25.setText("Monto total:");
-        jPanel10.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, -1, -1));
+        jPanel10.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(0, 0, 0));
         jLabel26.setText("Fecha:");
-        jPanel10.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
+        jPanel10.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
         jLabel27.setText("Peso total:");
-        jPanel10.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, -1, -1));
+        jPanel10.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, -1, -1));
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel29.setText("Id:");
-        jPanel10.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+        jLabelIdOrden2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelIdOrden2.setText("Id:");
+        jPanel10.add(jLabelIdOrden2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
         jLabel28.setText("Bodega Destino:");
-        jPanel10.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
+        jPanel10.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
         jPanel10.add(jLabelIdOrdenDistribucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 80, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel10.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 60, 200, -1));
+        jPanel10.add(jComboBoxOperadorOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 60, 200, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel10.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 200, -1));
+        jPanel10.add(jComboBoxBodegaDestinoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 200, -1));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel10.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 200, -1));
-        jPanel10.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 200, -1));
+        jPanel10.add(jComboBoxProductosOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 200, -1));
+        jPanel10.add(jDateChooserFechaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 200, -1));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel10.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 200, -1));
-        jPanel10.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 200, -1));
-        jPanel10.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, 200, -1));
+        jPanel10.add(jComboBoxBodegaProcedenciaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 200, -1));
+        jPanel10.add(jTextFieldMontoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, 200, -1));
+        jPanel10.add(jTextFieldPesoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 200, -1));
 
-        jButton1.setText("Editar");
-        jPanel10.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, -1, -1));
+        jScrollPane1.setViewportView(jListProductosOrden);
 
-        jButton2.setText("Eliminar");
-        jPanel10.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, -1, -1));
+        jPanel10.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, 200, -1));
 
-        jButton3.setText("Limpiar");
-        jPanel10.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 310, -1, -1));
+        jButtonAgregarProductoOrden.setText("Agregar Producto");
+        jButtonAgregarProductoOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarProductoOrdenActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonAgregarProductoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 210, 140, -1));
 
-        jButton4.setText("Agregar");
-        jPanel10.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, -1, -1));
+        jButtonEliminarProductoOrden.setText("Eliminar Producto");
+        jButtonEliminarProductoOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarProductoOrdenActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonEliminarProductoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 380, 140, -1));
+
+        jButtonEditarOrden.setText("Editar");
+        jButtonEditarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarOrdenActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonEditarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, -1, -1));
+
+        jButtonEliminarOrden.setText("Eliminar");
+        jButtonEliminarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarOrdenActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonEliminarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, -1, -1));
+
+        jButtonLimpiarOrden.setText("Limpiar");
+        jButtonLimpiarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarOrdenActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonLimpiarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, -1, -1));
+
+        jButtonAgregarOrden.setText("Agregar");
+        jButtonAgregarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarOrdenActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonAgregarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, -1, -1));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel29.setText("Bodega Procedencia:");
+        jPanel10.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
+
+        jTextFieldCodigoOrden.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldCodigoOrdenFocusGained(evt);
+            }
+        });
+        jPanel10.add(jTextFieldCodigoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 200, -1));
 
         fondo8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel10.add(fondo8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
@@ -1198,6 +1301,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
+                llenarComboBoxBodega(jComboBoxBodegaLote);
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1371,7 +1475,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
-                llenarComboBoxCategoriaProducto();
+                llenarComboBoxCategoria();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1409,7 +1513,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
-                llenarComboBoxCategoriaProducto();
+                llenarComboBoxCategoria();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1462,7 +1566,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-                llenarComboBoxLoteProducto();
+                llenarComboBoxLote();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1503,7 +1607,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-                llenarComboBoxLoteProducto();
+                llenarComboBoxLote();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1816,6 +1920,140 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jTextFieldNombreProductoFocusGained
 
+    private void jTextFieldCodigoOrdenFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoOrdenFocusGained
+        for (int i = 0; i < listaOrdenes.size(); i++) {
+            if(jTextFieldCodigoOrden.getText().equals(listaOrdenes.get(i).getCodigo())){
+                try {
+                    jLabelIdOrdenDistribucion.setText(String.valueOf(listaOrdenes.get(i).getId()));
+                    jComboBoxBodegaProcedenciaOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaDestino()));
+                    jComboBoxBodegaDestinoOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaDestino()));
+                    jDateChooserFechaOrden.setDate(listaOrdenes.get(i).getFecha());
+                    jComboBoxOperadorOrden.setSelectedItem(this.logica.getNombreOperador(listaOrdenes.get(i).getIdOperador()));
+                    jTextFieldPesoOrden.setText(String.valueOf(listaOrdenes.get(i).getPesoTotal()));
+                    jTextFieldMontoOrden.setText(String.valueOf(listaOrdenes.get(i).getMontoTotal()));
+                    for (int j = 0; j < listaOrdenes.size(); j++) {
+                        listModel.addElement(listaOrdenes.get(i).getListaProductos().get(j));
+                    }
+                } catch (GraphException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTextFieldCodigoOrdenFocusGained
+
+    private void jButtonAgregarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarOrdenActionPerformed
+        try {
+            OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
+            int id = 0;
+            if (listaOrdenes.isEmpty()) {
+                id = 1;
+            } else {
+                id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
+            }
+            
+            ordenDistribucion.setId(id);
+            ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
+            ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
+            ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
+            ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
+            ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
+            ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
+            ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
+            
+            LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
+            for (int i = 0; i < listModel.size(); i++) {
+                linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
+            }
+            
+            ordenDistribucion.setListaProductos(linkedList);
+
+            this.cruds.agregarOrden(ordenDistribucion);
+            
+            llenarAutocompleterOrden();
+            limpiarInformacionOrden();
+
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonAgregarOrdenActionPerformed
+
+    private void jButtonEditarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarOrdenActionPerformed
+        try {
+            OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
+            
+            ordenDistribucion.setId(Integer.parseInt(jLabelIdOrdenDistribucion.getText()));
+            ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
+            ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
+            ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
+            ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
+            ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
+            ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
+            ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
+            
+            LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
+            for (int i = 0; i < listModel.size(); i++) {
+                linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
+            }
+            
+            ordenDistribucion.setListaProductos(linkedList);
+
+            this.cruds.editarOrden(ordenDistribucion);
+            
+            llenarAutocompleterOrden();
+            limpiarInformacionOrden();
+
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonEditarOrdenActionPerformed
+
+    private void jButtonEliminarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarOrdenActionPerformed
+        try {
+            OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
+            
+            ordenDistribucion.setId(Integer.parseInt(jLabelIdOrdenDistribucion.getText()));
+            ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
+            ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
+            ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
+            ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
+            ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
+            ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
+            ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
+            
+            LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
+            for (int i = 0; i < listModel.size(); i++) {
+                linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
+            }
+            
+            ordenDistribucion.setListaProductos(linkedList);
+
+            this.cruds.eliminarOrden(ordenDistribucion);
+            
+            llenarAutocompleterOrden();
+            limpiarInformacionOrden();
+
+        } catch (IOException | GraphException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonEliminarOrdenActionPerformed
+
+    private void jButtonLimpiarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarOrdenActionPerformed
+        limpiarInformacionOrden();
+    }//GEN-LAST:event_jButtonLimpiarOrdenActionPerformed
+
+    private void jButtonAgregarProductoOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarProductoOrdenActionPerformed
+        listModel.addElement(jComboBoxProductosOrden.getSelectedItem());
+    }//GEN-LAST:event_jButtonAgregarProductoOrdenActionPerformed
+
+    private void jButtonEliminarProductoOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarProductoOrdenActionPerformed
+        String elemento = jListProductosOrden.getSelectedValue();
+        for (int i = 0; i < listModel.size(); i++) {
+            if(listModel.get(i).toString().equals(elemento)){
+                listModel.remove(i);
+            }
+        }
+    }//GEN-LAST:event_jButtonEliminarProductoOrdenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1864,14 +2102,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel fondo6;
     private javax.swing.JLabel fondo7;
     private javax.swing.JLabel fondo8;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
+    private javax.swing.JButton jButtonAgregarOrden;
     private javax.swing.JButton jButtonAgregarProducto;
+    private javax.swing.JButton jButtonAgregarProductoOrden;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
     private javax.swing.JButton jButtonAgregarUsuario;
     private javax.swing.JButton jButtonBuscarImagenBodega;
@@ -1880,33 +2116,37 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonEditarBodega;
     private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEditarLote;
+    private javax.swing.JButton jButtonEditarOrden;
     private javax.swing.JButton jButtonEditarProducto;
     private javax.swing.JButton jButtonEditarUnidadTransporte;
     private javax.swing.JButton jButtonEditarUsuario;
     private javax.swing.JButton jButtonEliminarBodega;
     private javax.swing.JButton jButtonEliminarCategoria;
     private javax.swing.JButton jButtonEliminarLote;
+    private javax.swing.JButton jButtonEliminarOrden;
     private javax.swing.JButton jButtonEliminarProducto;
+    private javax.swing.JButton jButtonEliminarProductoOrden;
     private javax.swing.JButton jButtonEliminarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarBodega;
     private javax.swing.JButton jButtonLimpiarCategoria;
     private javax.swing.JButton jButtonLimpiarLote;
+    private javax.swing.JButton jButtonLimpiarOrden;
     private javax.swing.JButton jButtonLimpiarProducto;
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JButton jButtonModificarUsuario;
     private javax.swing.JButton jButtonSalir;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBoxBodegaDestinoOrden;
     private javax.swing.JComboBox<String> jComboBoxBodegaLote;
+    private javax.swing.JComboBox<String> jComboBoxBodegaProcedenciaOrden;
     private javax.swing.JComboBox<String> jComboBoxIdCategoriaProducto;
     private javax.swing.JComboBox<String> jComboBoxIdLoteProducto;
+    private javax.swing.JComboBox<String> jComboBoxOperadorOrden;
+    private javax.swing.JComboBox<String> jComboBoxProductosOrden;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
+    private com.toedter.calendar.JDateChooser jDateChooserFechaOrden;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1945,6 +2185,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabelIdLote;
     private javax.swing.JLabel jLabelIdLote2;
     private javax.swing.JLabel jLabelIdLoteProducto;
+    private javax.swing.JLabel jLabelIdOrden2;
     private javax.swing.JLabel jLabelIdOrdenDistribucion;
     private javax.swing.JLabel jLabelIdProducto;
     private javax.swing.JLabel jLabelIdProducto2;
@@ -1958,6 +2199,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabelUnidadMedidasProducto;
     private javax.swing.JLabel jLabelUrlFotoProducto;
     private javax.swing.JLabel jLabelValorUnidad;
+    private javax.swing.JList<String> jListProductosOrden;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel5;
@@ -1966,21 +2208,23 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordFieldPasswordUsuario;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextFieldCapacidadUnidadTransporte;
     private javax.swing.JTextField jTextFieldCodigoLote;
+    private javax.swing.JTextField jTextFieldCodigoOrden;
     private javax.swing.JTextField jTextFieldDescripcionCategoria;
     private javax.swing.JTextField jTextFieldDescripcionProducto;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
     private javax.swing.JTextField jTextFieldMedidasProducto;
+    private javax.swing.JTextField jTextFieldMontoOrden;
     private javax.swing.JTextField jTextFieldNombreBodega;
     private javax.swing.JTextField jTextFieldNombreCategoria;
     private javax.swing.JTextField jTextFieldNombreProducto;
     private javax.swing.JTextField jTextFieldNombreUsuario;
+    private javax.swing.JTextField jTextFieldPesoOrden;
     private javax.swing.JTextField jTextFieldPesoProducto;
     private javax.swing.JTextField jTextFieldPlacaUnidadTransporte;
     private javax.swing.JTextField jTextFieldPrecioProducto;

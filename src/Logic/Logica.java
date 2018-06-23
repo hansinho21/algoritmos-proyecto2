@@ -38,6 +38,7 @@ public class Logica implements Serializable {
     private static TreeMap<Integer, Lote> treeMapLote;
     private static LinkedList<Usuario> listaUsuarios;
     private static AdjacencyMatrixGraph grafoBodegas;
+    private static LinkedList<ProductoMayorista> listaProductos;
 
     public Logica() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         //Clases
@@ -49,6 +50,7 @@ public class Logica implements Serializable {
         this.treeMapLote = this.datos.getTreeMapLote();
         this.listaUsuarios = this.datos.getListaUsuarios();
         this.grafoBodegas = this.datos.getGrafoBodegas();
+        this.listaProductos = this.datos.getListaProductos();
     }
 
     /**
@@ -134,6 +136,32 @@ public class Logica implements Serializable {
             if (bodega.getId() == id) {
                 return bodega.getNombre();
             }
+        }
+        return null;
+    }
+    
+    public int getIdOperador(String nombre){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(nombre.equals(listaUsuarios.get(i).getNombre()) && listaUsuarios.get(i).getRol().equals("Operador")){
+                return listaUsuarios.get(i).getId();
+            }
+        }
+        return -1;
+    }
+    
+    public String getNombreOperador(int id){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(id == listaUsuarios.get(i).getId()){
+                return listaUsuarios.get(i).getNombre();
+            }
+        }
+        return null;
+    }
+    
+    public ProductoMayorista getProducto(String nombre){
+        for (int i = 0; i < listaProductos.size(); i++) {
+            if(listaProductos.get(i).getNombre().equals(nombre))
+                return listaProductos.get(i);
         }
         return null;
     }

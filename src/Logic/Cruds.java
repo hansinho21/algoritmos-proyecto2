@@ -8,6 +8,7 @@ package Logic;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
@@ -38,6 +39,7 @@ public class Cruds implements Serializable{
     private HashMap<String, Categoria> hashMapCategoria;
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
+    private LinkedList<OrdenDistribucion> listaOrdenes;
     
     private LinkedList<ProductoMayorista> listaProductos;
 
@@ -50,6 +52,7 @@ public class Cruds implements Serializable{
         this.treeMapLote = this.data.getTreeMapLote();
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
         this.listaProductos = this.data.getListaProductos();
+        this.listaOrdenes = this.data.getListaOrdenes();
     }
 
     //CRUDs Categorías ----------------------------------------------------------------------------------------
@@ -320,6 +323,60 @@ public class Cruds implements Serializable{
                 exist = true;
                 listaProductos.set(i, producto);
                 data.setListaProductos(listaProductos);
+                JOptionPane.showMessageDialog(null, "correctly modified user");
+            }
+        }
+       if (exist == false) {
+            JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
+        }
+    }
+    
+    //CRUDs Orden ----------------------------------------------------------------------------------------
+    public void agregarOrden(OrdenDistribucion orden) throws IOException{
+        boolean exist = false;
+        if (listaOrdenes.isEmpty()) {
+            listaOrdenes.add(orden);
+            this.data.setListaOrdenes(listaOrdenes);
+            exist = true;
+        } else {
+            for (int i = 0; i < listaOrdenes.size(); i++) {
+                if (listaOrdenes.get(i).getId() == (orden.getId())) {
+                    exist = true;
+                    JOptionPane.showMessageDialog(null, "The user already exists");
+                }
+            }
+        }
+        if (exist == false) {
+            listaOrdenes.add(orden);
+            this.data.setListaOrdenes(listaOrdenes);
+        }
+    }
+
+    public void eliminarOrden(OrdenDistribucion orden) throws IOException{
+        boolean exist = false;
+        System.out.println(listaOrdenes.size() + "Inicio");
+        for (int i = 0; i < listaOrdenes.size(); i++) {
+            if (listaOrdenes.get(i).getId() == (orden.getId())) {
+                exist = true;
+                listaOrdenes.remove(i);
+                this.data.setListaOrdenes(listaOrdenes);
+                JOptionPane.showMessageDialog(null, "user removed succesfull");
+            }
+        }
+
+        if (exist == false) {
+            JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
+        }
+    }
+    
+
+    public void editarOrden(OrdenDistribucion orden) throws IOException {
+        boolean exist = false;
+        for (int i = 0; i < listaOrdenes.size(); i++) {
+            if (listaOrdenes.get(i).getId() == (orden.getId())) {
+                exist = true;
+                listaOrdenes.set(i, orden);
+                data.setListaOrdenes(listaOrdenes);
                 JOptionPane.showMessageDialog(null, "correctly modified user");
             }
         }

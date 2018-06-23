@@ -8,6 +8,7 @@ package Logic;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
@@ -29,11 +30,11 @@ import java.util.TreeMap;
  *
  * @author jeison
  */
-public class Datos implements Serializable{
+public class Datos implements Serializable {
 
     //Clases
     private Archivos archivos = new Archivos();
-    
+
     //TDA's
     private static LinkedBinaryTree arbolProductosMayoristas = new LinkedBinaryTree();
     private static LinkedList<Usuario> listaUsuarios = new LinkedList<>();
@@ -41,7 +42,8 @@ public class Datos implements Serializable{
     private static HashMap<String, Categoria> hashMapCategoria = new HashMap<>();
     private static TreeMap<Integer, Lote> treeMapLote = new TreeMap<>();
     private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte = new LinkedHashMap<>();
-    
+    private static LinkedList<OrdenDistribucion> listaOrdenes = new LinkedList<>();
+
     //lista provisional mientras el profe sube el arbol arreglado
     private static LinkedList<ProductoMayorista> listaProductos = new LinkedList<>();
 
@@ -65,8 +67,11 @@ public class Datos implements Serializable{
         if (listaUsuarios.isEmpty()) {
             llenarListaUsuarios();
         }
-        if(listaProductos.isEmpty()){
+        if (listaProductos.isEmpty()) {
             llenarProductos();
+        }
+        if (listaOrdenes.isEmpty()) {
+            llenarOrdenes();
         }
     }
 
@@ -92,7 +97,7 @@ public class Datos implements Serializable{
 //        hashMapCategoria.put("Categoria 2", new Categoria(2, "Legumbres", "bbbb"));
 //        hashMapCategoria.put("Categoria 3", new Categoria(3, "Lacteos", "cccc"));
 //        hashMapCategoria.put("Categoria 4", new Categoria(4, "Liquidos", "dddd"));
-        
+
         this.hashMapCategoria = this.archivos.leerArchivoCategorias();
     }
 
@@ -112,16 +117,20 @@ public class Datos implements Serializable{
 //        linkedHashMapUnidadTransporte.put(3, new UnidadTransporte(3, "789-C", "45", "url Unidad 3"));
 //        linkedHashMapUnidadTransporte.put(4, new UnidadTransporte(4, "0234-D", "65", "url Unidad 4"));
 //        linkedHashMapUnidadTransporte.put(5, new UnidadTransporte(4, "1657-E", "77", "url Unidad 5"));
-        
+
         this.linkedHashMapUnidadTransporte = this.archivos.leerArchivoUnidadesTransporte();
     }
-    
+
     private void llenarProductos() throws IOException, FileNotFoundException, ClassNotFoundException {
 //        listaProductos.add(new ProductoMayorista(1, "Procucto 1", "kg", 1, 22, "x", 1, 1, 213, ""));
 //        listaProductos.add(new ProductoMayorista(1, "Procucto 2", "kg", 1, 22, "x", 1, 1, 213, ""));
 //        listaProductos.add(new ProductoMayorista(1, "Procucto 3", "kg", 1, 22, "x", 1, 1, 213, ""));
 //        listaProductos.add(new ProductoMayorista(1, "Procucto 4", "kg", 1, 22, "x", 1, 1, 213, ""));
         this.listaProductos = this.archivos.leerArchivoProductos();
+    }
+
+    private void llenarOrdenes() throws FileNotFoundException, IOException, ClassNotFoundException {
+        this.listaOrdenes = this.archivos.leerArchivoOrdenes();
     }
 
     public LinkedList<ProductoMayorista> getListaProductos() {
@@ -183,6 +192,14 @@ public class Datos implements Serializable{
     public void setListaUsuarios(LinkedList<Usuario> listaUsuarios) throws IOException {
 //        Datos.listaUsuarios = listaUsuarios;
         this.archivos.escribirArchivoUsuarios(listaUsuarios);
+    }
+
+    public LinkedList<OrdenDistribucion> getListaOrdenes() {
+        return listaOrdenes;
+    }
+
+    public void setListaOrdenes(LinkedList<OrdenDistribucion> listaOrdenes) throws IOException{
+        this.archivos.escribirArchivoOrdenes(listaOrdenes);
     }
 
 }

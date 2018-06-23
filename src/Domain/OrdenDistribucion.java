@@ -6,31 +6,35 @@
 package Domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
  *
  * @author jeison
  */
-public class OrdenDistribucion implements Serializable{
+public class OrdenDistribucion implements Serializable {
 
-    
     private int id;//autoincremental
+    private String codigo;
     private int idBodegaProcedencia;
     private int idBodegaDestino;
     private double montoTotal;
     private float pesoTotal;//Kilos
     private LinkedList<ProductoMayorista> listaProductos;
     private int idOperador;
+    private Date fecha;
 
-    public OrdenDistribucion(int id, int idBodegaProcedencia, int idBodegaDestino, double montoTotal, float pesoTotal, LinkedList<ProductoMayorista> listaProductos, int idOperador) {
+    public OrdenDistribucion(int id, String codigo, int idBodegaProcedencia, int idBodegaDestino, double montoTotal, float pesoTotal, LinkedList<ProductoMayorista> listaProductos, int idOperador, Date fecha) {
         this.id = id;
+        this.codigo = codigo;
         this.idBodegaProcedencia = idBodegaProcedencia;
         this.idBodegaDestino = idBodegaDestino;
         this.montoTotal = montoTotal;
         this.pesoTotal = pesoTotal;
         this.listaProductos = listaProductos;
         this.idOperador = idOperador;
+        this.fecha = fecha;
     }
 
     public OrdenDistribucion() {
@@ -42,6 +46,14 @@ public class OrdenDistribucion implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public int getIdBodegaProcedencia() {
@@ -92,10 +104,19 @@ public class OrdenDistribucion implements Serializable{
         this.idOperador = idOperador;
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
     @Override
     public String toString() {
-        return "OrdenDistribucion{" + "id=" + id + ", idBodegaProcedencia=" + idBodegaProcedencia + ", idBodegaDestino=" + idBodegaDestino + ", montoTotal=" + montoTotal + ", pesoTotal=" + pesoTotal + ", listaProductos=" + listaProductos + ", idOperador=" + idOperador + '}';
+        return "OrdenDistribucion{" + "id=" + id + ", codigo=" + codigo + ", idBodegaProcedencia=" + idBodegaProcedencia + ", idBodegaDestino=" + idBodegaDestino + ", montoTotal=" + montoTotal + ", pesoTotal=" + pesoTotal + ", listaProductos=" + listaProductos + ", idOperador=" + idOperador + ", fecha=" + fecha + '}';
     }
+
     
-    
+
 }

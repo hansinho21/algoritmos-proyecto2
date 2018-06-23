@@ -8,6 +8,7 @@ package Logic;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
@@ -41,6 +42,7 @@ public class Archivos implements Serializable {
         File archivoUnidadTransporte = new File("UnidadesTransporte.txt");
         File archivoBodega = new File("Bodegas.txt");
         File archivoProducto = new File("Productos.txt");
+        File archivoOrden = new File("Ordenes.txt");
 
         if (!archivoUsuario.exists()) {
             escribirArchivoUsuarios(new LinkedList<>());
@@ -59,6 +61,9 @@ public class Archivos implements Serializable {
         }
         if(!archivoProducto.exists()){
             escribirArchivoProductos(new LinkedList<>());
+        }
+        if(!archivoOrden.exists()){
+            escribirArchivoOrdenes(new LinkedList<>());
         }
     }
 
@@ -196,6 +201,19 @@ public class Archivos implements Serializable {
 
     public void escribirArchivoProductos(LinkedList<ProductoMayorista> linkedList) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Productos.txt"));
+        objectOS.writeObject(linkedList);
+        objectOS.close();
+    }
+    
+    //Archivo Usuarios---------------------------------------------------
+    public LinkedList leerArchivoOrdenes() throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Ordenes.txt"));
+        LinkedList linkedList = (LinkedList) objectIS.readObject();
+        return linkedList;
+    }
+
+    public void escribirArchivoOrdenes(LinkedList<OrdenDistribucion> linkedList) throws FileNotFoundException, IOException {
+        ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Ordenes.txt"));
         objectOS.writeObject(linkedList);
         objectOS.close();
     }
