@@ -144,9 +144,13 @@ public class Login extends javax.swing.JFrame {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    Modulo2 panel = new Modulo2();
-                    panel.setVisible(true);
-                    dispose();
+                    try {
+                        Modulo2 panel = new Modulo2();
+                        panel.setVisible(true);
+                        dispose();
+                    } catch (IOException | GraphException | ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }

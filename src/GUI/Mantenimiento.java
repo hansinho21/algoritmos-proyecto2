@@ -1070,7 +1070,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 if (linkedHashMapUnidadTransporte.isEmpty()) {
                     id = 1;
                 } else {
-                    id = linkedHashMapUnidadTransporte.get(linkedHashMapUnidadTransporte.size() - 1).getId() + 1;
+                    for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
+                        id = entry.getValue().getId() + 1;
+                    }
                 }
                 auxBodega.setId(id);
                 auxBodega.setNombre(jTextFieldNombreBodega.getText());
