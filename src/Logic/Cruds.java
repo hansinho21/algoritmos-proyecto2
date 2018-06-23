@@ -156,7 +156,7 @@ public class Cruds implements Serializable{
     }
 
     //CRUDs Bodegas ----------------------------------------------------------------------------------------
-    public void agregarBodega(Bodega bodega) throws GraphException {
+    public void agregarBodega(Bodega bodega) throws GraphException, IOException {
         boolean exist = false;
         if (grafoBodegas.isEmpty()) {
             grafoBodegas.insertVertex(bodega);
@@ -176,7 +176,7 @@ public class Cruds implements Serializable{
         }
     }
 
-    public void editarBodega(Bodega bodega) throws GraphException {
+    public void editarBodega(Bodega bodega) throws GraphException, IOException {
         boolean exist = false;
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
@@ -191,7 +191,7 @@ public class Cruds implements Serializable{
         }
     }
 
-    public void eliminarBodega(Bodega bodega) throws GraphException {
+    public void eliminarBodega(Bodega bodega) throws GraphException, IOException {
         boolean exist = false;
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);

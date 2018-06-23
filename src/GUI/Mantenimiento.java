@@ -505,6 +505,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jPanel5.add(jTextFieldLongitudBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 150, 30));
 
         jTextFieldDistanciaBodega.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldDistanciaBodega.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDistanciaBodegaKeyTyped(evt);
+            }
+        });
         jPanel5.add(jTextFieldDistanciaBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 150, 30));
         jPanel5.add(jLabelIdBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 140, 30));
 
@@ -1001,7 +1006,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
     private void jButtonAgregarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarBodegaActionPerformed
         if (validarInformacionBodega() == true) {
             try {
-                Bodega ultimaBodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize() - 1);
                 Bodega auxBodega = new Bodega();
                 int id = 0;
                 if (linkedHashMapUnidadTransporte.isEmpty()) {
@@ -1020,7 +1024,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
                 limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1045,7 +1049,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
                 limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1066,7 +1070,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
                 limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
-            } catch (GraphException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1497,6 +1501,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldCapacidadUnidadTransporteKeyTyped
+
+    private void jTextFieldDistanciaBodegaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDistanciaBodegaKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldDistanciaBodegaKeyTyped
 
     /**
      * @param args the command line arguments

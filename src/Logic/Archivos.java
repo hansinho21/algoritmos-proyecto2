@@ -5,10 +5,13 @@
  */
 package Logic;
 
+import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
+import TDA.Graph.AdjacencyMatrixGraph;
+import TDA.Graph.GraphException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,25 +31,29 @@ import java.util.TreeMap;
  *
  * @author hvill
  */
-public class Archivos implements Serializable{
-    
-    public Archivos() throws IOException{
+public class Archivos implements Serializable {
+
+    public Archivos() throws IOException, FileNotFoundException, GraphException {
         File archivoUsuario = new File("Usuarios.txt");
         File archivoCategoria = new File("Categorias.txt");
         File archivoLote = new File("Lotes.txt");
         File archivoUnidadTransporte = new File("UnidadesTransporte.txt");
+        File archivoBodega = new File("Bodegas.txt");
 
-        if(!archivoUsuario.exists()){
+        if (!archivoUsuario.exists()) {
             escribirArchivoUsuarios(new LinkedList<>());
         }
-        if(!archivoCategoria.exists()){
+        if (!archivoCategoria.exists()) {
             escribirArchivoCategorias(new HashMap<>());
         }
-        if(!archivoLote.exists()){
+        if (!archivoLote.exists()) {
             escribirArchivoLotes(new TreeMap<>());
         }
-        if(!archivoUnidadTransporte.exists()){
+        if (!archivoUnidadTransporte.exists()) {
             escribirArchivoUnidadesTransporte(new LinkedHashMap<>());
+        }
+        if (!archivoBodega.exists()) {
+            escribirArchivoBodegas(new AdjacencyMatrixGraph(100));
         }
     }
 
@@ -65,7 +72,7 @@ public class Archivos implements Serializable{
 
     //Archivo Categorias---------------------------------------------------
     public HashMap leerArchivoCategorias() throws FileNotFoundException, IOException, ClassNotFoundException {
-        
+
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Categorias.txt"));
         LinkedList<Categoria> linkedList = (LinkedList) objectIS.readObject();
 
@@ -142,6 +149,33 @@ public class Archivos implements Serializable{
         for (Map.Entry<Integer, UnidadTransporte> entry : treeMap.entrySet()) {
             linkedList.add(entry.getValue());
 
+        }
+
+        objectOS.writeObject(linkedList);
+        objectOS.close();
+    }
+
+    //Archivo Bodegas---------------------------------------------------
+    public AdjacencyMatrixGraph leerArchivoBodegas() throws FileNotFoundException, IOException, ClassNotFoundException, GraphException {
+        ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Bodegas.txt"));
+        LinkedList linkedList = (LinkedList) objectIS.readObject();
+
+        AdjacencyMatrixGraph grafo = new AdjacencyMatrixGraph(100);
+        for (int i = 0; i < linkedList.size(); i++) {
+            grafo.insertVertex(linkedList.get(i));
+        }
+
+        return grafo;
+    }
+
+    public void escribirArchivoBodegas(AdjacencyMatrixGraph grafo) throws FileNotFoundException, IOException, GraphException {
+        ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Bodegas.txt"));
+
+        LinkedList<Bodega> linkedList = new LinkedList();
+        if (grafo.isEmpty() == false) {
+            for (int i = 0; i < grafo.getSize(); i++) {
+                linkedList.add((Bodega) grafo.getVertex(i));
+            }
         }
 
         objectOS.writeObject(linkedList);

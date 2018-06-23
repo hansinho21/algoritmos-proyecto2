@@ -5,11 +5,13 @@
  */
 package TDA.Graph;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo
  */
-public class Vertice {
+public class Vertice implements Serializable{
     
     public Object element;
     public boolean isVisited;

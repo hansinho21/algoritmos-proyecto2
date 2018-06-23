@@ -5,11 +5,13 @@
  */
 package TDA.Graph;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo
  */
-public class AdjacencyMatrixGraph implements Graph {
+public class AdjacencyMatrixGraph implements Graph, Serializable {
 
     private Object AdjacencyMatrix[][];
     private int counter;
@@ -47,9 +49,9 @@ public class AdjacencyMatrixGraph implements Graph {
 
     @Override
     public int getSize() throws GraphException {
-        if (isEmpty()) {
-            throw new GraphException("El grafo está vacío");
-        }
+//        if (isEmpty()) {
+//            throw new GraphException("El grafo está vacío");
+//        }
         return counter;
     }
 

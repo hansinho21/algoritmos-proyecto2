@@ -79,26 +79,12 @@ public class Datos implements Serializable{
         this.listaUsuarios = this.archivos.leerArchivoUsuarios();
     }
 
-    private void llenarBodegas() throws GraphException, FileNotFoundException, IOException {
-        grafoBodegas.insertVertex(new Bodega(23, "Bodega Test", "9.8273563", "-83.8706482", 23, "url bodega 1"));
+    private void llenarBodegas() throws GraphException, FileNotFoundException, IOException, ClassNotFoundException {
+//        grafoBodegas.insertVertex(new Bodega(23, "Bodega Test", "9.8273563", "-83.8706482", 23, "url bodega 1"));
 //        grafoBodegas.insertVertex(new Bodega(24, "Bodega sdf", "234.678", "3542", 55, "url bodega 2"));
 //        grafoBodegas.insertVertex(new Bodega(35, "Bodega dgdf", "4262.7", "55555", 6, "url bodega 3"));
 //        grafoBodegas.insertVertex(new Bodega(47, "Bodega jfjhgjh", "65675", "464.77", 122, "url bodega 4"));
-        String sCadena;
-        FileReader fr = new FileReader("Bodegas.txt");
-        BufferedReader bf = new BufferedReader(fr);
-        while ((sCadena = bf.readLine()) != null) {
-                Bodega bodega = new Bodega();
-                String[] aux = sCadena.split(";");
-                bodega.setId(Integer.parseInt(aux[0]));
-                bodega.setNombre(aux[1]);
-                bodega.setLatitud(aux[2]);
-                bodega.setLongitud(aux[3]);
-                bodega.setDistanciaCentroOperaciones(Float.parseFloat(aux[4]));
-                bodega.setUrlFotografia(aux[5]);
-                grafoBodegas.insertVertex(bodega);
-            }
-            bf.close();
+        this.grafoBodegas = this.archivos.leerArchivoBodegas();
     }
 
     private void llenarCategorias() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -184,8 +170,8 @@ public class Datos implements Serializable{
         return grafoBodegas;
     }
 
-    public void setGrafoBodegas(AdjacencyMatrixGraph grafoBodegas) {
-        Datos.grafoBodegas = grafoBodegas;
+    public void setGrafoBodegas(AdjacencyMatrixGraph grafoBodegas) throws IOException, FileNotFoundException, GraphException {
+        this.archivos.escribirArchivoBodegas(grafoBodegas);
     }
 
     public LinkedList<Usuario> getListaUsuarios() {

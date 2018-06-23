@@ -5,11 +5,13 @@
  */
 package TDA.Graph;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo
  */
-public class GraphException extends Exception{
+public class GraphException  extends Exception implements Serializable{
 
     public GraphException(String message) {
         super(message);
