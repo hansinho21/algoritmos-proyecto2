@@ -116,19 +116,21 @@ public class Datos implements Serializable{
         this.linkedHashMapUnidadTransporte = this.archivos.leerArchivoUnidadesTransporte();
     }
     
-    private void llenarProductos() {
-        listaProductos.add(new ProductoMayorista(1, "Procucto 1", "kg", 1, 22, "x", 1, 1, 213, ""));
-        listaProductos.add(new ProductoMayorista(1, "Procucto 2", "kg", 1, 22, "x", 1, 1, 213, ""));
-        listaProductos.add(new ProductoMayorista(1, "Procucto 3", "kg", 1, 22, "x", 1, 1, 213, ""));
-        listaProductos.add(new ProductoMayorista(1, "Procucto 4", "kg", 1, 22, "x", 1, 1, 213, ""));
+    private void llenarProductos() throws IOException, FileNotFoundException, ClassNotFoundException {
+//        listaProductos.add(new ProductoMayorista(1, "Procucto 1", "kg", 1, 22, "x", 1, 1, 213, ""));
+//        listaProductos.add(new ProductoMayorista(1, "Procucto 2", "kg", 1, 22, "x", 1, 1, 213, ""));
+//        listaProductos.add(new ProductoMayorista(1, "Procucto 3", "kg", 1, 22, "x", 1, 1, 213, ""));
+//        listaProductos.add(new ProductoMayorista(1, "Procucto 4", "kg", 1, 22, "x", 1, 1, 213, ""));
+        this.listaProductos = this.archivos.leerArchivoProductos();
     }
 
     public LinkedList<ProductoMayorista> getListaProductos() {
         return listaProductos;
     }
 
-    public void setListaProductos(LinkedList<ProductoMayorista> listaProductos) {
-        Datos.listaProductos = listaProductos;
+    public void setListaProductos(LinkedList<ProductoMayorista> listaProductos) throws IOException {
+//        Datos.listaProductos = listaProductos;
+        this.archivos.escribirArchivoProductos(listaProductos);
     }
 
     public HashMap<String, Categoria> getHashMapCategoria() {

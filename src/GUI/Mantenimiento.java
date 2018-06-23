@@ -8,6 +8,7 @@ package GUI;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import Logic.Cruds;
@@ -54,6 +55,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private HashMap<String, Categoria> hashMapCategoria;
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
+    private LinkedList<ProductoMayorista> listaProducto;
 
     private TextAutoCompleter textAutoCompleterUsuario;
     private TextAutoCompleter textAutoCompleterBodega;
@@ -61,6 +63,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private TextAutoCompleter textAutoCompleterLote;
     private TextAutoCompleter textAutoCompleterUnidadTransorte;
     private TextAutoCompleter textAutoCompleterProducto;
+    
 
     /**
      * Creates new form Mantenimiento
@@ -74,6 +77,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdCategoria2.setVisible(false);
         this.jLabelIdLote2.setVisible(false);
         this.jLabelIdUnidadTransporte2.setVisible(false);
+        this.jLabelIdProducto2.setVisible(false);
 
         //instancias
         this.data = new Datos();
@@ -86,6 +90,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.hashMapCategoria = this.data.getHashMapCategoria();
         this.treeMapLote = this.data.getTreeMapLote();
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
+        this.listaProducto = this.data.getListaProductos();
 
         //autocopleter
         this.textAutoCompleterUsuario = new TextAutoCompleter(jTextFieldUserUsuario);
@@ -93,6 +98,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.textAutoCompleterCategoria = new TextAutoCompleter(jTextFieldNombreCategoria);
         this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLote);
         this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
+        this.textAutoCompleterProducto = new TextAutoCompleter(jTextFieldNombreProducto);
 
         //llenar autocompleters
         llenarAutocompleterBodegas();
@@ -100,6 +106,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         llenarAutocompleterUnidadesTransporte();
         llenarAutocompleterLote();
         llenarAutocompleterUsuarios();
+        llenarAutocompleterProductos();
+        
+        //ComboBox
+        llenarComboBoxCategoria();
+        llenarComboBoxLote();
     }
 
     private void limpiarInformacionUsuario() {
@@ -145,6 +156,19 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jTextFieldUrlUnidadTransporte.setText("");
 
         this.jLabelIdUnidadTransporte2.setVisible(false);
+    }
+    
+    private void limpiarInformacionProducto(){
+        jLabelIdProducto.setText("");
+        jTextFieldNombreProducto.setText("");
+        jTextFieldDescripcionProducto.setText("");
+        jTextFieldMedidasProducto.setText("");
+        jTextFieldUrlProducto.setText("");
+        jTextFieldPesoProducto.setText("");
+        jTextFieldValorProducto.setText("");
+        jTextFieldPrecioProducto.setText("");
+        
+        this.jLabelIdProducto2.setVisible(false);
     }
 
     private boolean validarInformacionBodega() {
@@ -249,6 +273,31 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
             textAutoCompleterUnidadTransorte.addItem(entry.getValue().getPlaca());
+        }
+    }
+    
+    private void llenarAutocompleterProductos() {
+        System.out.println("----PRODUCTOS----");
+        textAutoCompleterProducto.removeAllItems();
+        for (int i = 0; i < listaProducto.size(); i++) {
+            System.out.println(listaProducto.get(i).toString());
+            textAutoCompleterProducto.addItem(listaProducto.get(i).getNombre());
+        }
+    }
+    
+    private void llenarComboBoxCategoria(){
+        jComboBoxIdCategoriaProducto.removeAllItems();
+        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
+            jComboBoxIdCategoriaProducto.addItem(String.valueOf(entry.getValue().getId()));
+            
+        }
+    }
+    
+    private void llenarComboBoxLote(){
+        jComboBoxIdLoteProducto.removeAllItems();
+        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            jComboBoxIdLoteProducto.addItem(String.valueOf(entry.getValue().getId()));
+            
         }
     }
 
@@ -361,12 +410,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jTextFieldDescripcionProducto = new javax.swing.JTextField();
         jTextFieldMedidasProducto = new javax.swing.JTextField();
         jTextFieldUrlProducto = new javax.swing.JTextField();
-        jTextFieldIdCategoriaProducto = new javax.swing.JTextField();
-        jTextFieldIdLoteProducto = new javax.swing.JTextField();
         jTextFieldPesoProducto = new javax.swing.JTextField();
         jTextFieldValorProducto = new javax.swing.JTextField();
         jTextFieldPrecioProducto = new javax.swing.JTextField();
         jButtonBuscarImagenBodega2 = new javax.swing.JButton();
+        jComboBoxIdCategoriaProducto = new javax.swing.JComboBox<>();
+        jComboBoxIdLoteProducto = new javax.swing.JComboBox<>();
         fondo7 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
@@ -402,11 +451,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel1.add(jLabelIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 80, 30));
 
         jTextFieldNombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextFieldNombreUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldNombreUsuarioFocusGained(evt);
-            }
-        });
         jPanel1.add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 220, 30));
 
         jComboBoxRolUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -841,22 +885,42 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonEditarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonEditarProducto.setForeground(new java.awt.Color(255, 255, 255));
         jButtonEditarProducto.setText("Editar");
+        jButtonEditarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarProductoActionPerformed(evt);
+            }
+        });
         jPanel9.add(jButtonEditarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, -1, -1));
 
         jButtonEliminarProducto.setBackground(new java.awt.Color(0, 51, 51));
         jButtonEliminarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
         jButtonEliminarProducto.setText("Eliminar");
+        jButtonEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarProductoActionPerformed(evt);
+            }
+        });
         jPanel9.add(jButtonEliminarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, -1));
 
         jButtonLimpiarProducto.setBackground(new java.awt.Color(0, 51, 51));
         jButtonLimpiarProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonLimpiarProducto.setForeground(new java.awt.Color(255, 255, 255));
         jButtonLimpiarProducto.setText("Limpiar");
+        jButtonLimpiarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarProductoActionPerformed(evt);
+            }
+        });
         jPanel9.add(jButtonLimpiarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
         jPanel9.add(jLabelIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 160, 30));
 
         jTextFieldNombreProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldNombreProducto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldNombreProductoFocusGained(evt);
+            }
+        });
         jPanel9.add(jTextFieldNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 160, 30));
 
         jTextFieldDescripcionProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -873,21 +937,15 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jTextFieldUrlProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPanel9.add(jTextFieldUrlProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 160, 30));
 
-        jTextFieldIdCategoriaProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextFieldIdCategoriaProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldIdCategoriaProductoActionPerformed(evt);
-            }
-        });
-        jPanel9.add(jTextFieldIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 160, 30));
-
-        jTextFieldIdLoteProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel9.add(jTextFieldIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 160, 30));
-
         jTextFieldPesoProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextFieldPesoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPesoProductoActionPerformed(evt);
+            }
+        });
+        jTextFieldPesoProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldPesoProductoKeyTyped(evt);
             }
         });
         jPanel9.add(jTextFieldPesoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 160, 30));
@@ -898,9 +956,19 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 jTextFieldValorProductoActionPerformed(evt);
             }
         });
+        jTextFieldValorProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldValorProductoKeyTyped(evt);
+            }
+        });
         jPanel9.add(jTextFieldValorProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 160, 30));
 
         jTextFieldPrecioProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldPrecioProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldPrecioProductoKeyTyped(evt);
+            }
+        });
         jPanel9.add(jTextFieldPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 160, 30));
 
         jButtonBuscarImagenBodega2.setText("Buscar Imagen");
@@ -910,6 +978,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             }
         });
         jPanel9.add(jButtonBuscarImagenBodega2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 120, 30));
+
+        jPanel9.add(jComboBoxIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 70, 30));
+
+        jPanel9.add(jComboBoxIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 70, 30));
 
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
@@ -959,7 +1031,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             if (this.logica.existeUsuario(usuario) == true) {
                 JOptionPane.showMessageDialog(null, "Nombre de usuario ya existe");
             } else {
-                cruds.AgregarUsuario(usuario);
+                cruds.agregarUsuario(usuario);
                 JOptionPane.showMessageDialog(null, "Agregado correctamente!!");
             }
 
@@ -1184,6 +1256,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
+                llenarComboBoxCategoria();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1221,6 +1294,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
+                llenarComboBoxCategoria();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1267,6 +1341,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
+                llenarComboBoxLote();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1307,6 +1382,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
+                llenarComboBoxLote();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1336,12 +1412,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
 
     }//GEN-LAST:event_jButtonEditarUsuarioActionPerformed
-
-    private void jTextFieldNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioFocusGained
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_jTextFieldNombreUsuarioFocusGained
 
     private void jTextFieldNombreBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreBodegaActionPerformed
         // TODO add your handling code here:
@@ -1389,10 +1459,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDescripcionProductoActionPerformed
 
-    private void jTextFieldIdCategoriaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdCategoriaProductoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldIdCategoriaProductoActionPerformed
-
     private void jTextFieldPesoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesoProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPesoProductoActionPerformed
@@ -1402,7 +1468,35 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jTextFieldValorProductoActionPerformed
 
     private void jButtonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarProductoActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            ProductoMayorista productoMayorista = new ProductoMayorista();
+            int id = 0;
+            if (listaProducto.isEmpty()) {
+                id = 1;
+            } else {
+                id = listaProducto.get(listaProducto.size() - 1).getId() + 1;
+            }
+            
+            productoMayorista.setId(id);
+            productoMayorista.setNombre(jTextFieldNombreProducto.getText());
+            productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
+            productoMayorista.setUnidadMedidas(jTextFieldMedidasProducto.getText());
+            productoMayorista.setUrlFotografia(jTextFieldUrlProducto.getText());
+            productoMayorista.setIdCategoria(Integer.parseInt(jComboBoxIdCategoriaProducto.getSelectedItem().toString()));
+            productoMayorista.setIdLote(Integer.parseInt(jComboBoxIdLoteProducto.getSelectedItem().toString()));
+            productoMayorista.setPesoTotal(Integer.parseInt(jTextFieldPesoProducto.getText()));
+            productoMayorista.setPrecioTotal(Double.parseDouble(jTextFieldPrecioProducto.getText()));
+            productoMayorista.setValorUnidad(Integer.parseInt(jTextFieldValorProducto.getText()));
+
+            this.cruds.agregarProducto(productoMayorista);
+            
+            llenarAutocompleterProductos();
+            limpiarInformacionProducto();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonAgregarProductoActionPerformed
 
     private void jTextFieldCapacidadUnidadTransporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCapacidadUnidadTransporteKeyTyped
@@ -1508,6 +1602,99 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jTextFieldUserUsuarioFocusGained
 
+    private void jTextFieldPesoProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesoProductoKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldPesoProductoKeyTyped
+
+    private void jTextFieldPrecioProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioProductoKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldPrecioProductoKeyTyped
+
+    private void jTextFieldValorProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldValorProductoKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldValorProductoKeyTyped
+
+    private void jButtonEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarProductoActionPerformed
+        try {
+            // TODO add your handling code here:
+            ProductoMayorista productoMayorista = new ProductoMayorista();
+            
+            productoMayorista.setId(Integer.parseInt(jLabelIdProducto.getText()));
+            productoMayorista.setNombre(jTextFieldNombreProducto.getText());
+            productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
+            productoMayorista.setUnidadMedidas(jTextFieldMedidasProducto.getText());
+            productoMayorista.setUrlFotografia(jTextFieldUrlProducto.getText());
+            productoMayorista.setIdCategoria(Integer.parseInt(jComboBoxIdCategoriaProducto.getSelectedItem().toString()));
+            productoMayorista.setIdLote(Integer.parseInt(jComboBoxIdLoteProducto.getSelectedItem().toString()));
+            productoMayorista.setPesoTotal(Integer.parseInt(jTextFieldPesoProducto.getText()));
+            productoMayorista.setPrecioTotal(Double.parseDouble(jTextFieldPrecioProducto.getText()));
+            productoMayorista.setValorUnidad(Integer.parseInt(jTextFieldValorProducto.getText()));
+
+            this.cruds.editarProducto(productoMayorista);
+            
+            llenarAutocompleterProductos();
+            limpiarInformacionProducto();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonEditarProductoActionPerformed
+
+    private void jButtonEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarProductoActionPerformed
+        try {
+            // TODO add your handling code here:
+            ProductoMayorista productoMayorista = new ProductoMayorista();
+            
+            productoMayorista.setId(Integer.parseInt(jLabelIdProducto.getText()));
+            productoMayorista.setNombre(jTextFieldNombreProducto.getText());
+            productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
+            productoMayorista.setUnidadMedidas(jTextFieldMedidasProducto.getText());
+            productoMayorista.setUrlFotografia(jTextFieldUrlProducto.getText());
+            productoMayorista.setIdCategoria(Integer.parseInt(jComboBoxIdCategoriaProducto.getSelectedItem().toString()));
+            productoMayorista.setIdLote(Integer.parseInt(jComboBoxIdLoteProducto.getSelectedItem().toString()));
+            productoMayorista.setPesoTotal(Integer.parseInt(jTextFieldPesoProducto.getText()));
+            productoMayorista.setPrecioTotal(Double.parseDouble(jTextFieldPrecioProducto.getText()));
+            productoMayorista.setValorUnidad(Integer.parseInt(jTextFieldValorProducto.getText()));
+
+            this.cruds.eliminarProducto(productoMayorista);
+            
+            llenarAutocompleterProductos();
+            limpiarInformacionProducto();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonEliminarProductoActionPerformed
+
+    private void jButtonLimpiarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarProductoActionPerformed
+        limpiarInformacionProducto();
+    }//GEN-LAST:event_jButtonLimpiarProductoActionPerformed
+
+    private void jTextFieldNombreProductoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreProductoFocusGained
+        for (int i = 0; i < listaProducto.size(); i++) {
+            if (jTextFieldNombreProducto.getText().equals(listaProducto.get(i).getNombre())) {
+                ProductoMayorista productoMayorista = listaProducto.get(i);
+                jLabelIdProducto.setText(String.valueOf(productoMayorista.getId()));
+                jTextFieldDescripcionProducto.setText(productoMayorista.getDescripcion());
+                jTextFieldMedidasProducto.setText(productoMayorista.getUnidadMedidas());
+                jTextFieldUrlProducto.setText(productoMayorista.getUrlFotografia());
+                jComboBoxIdCategoriaProducto.setSelectedItem(productoMayorista.getIdCategoria());
+                jComboBoxIdLoteProducto.setSelectedItem(productoMayorista.getIdLote());
+                jTextFieldPesoProducto.setText(String.valueOf(productoMayorista.getPesoTotal()));
+                jTextFieldPrecioProducto.setText(String.valueOf(productoMayorista.getPrecioTotal()));
+                jTextFieldValorProducto.setText(String.valueOf(productoMayorista.getValorUnidad()));
+
+                this.jLabelIdProducto2.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldNombreProductoFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -1583,6 +1770,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JButton jButtonModificarUsuario;
     private javax.swing.JButton jButtonSalir;
+    private javax.swing.JComboBox<String> jComboBoxIdCategoriaProducto;
+    private javax.swing.JComboBox<String> jComboBoxIdLoteProducto;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -1640,8 +1829,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JTextField jTextFieldDescripcionCategoria;
     private javax.swing.JTextField jTextFieldDescripcionProducto;
     private javax.swing.JTextField jTextFieldDistanciaBodega;
-    private javax.swing.JTextField jTextFieldIdCategoriaProducto;
-    private javax.swing.JTextField jTextFieldIdLoteProducto;
     private javax.swing.JTextField jTextFieldLatitudBodega;
     private javax.swing.JTextField jTextFieldLongitudBodega;
     private javax.swing.JTextField jTextFieldMedidasProducto;

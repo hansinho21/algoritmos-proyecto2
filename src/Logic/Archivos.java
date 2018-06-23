@@ -8,6 +8,7 @@ package Logic;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import TDA.Graph.AdjacencyMatrixGraph;
@@ -39,6 +40,7 @@ public class Archivos implements Serializable {
         File archivoLote = new File("Lotes.txt");
         File archivoUnidadTransporte = new File("UnidadesTransporte.txt");
         File archivoBodega = new File("Bodegas.txt");
+        File archivoProducto = new File("Productos.txt");
 
         if (!archivoUsuario.exists()) {
             escribirArchivoUsuarios(new LinkedList<>());
@@ -54,6 +56,9 @@ public class Archivos implements Serializable {
         }
         if (!archivoBodega.exists()) {
             escribirArchivoBodegas(new AdjacencyMatrixGraph(100));
+        }
+        if(!archivoProducto.exists()){
+            escribirArchivoProductos(new LinkedList<>());
         }
     }
 
@@ -178,6 +183,19 @@ public class Archivos implements Serializable {
             }
         }
 
+        objectOS.writeObject(linkedList);
+        objectOS.close();
+    }
+    
+    //Archivo Productos---------------------------------------------------
+    public LinkedList leerArchivoProductos() throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Productos.txt"));
+        LinkedList linkedList = (LinkedList) objectIS.readObject();
+        return linkedList;
+    }
+
+    public void escribirArchivoProductos(LinkedList<ProductoMayorista> linkedList) throws FileNotFoundException, IOException {
+        ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Productos.txt"));
         objectOS.writeObject(linkedList);
         objectOS.close();
     }

@@ -38,6 +38,8 @@ public class Cruds implements Serializable{
     private HashMap<String, Categoria> hashMapCategoria;
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
+    
+    private LinkedList<ProductoMayorista> listaProductos;
 
     public Cruds() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         this.data = new Datos();
@@ -47,6 +49,7 @@ public class Cruds implements Serializable{
         this.hashMapCategoria = this.data.getHashMapCategoria();
         this.treeMapLote = this.data.getTreeMapLote();
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
+        this.listaProductos = this.data.getListaProductos();
     }
 
     //CRUDs Categorías ----------------------------------------------------------------------------------------
@@ -208,7 +211,7 @@ public class Cruds implements Serializable{
     }
 
     //CRUDs Usuario ----------------------------------------------------------------------------------------
-    public void AgregarUsuario(Usuario usuario) throws IOException {
+    public void agregarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         if (listaUsuarios.isEmpty()) {
             listaUsuarios.add(usuario);
@@ -257,6 +260,64 @@ public class Cruds implements Serializable{
                 exist = true;
                 listaUsuarios.set(i, usuario);
                 data.setListaUsuarios(listaUsuarios);
+                JOptionPane.showMessageDialog(null, "correctly modified user");
+            }
+        }
+       if (exist == false) {
+            JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
+        }
+    }
+    
+    //CRUDs Producto ----------------------------------------------------------------------------------------
+    public void agregarProducto(ProductoMayorista producto) throws IOException {
+        boolean exist = false;
+        if (listaProductos.isEmpty()) {
+            listaProductos.add(producto);
+            this.data.setListaProductos(listaProductos);
+            exist = true;
+        } else {
+            for (int i = 0; i < listaProductos.size(); i++) {
+                if (listaProductos.get(i).getId() == (producto.getId())) {
+                    exist = true;
+                    JOptionPane.showMessageDialog(null, "The user already exists");
+                }
+            }
+        }
+        if (exist == false) {
+            listaProductos.add(producto);
+            this.data.setListaProductos(listaProductos);
+        }
+        System.out.println(listaProductos.size());
+        for (int i = 0; i < listaProductos.size(); i++) {
+            System.out.println(listaProductos.get(i).toString());
+        }
+    }
+
+    public void eliminarProducto(ProductoMayorista producto) throws IOException {
+        boolean exist = false;
+        System.out.println(listaProductos.size() + "Inicio");
+        for (int i = 0; i < listaProductos.size(); i++) {
+            if (listaProductos.get(i).getId() == (producto.getId())) {
+                exist = true;
+                listaProductos.remove(i);
+                this.data.setListaProductos(listaProductos);
+                JOptionPane.showMessageDialog(null, "user removed succesfull");
+            }
+        }
+
+        if (exist == false) {
+            JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
+        }
+    }
+    
+
+    public void editarProducto(ProductoMayorista producto) throws IOException {
+        boolean exist = false;
+        for (int i = 0; i < listaProductos.size(); i++) {
+            if (listaProductos.get(i).getId() == (producto.getId())) {
+                exist = true;
+                listaProductos.set(i, producto);
+                data.setListaProductos(listaProductos);
                 JOptionPane.showMessageDialog(null, "correctly modified user");
             }
         }
