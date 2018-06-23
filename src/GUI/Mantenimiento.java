@@ -17,9 +17,14 @@ import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.ComponentOrientation;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -28,13 +33,15 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author jeison
  */
-public class Mantenimiento extends javax.swing.JFrame implements Serializable{
+public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
     //instancias
     private Datos data;
@@ -81,7 +88,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
 
         //autocopleter
-        this.textAutoCompleterUsuario = new TextAutoCompleter(jTextFieldNombreUsuario);
+        this.textAutoCompleterUsuario = new TextAutoCompleter(jTextFieldUserUsuario);
         this.textAutoCompleterBodega = new TextAutoCompleter(jTextFieldNombreBodega);
         this.textAutoCompleterCategoria = new TextAutoCompleter(jTextFieldNombreCategoria);
         this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLote);
@@ -101,7 +108,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jTextFieldUserUsuario.setText("");
         jPasswordFieldPasswordUsuario.setText("");
 
-        this.jLabelIdUsuario2.setVisible(true);
+        this.jLabelIdUsuario2.setVisible(false);
     }
 
     private void limpiarInformacionBodega() {
@@ -163,8 +170,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
     private boolean validarInformacionLote() {
         if (jTextFieldCodigoLote.getText().equals("")
-                || jDateChooser1.getDate().equals("")
-                || jDateChooser2.getDate().equals("")) {
+                || jDateChooser1.toString().equals("")
+                || jDateChooser2.toString().equals("")) {
             return false;
         } else {
             return true;
@@ -187,6 +194,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
      */
     private void llenarAutocompleterBodegas() throws GraphException {
         textAutoCompleterBodega.removeAllItems();
+        System.out.println("----BODEGAS----");
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             System.out.println(grafoBodegas.getVertex(i).toString());
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
@@ -195,11 +203,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
     }
 
     private void llenarAutocompleterUsuarios() {
+        System.out.println("----USUARIOS----");
         textAutoCompleterUsuario.removeAllItems();
         for (int i = 0; i < listaUsuarios.size(); i++) {
             System.out.println(listaUsuarios.get(i).toString());
             Usuario usuario = listaUsuarios.get(i);
-            textAutoCompleterUsuario.addItem(usuario.getNombre());
+            textAutoCompleterUsuario.addItem(usuario.getUsuario());
         }
     }
 
@@ -208,6 +217,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
      * LLena el AutoCompleter con las categorias.
      */
     private void llenarAutocompleterCategoria() throws GraphException {
+        System.out.println("----CATEGORIAS----");
         textAutoCompleterCategoria.removeAllItems();
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
@@ -220,12 +230,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
      * LLena el AutoCompleter con los lotes.
      */
     private void llenarAutocompleterLote() throws GraphException {
+        System.out.println("----LOTES----");
         textAutoCompleterLote.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
             textAutoCompleterLote.addItem(entry.getValue().getCodigoLote());
-            textAutoCompleterLote.addItem(entry.getValue().getFechaEmpacado());
-            textAutoCompleterLote.addItem(entry.getValue().getFechaVecimiento());
 
         }
     }
@@ -235,6 +244,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
      * LLena el AutoCompleter con las unidades de transporte.
      */
     private void llenarAutocompleterUnidadesTransporte() throws GraphException {
+        System.out.println("----TRANSPORTES----");
         textAutoCompleterUnidadTransorte.removeAllItems();
         for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
             System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
@@ -286,6 +296,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonLimpiarBodega = new javax.swing.JButton();
         jTextFieldUrlBodega = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
+        jButtonBuscarImagenBodega = new javax.swing.JButton();
         fondo2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -328,6 +339,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonEliminarUnidadTransporte = new javax.swing.JButton();
         jButtonLimpiarUnidadTransporte = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
+        jButtonBuscarImagenBodega1 = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabelIdProducto2 = new javax.swing.JLabel();
@@ -354,6 +366,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jTextFieldPesoProducto = new javax.swing.JTextField();
         jTextFieldValorProducto = new javax.swing.JTextField();
         jTextFieldPrecioProducto = new javax.swing.JTextField();
+        jButtonBuscarImagenBodega2 = new javax.swing.JButton();
         fondo7 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
@@ -401,6 +414,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jPanel1.add(jComboBoxRolUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 220, 30));
 
         jTextFieldUserUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldUserUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldUserUsuarioFocusGained(evt);
+            }
+        });
+        jTextFieldUserUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldUserUsuarioActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldUserUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 220, 30));
 
         jPasswordFieldPasswordUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -528,11 +551,19 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             }
         });
         jPanel5.add(jButtonLimpiarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 430, -1, -1));
-        jPanel5.add(jTextFieldUrlBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 130, -1));
+        jPanel5.add(jTextFieldUrlBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 370, 150, 30));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel20.setText("FileChooser en el url");
         jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
+
+        jButtonBuscarImagenBodega.setText("Buscar Imagen");
+        jButtonBuscarImagenBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarImagenBodegaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonBuscarImagenBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 120, 30));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
@@ -740,6 +771,14 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jLabel21.setText("FileChooser en el url");
         jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
 
+        jButtonBuscarImagenBodega1.setText("Buscar Imagen");
+        jButtonBuscarImagenBodega1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarImagenBodega1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonBuscarImagenBodega1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 270, 120, 30));
+
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
@@ -864,12 +903,20 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jTextFieldPrecioProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPanel9.add(jTextFieldPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 160, 30));
 
+        jButtonBuscarImagenBodega2.setText("Buscar Imagen");
+        jButtonBuscarImagenBodega2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarImagenBodega2ActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButtonBuscarImagenBodega2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 120, 30));
+
         fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel9.add(fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
 
         jTabbedPane1.addTab("Producto", jPanel9);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 960, 540));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 960, 540));
 
         jButtonSalir.setBackground(new java.awt.Color(0, 51, 51));
         jButtonSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -1199,7 +1246,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         if (validarInformacionLote() == true) {
             try {
                 Lote auxLote = new Lote();
-                Date date = new Date(2, 2, 2);
                 int id = 0;
                 if (treeMapLote.isEmpty()) {
                     id = 1;
@@ -1210,8 +1256,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
                 }
                 auxLote.setId(id);
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
-                auxLote.setFechaEmpacado(date);
-                auxLote.setFechaVecimiento(date);
+                auxLote.setFechaEmpacado(jDateChooser1.getDate());
+                auxLote.setFechaVecimiento(jDateChooser2.getDate());
 
                 if (this.logica.existeLote(auxLote) == true) {
                     JOptionPane.showMessageDialog(null, "Este lote ya existe");
@@ -1282,7 +1328,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             usuario.setUsuario(jTextFieldUserUsuario.getText());
             usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
             cruds.eliminarUsuario(usuario);
-            
+
             limpiarInformacionUsuario();
             llenarAutocompleterUsuarios();
         } catch (IOException ex) {
@@ -1293,17 +1339,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
     private void jTextFieldNombreUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreUsuarioFocusGained
         // TODO add your handling code here:
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            if (jTextFieldNombreUsuario.getText().equalsIgnoreCase(
-                    listaUsuarios.get(i).getNombre())) {
-                jLabelIdUsuario.setText(String.valueOf(listaUsuarios.get(i).getId()));
-                jComboBoxRolUsuario.setSelectedItem(listaUsuarios.get(i).getRol());
-                jTextFieldUserUsuario.setText(listaUsuarios.get(i).getUsuario());
-                jPasswordFieldPasswordUsuario.setText(listaUsuarios.get(i).getContrasena());
 
-                this.jLabelIdUsuario2.setVisible(true);
-            }
-        }
 
     }//GEN-LAST:event_jTextFieldNombreUsuarioFocusGained
 
@@ -1322,7 +1358,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             usuario.setUsuario(jTextFieldUserUsuario.getText());
             usuario.setContrasena(jPasswordFieldPasswordUsuario.getText());
             cruds.editarUsuario(usuario);
-            
+
             limpiarInformacionUsuario();
             llenarAutocompleterUsuarios();
         } catch (IOException ex) {
@@ -1338,10 +1374,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (salida == 0) {
             LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-            
+
             System.exit(0);
         }
-        
+
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jButtonLimpiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarUsuarioActionPerformed
@@ -1380,6 +1416,97 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             evt.consume();
         }
     }//GEN-LAST:event_jTextFieldDistanciaBodegaKeyTyped
+
+    private void jButtonBuscarImagenBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarImagenBodegaActionPerformed
+
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        fileChooser.setFileFilter(fileNameExtensionFilter);
+        fileChooser.showOpenDialog(this);
+        File file = fileChooser.getSelectedFile();
+        if (file != null) {
+            String path = file.toString();
+            Path origin = Paths.get(path);
+            Path destiny = Paths.get(origin.getFileName().toString());
+            File imagen = new File(destiny.toString());
+            if (!imagen.exists()) {
+                try {
+                    Files.copy(origin, destiny, StandardCopyOption.COPY_ATTRIBUTES);
+                } catch (IOException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            jTextFieldUrlBodega.setText(destiny.toString());
+        }
+
+    }//GEN-LAST:event_jButtonBuscarImagenBodegaActionPerformed
+
+    private void jButtonBuscarImagenBodega1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarImagenBodega1ActionPerformed
+
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        fileChooser.setFileFilter(fileNameExtensionFilter);
+        fileChooser.showOpenDialog(this);
+        File file = fileChooser.getSelectedFile();
+        if (file != null) {
+            String path = file.toString();
+            Path origin = Paths.get(path);
+            Path destiny = Paths.get(origin.getFileName().toString());
+            File imagen = new File(destiny.toString());
+            if (!imagen.exists()) {
+                try {
+                    Files.copy(origin, destiny, StandardCopyOption.COPY_ATTRIBUTES);
+                } catch (IOException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            jTextFieldUrlUnidadTransporte.setText(destiny.toString());
+        }
+    }//GEN-LAST:event_jButtonBuscarImagenBodega1ActionPerformed
+
+    private void jButtonBuscarImagenBodega2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarImagenBodega2ActionPerformed
+
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("JPG, PNG", "jpg", "png");
+        fileChooser.setFileFilter(fileNameExtensionFilter);
+        fileChooser.showOpenDialog(this);
+        File file = fileChooser.getSelectedFile();
+        if (file != null) {
+            String path = file.toString();
+            Path origin = Paths.get(path);
+            Path destiny = Paths.get(origin.getFileName().toString());
+            File imagen = new File(destiny.toString());
+            if (!imagen.exists()) {
+                try {
+                    Files.copy(origin, destiny, StandardCopyOption.COPY_ATTRIBUTES);
+                } catch (IOException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            jTextFieldUrlProducto.setText(destiny.toString());
+        }
+    }//GEN-LAST:event_jButtonBuscarImagenBodega2ActionPerformed
+
+    private void jTextFieldUserUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUserUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldUserUsuarioActionPerformed
+
+    private void jTextFieldUserUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldUserUsuarioFocusGained
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if (jTextFieldUserUsuario.getText().equalsIgnoreCase(
+                    listaUsuarios.get(i).getUsuario())) {
+                jLabelIdUsuario.setText(String.valueOf(listaUsuarios.get(i).getId()));
+                jComboBoxRolUsuario.setSelectedItem(listaUsuarios.get(i).getRol());
+                jTextFieldNombreUsuario.setText(listaUsuarios.get(i).getNombre());
+                jPasswordFieldPasswordUsuario.setText(listaUsuarios.get(i).getContrasena());
+
+                this.jLabelIdUsuario2.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldUserUsuarioFocusGained
 
     /**
      * @param args the command line arguments
@@ -1434,6 +1561,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
     private javax.swing.JButton jButtonAgregarProducto;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
     private javax.swing.JButton jButtonAgregarUsuario;
+    private javax.swing.JButton jButtonBuscarImagenBodega;
+    private javax.swing.JButton jButtonBuscarImagenBodega1;
+    private javax.swing.JButton jButtonBuscarImagenBodega2;
     private javax.swing.JButton jButtonEditarBodega;
     private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEditarLote;
