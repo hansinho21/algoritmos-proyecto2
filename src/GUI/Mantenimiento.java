@@ -68,9 +68,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private TextAutoCompleter textAutoCompleterUnidadTransorte;
     private TextAutoCompleter textAutoCompleterProducto;
     private TextAutoCompleter textAutoCompleterOrden;
-    
+
     private DefaultListModel listModel;
-    
 
     /**
      * Creates new form Mantenimiento
@@ -109,7 +108,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
         this.textAutoCompleterProducto = new TextAutoCompleter(jTextFieldNombreProducto);
         this.textAutoCompleterOrden = new TextAutoCompleter(jTextFieldCodigoOrden);
-        
+
         this.listModel = new DefaultListModel();
         this.jListProductosOrden.setModel(listModel);
 
@@ -121,14 +120,14 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         llenarAutocompleterUsuarios();
         llenarAutocompleterProductos();
         llenarAutocompleterOrden();
-        
+
         //ComboBox - Producto
         llenarComboBoxCategoria();
         llenarComboBoxLote();
-        
+
         //ComboBox - Lote
         llenarComboBoxBodega(jComboBoxBodegaLote);
-        
+
         //ComboBox - Orden
         llenarComboBoxBodega(jComboBoxBodegaProcedenciaOrden);
         llenarComboBoxBodega(jComboBoxBodegaDestinoOrden);
@@ -180,8 +179,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
         this.jLabelIdUnidadTransporte2.setVisible(false);
     }
-    
-    private void limpiarInformacionProducto(){
+
+    private void limpiarInformacionProducto() {
         jLabelIdProducto.setText("");
         jTextFieldNombreProducto.setText("");
         jTextFieldDescripcionProducto.setText("");
@@ -190,17 +189,18 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jTextFieldPesoProducto.setText("");
         jTextFieldValorProducto.setText("");
         jTextFieldPrecioProducto.setText("");
-        
+
         this.jLabelIdProducto2.setVisible(false);
     }
-    
-    private void limpiarInformacionOrden(){
+
+    private void limpiarInformacionOrden() {
+        jLabelIdOrdenDistribucion.setText("");
         jTextFieldCodigoOrden.setText("");
         jDateChooserFechaOrden.setDateFormatString("");
         jTextFieldPesoOrden.setText("");
         jTextFieldMontoOrden.setText("");
         listModel.clear();
-        
+
         this.jLabelIdOrden2.setVisible(false);
     }
 
@@ -308,7 +308,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             textAutoCompleterUnidadTransorte.addItem(entry.getValue().getPlaca());
         }
     }
-    
+
     private void llenarAutocompleterProductos() {
         System.out.println("----PRODUCTOS----");
         textAutoCompleterProducto.removeAllItems();
@@ -317,8 +317,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             textAutoCompleterProducto.addItem(listaProducto.get(i).getNombre());
         }
     }
-    
-    private void llenarAutocompleterOrden(){
+
+    private void llenarAutocompleterOrden() {
         System.out.println("----ORDENES----");
         textAutoCompleterOrden.removeAllItems();
         for (int i = 0; i < listaOrdenes.size(); i++) {
@@ -326,47 +326,46 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             textAutoCompleterOrden.addItem(listaOrdenes.get(i).getCodigo());
         }
     }
-    
-    private void llenarComboBoxCategoria(){
+
+    private void llenarComboBoxCategoria() {
         jComboBoxIdCategoriaProducto.removeAllItems();
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             jComboBoxIdCategoriaProducto.addItem(String.valueOf(entry.getValue().getId()));
-            
+
         }
     }
-    
-    private void llenarComboBoxLote(){
+
+    private void llenarComboBoxLote() {
         jComboBoxIdLoteProducto.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             jComboBoxIdLoteProducto.addItem(String.valueOf(entry.getValue().getId()));
-            
+
         }
     }
-    
-    private void llenarComboBoxBodega(JComboBox comboBox) throws GraphException{
+
+    private void llenarComboBoxBodega(JComboBox comboBox) throws GraphException {
         comboBox.removeAllItems();
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
             comboBox.addItem(bodega.getNombre());
         }
     }
-    
-    private void llenarComboBoxProductos(JComboBox comboBox){
+
+    private void llenarComboBoxProductos(JComboBox comboBox) {
         comboBox.removeAllItems();
         for (int i = 0; i < listaProducto.size(); i++) {
             comboBox.addItem(listaProducto.get(i).getNombre());
         }
     }
-    
-    private void llenarComboBoxOperador(JComboBox comboBox){
+
+    private void llenarComboBoxOperador(JComboBox comboBox) {
         comboBox.removeAllItems();
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(listaUsuarios.get(i).getRol().equals("Operador")){
+            if (listaUsuarios.get(i).getRol().equals("Operador")) {
                 comboBox.addItem(listaUsuarios.get(i).getNombre());
             }
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1134,12 +1133,24 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel10.add(jDateChooserFechaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 200, -1));
 
         jPanel10.add(jComboBoxBodegaProcedenciaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 200, -1));
+
+        jTextFieldMontoOrden.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMontoOrdenKeyTyped(evt);
+            }
+        });
         jPanel10.add(jTextFieldMontoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, 200, -1));
+
+        jTextFieldPesoOrden.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldPesoOrdenKeyTyped(evt);
+            }
+        });
         jPanel10.add(jTextFieldPesoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 200, -1));
 
         jScrollPane1.setViewportView(jListProductosOrden);
 
-        jPanel10.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, 200, -1));
+        jPanel10.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 250, 200, -1));
 
         jButtonAgregarProductoOrden.setText("Agregar Producto");
         jButtonAgregarProductoOrden.addActionListener(new java.awt.event.ActionListener() {
@@ -1155,7 +1166,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 jButtonEliminarProductoOrdenActionPerformed(evt);
             }
         });
-        jPanel10.add(jButtonEliminarProductoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 380, 140, -1));
+        jPanel10.add(jButtonEliminarProductoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 410, 140, -1));
 
         jButtonEditarOrden.setText("Editar");
         jButtonEditarOrden.addActionListener(new java.awt.event.ActionListener() {
@@ -1287,8 +1298,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 if (grafoBodegas.isEmpty()) {
                     id = 1;
                 } else {
-                    Bodega bodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize()-1);
-                    id = bodega.getId()+1;
+                    Bodega bodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize() - 1);
+                    id = bodega.getId() + 1;
                 }
                 auxBodega.setId(id);
                 auxBodega.setNombre(jTextFieldNombreBodega.getText());
@@ -1702,7 +1713,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             } else {
                 id = listaProducto.get(listaProducto.size() - 1).getId() + 1;
             }
-            
+
             productoMayorista.setId(id);
             productoMayorista.setNombre(jTextFieldNombreProducto.getText());
             productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
@@ -1715,10 +1726,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             productoMayorista.setValorUnidad(Integer.parseInt(jTextFieldValorProducto.getText()));
 
             this.cruds.agregarProducto(productoMayorista);
-            
+
             llenarAutocompleterProductos();
             limpiarInformacionProducto();
-
+            llenarComboBoxProductos(jComboBoxProductosOrden);
         } catch (IOException ex) {
             Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1849,7 +1860,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         try {
             // TODO add your handling code here:
             ProductoMayorista productoMayorista = new ProductoMayorista();
-            
+
             productoMayorista.setId(Integer.parseInt(jLabelIdProducto.getText()));
             productoMayorista.setNombre(jTextFieldNombreProducto.getText());
             productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
@@ -1862,7 +1873,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             productoMayorista.setValorUnidad(Integer.parseInt(jTextFieldValorProducto.getText()));
 
             this.cruds.editarProducto(productoMayorista);
-            
+
             llenarAutocompleterProductos();
             limpiarInformacionProducto();
 
@@ -1875,7 +1886,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         try {
             // TODO add your handling code here:
             ProductoMayorista productoMayorista = new ProductoMayorista();
-            
+
             productoMayorista.setId(Integer.parseInt(jLabelIdProducto.getText()));
             productoMayorista.setNombre(jTextFieldNombreProducto.getText());
             productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
@@ -1888,7 +1899,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             productoMayorista.setValorUnidad(Integer.parseInt(jTextFieldValorProducto.getText()));
 
             this.cruds.eliminarProducto(productoMayorista);
-            
+
             llenarAutocompleterProductos();
             limpiarInformacionProducto();
 
@@ -1922,18 +1933,22 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
     private void jTextFieldCodigoOrdenFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoOrdenFocusGained
         for (int i = 0; i < listaOrdenes.size(); i++) {
-            if(jTextFieldCodigoOrden.getText().equals(listaOrdenes.get(i).getCodigo())){
+            if (jTextFieldCodigoOrden.getText().equals(listaOrdenes.get(i).getCodigo())) {
+                limpiarInformacionOrden();
                 try {
+                    jTextFieldCodigoOrden.setText(listaOrdenes.get(i).getCodigo());
                     jLabelIdOrdenDistribucion.setText(String.valueOf(listaOrdenes.get(i).getId()));
-                    jComboBoxBodegaProcedenciaOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaDestino()));
+                    jComboBoxBodegaProcedenciaOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaProcedencia()));
                     jComboBoxBodegaDestinoOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaDestino()));
                     jDateChooserFechaOrden.setDate(listaOrdenes.get(i).getFecha());
                     jComboBoxOperadorOrden.setSelectedItem(this.logica.getNombreOperador(listaOrdenes.get(i).getIdOperador()));
                     jTextFieldPesoOrden.setText(String.valueOf(listaOrdenes.get(i).getPesoTotal()));
                     jTextFieldMontoOrden.setText(String.valueOf(listaOrdenes.get(i).getMontoTotal()));
-                    for (int j = 0; j < listaOrdenes.size(); j++) {
-                        listModel.addElement(listaOrdenes.get(i).getListaProductos().get(j));
+                    for (int j = 0; j < listaOrdenes.get(i).getListaProductos().size(); j++) {
+                        listModel.addElement(listaOrdenes.get(i).getListaProductos().get(j).getNombre());
                     }
+                    
+                    this.jLabelIdOrden2.setVisible(true);
                 } catch (GraphException ex) {
                     Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1950,7 +1965,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             } else {
                 id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
             }
-            
+
             ordenDistribucion.setId(id);
             ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
             ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
@@ -1959,16 +1974,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
             ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
             ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
-            
+
             LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
             for (int i = 0; i < listModel.size(); i++) {
                 linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
             }
-            
+
             ordenDistribucion.setListaProductos(linkedList);
 
             this.cruds.agregarOrden(ordenDistribucion);
-            
+
             llenarAutocompleterOrden();
             limpiarInformacionOrden();
 
@@ -1980,7 +1995,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void jButtonEditarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarOrdenActionPerformed
         try {
             OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
-            
+
             ordenDistribucion.setId(Integer.parseInt(jLabelIdOrdenDistribucion.getText()));
             ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
             ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
@@ -1989,16 +2004,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
             ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
             ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
-            
+
             LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
             for (int i = 0; i < listModel.size(); i++) {
                 linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
             }
-            
+
             ordenDistribucion.setListaProductos(linkedList);
 
             this.cruds.editarOrden(ordenDistribucion);
-            
+
             llenarAutocompleterOrden();
             limpiarInformacionOrden();
 
@@ -2010,7 +2025,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void jButtonEliminarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarOrdenActionPerformed
         try {
             OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
-            
+
             ordenDistribucion.setId(Integer.parseInt(jLabelIdOrdenDistribucion.getText()));
             ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
             ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
@@ -2019,16 +2034,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
             ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
             ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
-            
+
             LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
             for (int i = 0; i < listModel.size(); i++) {
                 linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
             }
-            
+
             ordenDistribucion.setListaProductos(linkedList);
 
             this.cruds.eliminarOrden(ordenDistribucion);
-            
+
             llenarAutocompleterOrden();
             limpiarInformacionOrden();
 
@@ -2048,11 +2063,23 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void jButtonEliminarProductoOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarProductoOrdenActionPerformed
         String elemento = jListProductosOrden.getSelectedValue();
         for (int i = 0; i < listModel.size(); i++) {
-            if(listModel.get(i).toString().equals(elemento)){
+            if (listModel.get(i).toString().equals(elemento)) {
                 listModel.remove(i);
             }
         }
     }//GEN-LAST:event_jButtonEliminarProductoOrdenActionPerformed
+
+    private void jTextFieldPesoOrdenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesoOrdenKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldPesoOrdenKeyTyped
+
+    private void jTextFieldMontoOrdenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoOrdenKeyTyped
+        if (!this.logica.esNumero(evt)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldMontoOrdenKeyTyped
 
     /**
      * @param args the command line arguments
