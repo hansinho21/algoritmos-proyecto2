@@ -18,12 +18,14 @@ public class Lote implements Serializable{//TreeMap Java - clave: id, valor: Lot
     private String codigoLote;
     private Date fechaEmpacado;//fecha y hora
     private Date fechaVecimiento;//solo fecha
+    private int idBodega;
 
-    public Lote(int id, String codigoLote, Date fechaEmpacado, Date fechaVecimiento) {
+    public Lote(int id, String codigoLote, Date fechaEmpacado, Date fechaVecimiento, int idBodega) {
         this.id = id;
         this.codigoLote = codigoLote;
         this.fechaEmpacado = fechaEmpacado;
         this.fechaVecimiento = fechaVecimiento;
+        this.idBodega = idBodega;
     }
 
     public Lote() {
@@ -61,10 +63,20 @@ public class Lote implements Serializable{//TreeMap Java - clave: id, valor: Lot
         this.fechaVecimiento = fechaVecimiento;
     }
 
+    public int getIdBodega() {
+        return idBodega;
+    }
+
+    public void setIdBodega(int idBodega) {
+        this.idBodega = idBodega;
+    }
+
     @Override
     public String toString() {
-        return "Lote{" + "id=" + id + ", codigoLote=" + codigoLote + ", fechaEmpacado=" + fechaEmpacado + ", fechaVecimiento=" + fechaVecimiento + '}';
+        return "Lote{" + "id=" + id + ", codigoLote=" + codigoLote + ", fechaEmpacado=" + fechaEmpacado + ", fechaVecimiento=" + fechaVecimiento + ", idBodega=" + idBodega + '}';
     }
+
+    
 
 
     

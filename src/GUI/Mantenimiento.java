@@ -109,8 +109,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         llenarAutocompleterProductos();
         
         //ComboBox
-        llenarComboBoxCategoria();
-        llenarComboBoxLote();
+        llenarComboBoxCategoriaProducto();
+        llenarComboBoxLoteProducto();
+        llenarConboBoxBodegaLote();
     }
 
     private void limpiarInformacionUsuario() {
@@ -285,7 +286,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
     
-    private void llenarComboBoxCategoria(){
+    private void llenarComboBoxCategoriaProducto(){
         jComboBoxIdCategoriaProducto.removeAllItems();
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             jComboBoxIdCategoriaProducto.addItem(String.valueOf(entry.getValue().getId()));
@@ -293,11 +294,19 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
     
-    private void llenarComboBoxLote(){
+    private void llenarComboBoxLoteProducto(){
         jComboBoxIdLoteProducto.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             jComboBoxIdLoteProducto.addItem(String.valueOf(entry.getValue().getId()));
             
+        }
+    }
+    
+    private void llenarConboBoxBodegaLote() throws GraphException{
+        jComboBoxBodegaLote.removeAllItems();
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
+            jComboBoxBodegaLote.addItem(bodega.getNombre());
         }
     }
 
@@ -373,6 +382,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonLimpiarLote = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jComboBoxBodegaLote = new javax.swing.JComboBox<>();
+        jLabel22 = new javax.swing.JLabel();
         fondo5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabelIdUnidadTransporte2 = new javax.swing.JLabel();
@@ -681,8 +692,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel7.add(jLabelIdLote2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel17.setText("Código:");
-        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+        jLabel17.setText("Bodega:");
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel18.setText("Fecha de empacado:");
@@ -737,6 +748,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel7.add(jButtonLimpiarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
         jPanel7.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 180, -1));
         jPanel7.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 180, -1));
+
+        jPanel7.add(jComboBoxBodegaLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 180, -1));
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel22.setText("Código:");
+        jPanel7.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -1067,12 +1084,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             try {
                 Bodega auxBodega = new Bodega();
                 int id = 0;
-                if (linkedHashMapUnidadTransporte.isEmpty()) {
+                if (grafoBodegas.isEmpty()) {
                     id = 1;
                 } else {
-                    for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
-                        id = entry.getValue().getId() + 1;
-                    }
+                    Bodega bodega = (Bodega) grafoBodegas.getVertex(grafoBodegas.getSize()-1);
+                    id = bodega.getId()+1;
                 }
                 auxBodega.setId(id);
                 auxBodega.setNombre(jTextFieldNombreBodega.getText());
@@ -1258,7 +1274,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
-                llenarComboBoxCategoria();
+                llenarComboBoxCategoriaProducto();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1296,7 +1312,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionCategoria();
                 llenarAutocompleterCategoria();
-                llenarComboBoxCategoria();
+                llenarComboBoxCategoriaProducto();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1310,10 +1326,15 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void jTextFieldCodigoLoteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteFocusGained
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             if (jTextFieldCodigoLote.getText().equals(entry.getValue().getCodigoLote())) {
-                jLabelIdLote.setText(String.valueOf(entry.getValue().getId()));
-                jDateChooser1.setDate(entry.getValue().getFechaEmpacado());
-                jDateChooser2.setDate(entry.getValue().getFechaVecimiento());
-                jLabelIdLote2.setVisible(true);
+                try {
+                    jLabelIdLote.setText(String.valueOf(entry.getValue().getId()));
+                    jDateChooser1.setDate(entry.getValue().getFechaEmpacado());
+                    jDateChooser2.setDate(entry.getValue().getFechaVecimiento());
+                    jComboBoxBodegaLote.setSelectedItem(this.logica.getNombreBodega(entry.getValue().getIdBodega()));
+                    jLabelIdLote2.setVisible(true);
+                } catch (GraphException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_jTextFieldCodigoLoteFocusGained
@@ -1334,6 +1355,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(jDateChooser1.getDate());
                 auxLote.setFechaVecimiento(jDateChooser2.getDate());
+                auxLote.setIdBodega(this.logica.getIdBodega(jComboBoxBodegaLote.getSelectedItem().toString()));
 
                 if (this.logica.existeLote(auxLote) == true) {
                     JOptionPane.showMessageDialog(null, "Este lote ya existe");
@@ -1343,7 +1365,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-                llenarComboBoxLote();
+                llenarComboBoxLoteProducto();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1384,7 +1406,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-                llenarComboBoxLote();
+                llenarComboBoxLoteProducto();
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1772,6 +1794,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JButton jButtonModificarUsuario;
     private javax.swing.JButton jButtonSalir;
+    private javax.swing.JComboBox<String> jComboBoxBodegaLote;
     private javax.swing.JComboBox<String> jComboBoxIdCategoriaProducto;
     private javax.swing.JComboBox<String> jComboBoxIdLoteProducto;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
@@ -1790,6 +1813,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

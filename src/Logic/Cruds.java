@@ -88,6 +88,7 @@ public class Cruds implements Serializable{
         if (treeMapLote.isEmpty()) {
             treeMapLote.put(lote.getId(), lote);
             this.data.setTreeMapLote(treeMapLote);
+            JOptionPane.showMessageDialog(null, "Lote agregado");
         } else {
             if (treeMapLote.containsKey(lote.getId()) == true) {
                 JOptionPane.showMessageDialog(null, "La clave ya existe");
@@ -96,6 +97,7 @@ public class Cruds implements Serializable{
             } else {
                 treeMapLote.put(lote.getId(), lote);
                 this.data.setTreeMapLote(treeMapLote);
+                JOptionPane.showMessageDialog(null, "Lote agregado");
             }
 
         }

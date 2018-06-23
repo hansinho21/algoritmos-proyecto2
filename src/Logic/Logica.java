@@ -5,11 +5,13 @@
  */
 package Logic;
 
+import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
+import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hvill
  */
-public class Logica implements Serializable{
+public class Logica implements Serializable {
 
     //Clases
     private Datos datos;
@@ -35,6 +37,7 @@ public class Logica implements Serializable{
     private static HashMap<String, Categoria> hashMapCategoria;
     private static TreeMap<Integer, Lote> treeMapLote;
     private static LinkedList<Usuario> listaUsuarios;
+    private static AdjacencyMatrixGraph grafoBodegas;
 
     public Logica() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         //Clases
@@ -45,8 +48,9 @@ public class Logica implements Serializable{
         this.hashMapCategoria = this.datos.getHashMapCategoria();
         this.treeMapLote = this.datos.getTreeMapLote();
         this.listaUsuarios = this.datos.getListaUsuarios();
+        this.grafoBodegas = this.datos.getGrafoBodegas();
     }
-    
+
     /**
      * Valida si la tecla precionada es un número o no.
      *
@@ -104,26 +108,33 @@ public class Logica implements Serializable{
         }
         return false;
     }
-    
-    public boolean existeUsuario(Usuario usuario){
+
+    public boolean existeUsuario(Usuario usuario) {
         for (int i = 0; i < listaUsuarios.size(); i++) {
-            if(usuario.getUsuario().equals(listaUsuarios.get(i).getUsuario())){
+            if (usuario.getUsuario().equals(listaUsuarios.get(i).getUsuario())) {
                 return true;
             }
         }
         return false;
     }
 
-//    public UnidadTransporte getSiguienteCapacidadTransporte(UnidadTransporte unidadTransporte){
-//        UnidadTransporte auxTransporte = new UnidadTransporte();
-//        UnidadTransporte salida = new UnidadTransporte();
-//        int cont1 = 0;
-//        int cont2 = 0;
-//        for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
-//            auxTransporte = entry.getValue();
-//            for (Map.Entry<Integer, UnidadTransporte> entry1 : linkedHashMapUnidadTransporte.entrySet()) {
-//                
-//            }
-//        }
-//    }
+    public int getIdBodega(String nombre) throws GraphException {
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
+            if (bodega.getNombre().equals(nombre)) {
+                return bodega.getId();
+            }
+        }
+        return -1;
+    }
+
+    public String getNombreBodega(int id) throws GraphException {
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
+            if (bodega.getId() == id) {
+                return bodega.getNombre();
+            }
+        }
+        return null;
+    }
 }
