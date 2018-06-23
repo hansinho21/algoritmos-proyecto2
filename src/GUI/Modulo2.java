@@ -5,9 +5,15 @@
  */
 package GUI;
 
+import Domain.Lote;
+import Logic.Datos;
 import TDA.Graph.GraphException;
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,14 +21,22 @@ import java.util.logging.Logger;
  *
  * @author jeison
  */
-public class Modulo2 extends javax.swing.JFrame {
+public class Modulo2 extends javax.swing.JFrame implements Serializable{
+    
+    private Datos data;
+    private TreeMap<Integer, Lote> treeMapLote;
+    private TextAutoCompleter textAutoCompleterLote;
 
     /**
      * Creates new form Modulo2
      */
-    public Modulo2() {
+    public Modulo2() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.data = new Datos();
+        this.treeMapLote = this.data.getTreeMapLote();
+        this.textAutoCompleterLote = new TextAutoCompleter(jTextFieldCodigoLoteM2);
+        llenarAutocompleterLote();
     }
 
     /**
@@ -37,9 +51,13 @@ public class Modulo2 extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldCodigoLoteM2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         fondo1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -55,14 +73,21 @@ public class Modulo2 extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Ingrese un codigo de lote:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 130, 30));
+        jTextFieldCodigoLoteM2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldCodigoLoteM2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldCodigoLoteM2FocusGained(evt);
+            }
+        });
+        jTextFieldCodigoLoteM2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCodigoLoteM2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFieldCodigoLoteM2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 130, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,12 +103,55 @@ public class Modulo2 extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Código", "Fecha Empacado", "Fecha vencimiento"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, -1, 180));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, -1, 210));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Bodega", "Fecha Distribución"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 210));
+
+        jButton3.setBackground(new java.awt.Color(0, 51, 51));
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Salir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 130, -1));
+
+        jButton4.setBackground(new java.awt.Color(0, 51, 51));
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -135,6 +203,38 @@ public class Modulo2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jTextFieldCodigoLoteM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteM2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCodigoLoteM2ActionPerformed
+
+    private void jTextFieldCodigoLoteM2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteM2FocusGained
+        // TODO add your handling code here:
+         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            if (jTextFieldCodigoLoteM2.getText().equals(entry.getValue().getCodigoLote())) {
+                System.out.println(":v");
+            }
+        }
+    }//GEN-LAST:event_jTextFieldCodigoLoteM2FocusGained
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void llenarAutocompleterLote() throws GraphException {
+        System.out.println("----LOTES----");
+        textAutoCompleterLote.removeAllItems();
+        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue().toString());
+            textAutoCompleterLote.addItem(entry.getValue().getCodigoLote());
+
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -168,7 +268,11 @@ public class Modulo2 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Modulo2().setVisible(true);
+                try {
+                    new Modulo2().setVisible(true);
+                } catch (IOException | GraphException | ClassNotFoundException ex) {
+                    Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -179,12 +283,16 @@ public class Modulo2 extends javax.swing.JFrame {
     private javax.swing.JLabel fondo4;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextFieldCodigoLoteM2;
     // End of variables declaration//GEN-END:variables
 }

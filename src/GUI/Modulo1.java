@@ -330,7 +330,7 @@ public class Modulo1 extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 90, 30));
+        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 0, 90, 30));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
