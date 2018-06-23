@@ -7,6 +7,7 @@ package GUI;
 
 import Domain.Categoria;
 import Domain.Usuario;
+import Logic.Datos;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,14 +22,29 @@ import javax.swing.JOptionPane;
  * @author jeison
  */
 public class Login extends javax.swing.JFrame {
-    
+
+    //Clases
+    private Datos datos;
+
+    //TDA's
+    private LinkedList<Usuario> listaUsuarios;
+
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
 
+        //Clases
+        this.datos = new Datos();
+
+        //TDA's
+        this.listaUsuarios = this.datos.getListaUsuarios();
+        
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            System.out.println(listaUsuarios.get(i).toString());
+        }
     }
 
     /**
@@ -41,11 +57,11 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNombreUsuario = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         LoginUser = new javax.swing.JLabel();
         LoginPassword = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordFieldContraseña = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jButtonSalirLogin = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -56,8 +72,8 @@ public class Login extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 170, -1));
+        jTextFieldNombreUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(jTextFieldNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 170, -1));
 
         jButton1.setBackground(new java.awt.Color(0, 51, 51));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -80,8 +96,8 @@ public class Login extends javax.swing.JFrame {
         LoginPassword.setText("Password:");
         getContentPane().add(LoginPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
 
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 170, -1));
+        jPasswordFieldContraseña.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(jPasswordFieldContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 170, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/1211811764.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 260, 270));
@@ -109,17 +125,32 @@ public class Login extends javax.swing.JFrame {
                 "Realmente desea salir de la apilcación?", "Confirmar salida",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (salida == 0) {
-            
+
             System.exit(0);
         }
-        
+
     }//GEN-LAST:event_jButtonSalirLoginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Modulo2 panel  = new Modulo2();
-        panel.setVisible(true);
-        dispose();
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if (jTextFieldNombreUsuario.getText().equals(listaUsuarios.get(i).getUsuario())
+                    && jPasswordFieldContraseña.getText().equals(listaUsuarios.get(i).getContrasena())) {
+                if (listaUsuarios.get(i).getRol().equals("Operador")) {
+                    try {
+                        Modulo1 panel = new Modulo1();
+                        panel.setVisible(true);
+                        dispose();
+                    } catch (IOException | GraphException | ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    Modulo2 panel = new Modulo2();
+                    panel.setVisible(true);
+                    dispose();
+                }
+            }
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -152,7 +183,11 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                try {
+                    new Login().setVisible(true);
+                } catch (IOException | GraphException | ClassNotFoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -165,7 +200,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField jPasswordFieldContraseña;
+    private javax.swing.JTextField jTextFieldNombreUsuario;
     // End of variables declaration//GEN-END:variables
 }

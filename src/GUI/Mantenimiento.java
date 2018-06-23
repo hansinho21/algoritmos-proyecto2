@@ -267,7 +267,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonEditarUsuario = new javax.swing.JButton();
         jButtonModificarUsuario = new javax.swing.JButton();
         jButtonLimpiarUsuario = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         fondo1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabelIdBodega2 = new javax.swing.JLabel();
@@ -287,7 +286,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonLimpiarBodega = new javax.swing.JButton();
         jTextFieldUrlBodega = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         fondo2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -300,7 +298,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonEditarCategoria = new javax.swing.JButton();
         jButtonEliminarCategoria = new javax.swing.JButton();
         jButtonLimpiarCategoria = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         fondo6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabelIdLote2 = new javax.swing.JLabel();
@@ -314,7 +311,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonEditarLote = new javax.swing.JButton();
         jButtonEliminarLote = new javax.swing.JButton();
         jButtonLimpiarLote = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         fondo5 = new javax.swing.JLabel();
@@ -332,10 +328,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jButtonEliminarUnidadTransporte = new javax.swing.JButton();
         jButtonLimpiarUnidadTransporte = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
         jLabelIdProducto2 = new javax.swing.JLabel();
         jLabelNombreProducto = new javax.swing.JLabel();
         jLabelValorUnidad = new javax.swing.JLabel();
@@ -361,6 +355,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jTextFieldValorProducto = new javax.swing.JTextField();
         jTextFieldPrecioProducto = new javax.swing.JTextField();
         fondo7 = new javax.swing.JLabel();
+        jButtonSalir = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -443,19 +438,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         });
         jPanel1.add(jButtonLimpiarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, -1, -1));
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 51));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Salir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
-
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
+        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
 
         jTabbedPane1.addTab("Usuario", jPanel1);
 
@@ -550,19 +534,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jLabel20.setText("FileChooser en el url");
         jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
 
-        jButton4.setBackground(new java.awt.Color(0, 51, 51));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Salir");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
-
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+        jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
 
         jTabbedPane1.addTab("Bodega", jPanel5);
 
@@ -621,19 +594,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         });
         jPanel8.add(jButtonLimpiarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 51));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Salir");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
-
         fondo6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel8.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+        jPanel8.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
 
         jTabbedPane1.addTab("Categoria", jPanel8);
 
@@ -698,17 +660,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             }
         });
         jPanel7.add(jButtonLimpiarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
-
-        jButton6.setBackground(new java.awt.Color(0, 51, 51));
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Salir");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
         jPanel7.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 180, -1));
         jPanel7.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 180, -1));
 
@@ -789,34 +740,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
         jLabel21.setText("FileChooser en el url");
         jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
 
-        jButton7.setBackground(new java.awt.Color(0, 51, 51));
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Salir");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(839, 20, 90, 30));
-
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
         jTabbedPane1.addTab("Unidad de Transporte", jPanel6);
 
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton8.setBackground(new java.awt.Color(0, 51, 51));
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Salir");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        jPanel9.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 90, 30));
 
         jLabelIdProducto2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelIdProducto2.setText("Id");
@@ -940,7 +869,18 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
         jTabbedPane1.addTab("Producto", jPanel9);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 530));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 960, 540));
+
+        jButtonSalir.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonSalir.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSalir.setText("Salir");
+        jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 100, 30));
 
         fondo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         getContentPane().add(fondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 530));
@@ -1391,7 +1331,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
 
     }//GEN-LAST:event_jButtonModificarUsuarioActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         // TODO add your handling code here:
         int salida = JOptionPane.showConfirmDialog(null,
                 "Realmente desea salir de la apilcación?", "Confirmar salida",
@@ -1401,75 +1341,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
             
             System.exit(0);
         }
-        System.exit(0);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-        // TODO add your handling code here:
-        int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-            
-            System.exit(0);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-            
-            
-            System.exit(0);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-            
-            System.exit(0);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-            
-            System.exit(0);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        int salida = JOptionPane.showConfirmDialog(null,
-                "Realmente desea salir de la apilcación?", "Confirmar salida",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (salida == 0) {
-            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
-            
-            System.exit(0);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_jButton8ActionPerformed
+        
+    }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jButtonLimpiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarUsuarioActionPerformed
         // TODO add your handling code here:
@@ -1555,12 +1428,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
     private javax.swing.JLabel fondo5;
     private javax.swing.JLabel fondo6;
     private javax.swing.JLabel fondo7;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
@@ -1585,6 +1452,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable{
     private javax.swing.JButton jButtonLimpiarUnidadTransporte;
     private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JButton jButtonModificarUsuario;
+    private javax.swing.JButton jButtonSalir;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
