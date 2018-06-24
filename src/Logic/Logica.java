@@ -68,6 +68,18 @@ public class Logica implements Serializable {
         return false;
     }
 
+    public void agregarBodega(int idBodega, DefaultTableModel tableModel,int contTable, AdjacencyMatrixGraph grafoBodega) throws GraphException{
+        for (int i = 0; i < grafoBodega.getSize(); i++) {
+            Bodega bodega = (Bodega) grafoBodega.getVertex(i);
+            if(bodega.getId()==idBodega){
+                tableModel.insertRow(contTable, new Object[]{});
+                tableModel.setValueAt(bodega.getNombre(), contTable, 0);
+                break;
+            }
+                
+        }
+    }
+    
     public void agergarProducto(String nombreProducto, DefaultTableModel tableModel, int contTable, LinkedList listaProductos, int peso, double precio) {
         for (int i = 0; i < listaProductos.size(); i++) {
             ProductoMayorista auxProducto = (ProductoMayorista) listaProductos.get(i);
