@@ -11,6 +11,7 @@ import Domain.Lote;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
@@ -40,7 +41,7 @@ public class Logica implements Serializable {
     private static AdjacencyMatrixGraph grafoBodegas;
     private static LinkedList<ProductoMayorista> listaProductos;
 
-    public Logica() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Logica() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         //Clases
         this.datos = new Datos();
 

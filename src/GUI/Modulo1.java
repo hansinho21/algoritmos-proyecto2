@@ -12,6 +12,7 @@ import Domain.Usuario;
 import Logic.Datos;
 
 import Logic.Logica;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -61,7 +62,7 @@ public class Modulo1 extends javax.swing.JFrame {
     /**
      * Creates new form Modulo1
      */
-    public Modulo1() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Modulo1() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.jProgressBar.setStringPainted(true);
@@ -457,6 +458,8 @@ public class Modulo1 extends javax.swing.JFrame {
                 } catch (IOException | GraphException ex) {
                     Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TreeException ex) {
                     Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

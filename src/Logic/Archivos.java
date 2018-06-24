@@ -12,6 +12,8 @@ import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
+import TDA.BinaryTree.LinkedBinaryTree;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.File;
@@ -193,10 +195,16 @@ public class Archivos implements Serializable {
     }
     
     //Archivo Productos---------------------------------------------------
-    public LinkedList leerArchivoProductos() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public LinkedBinaryTree leerArchivoProductos() throws FileNotFoundException, IOException, ClassNotFoundException, TreeException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Productos.txt"));
         LinkedList linkedList = (LinkedList) objectIS.readObject();
-        return linkedList;
+        
+        LinkedBinaryTree binaryTree = new LinkedBinaryTree();
+        for (int i = 0; i < linkedList.size(); i++) {
+            binaryTree.insert(linkedList.get(i));
+        }
+                
+        return binaryTree;
     }
 
     public void escribirArchivoProductos(LinkedList<ProductoMayorista> linkedList) throws FileNotFoundException, IOException {

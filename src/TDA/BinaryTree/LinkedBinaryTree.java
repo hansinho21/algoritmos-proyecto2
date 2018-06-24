@@ -297,6 +297,16 @@ public class LinkedBinaryTree implements BinaryTree {
 
     }
 
+    public void postOrder(LinkedList list) {
+        if (root != null) {
+
+            postOrder(root.left);
+            postOrder(root.right);
+            list.push(root.element);
+        }
+
+    }
+
     public Boolean identical(LinkedBinaryTree A, LinkedBinaryTree B) throws TreeException {
         boolean identical = false;
         if (A.isEmpty() || B.isEmpty()) {
@@ -309,7 +319,7 @@ public class LinkedBinaryTree implements BinaryTree {
         }
         return identical;
     }
- 
+
     public String level(int level) throws TreeException {
         String temp = "";
         temp += level(this.root, level);
@@ -329,37 +339,37 @@ public class LinkedBinaryTree implements BinaryTree {
 
 //            level((BinaryNode) node.left, level);
 //            level((BinaryNode) node.right, level);
-
             return temp;
-        }     
+        }
     }
 
     //Se define por frontera de un árbol binario, la secuencia formada por los elementos
 //almacenados en las hojas de un árbol binario, tomados de izquierda a derecha. Escribe una
 //acción que, dados un árbol binario y una LinkedList vacía (java.utils) compartidos como
 //parámetros, devuelva en dicha lista la frontera del árbol.
-    
-    public LinkedList border(LinkedList lista) throws TreeException{
-        if(isEmpty())
+    public LinkedList border(LinkedList lista) throws TreeException {
+        if (isEmpty()) {
             throw new TreeException("el arbol no existe");
+        }
         return border(this.root, lista);
     }
-    
-      private LinkedList border(BinaryNode node,LinkedList<Object> lista) throws TreeException{
-            
-          if(node.left==null&&node.right==null)
-              lista.add(node.element);
-          else {
-              if(node.left!=null)
-                  border(node.left, lista);
-              if(node.right!=null)
-                  border(node.right, lista);
-          }
-          return lista;
-     }
-      
-      //----------------------------------------------------------------------------------
-      
+
+    private LinkedList border(BinaryNode node, LinkedList<Object> lista) throws TreeException {
+
+        if (node.left == null && node.right == null) {
+            lista.add(node.element);
+        } else {
+            if (node.left != null) {
+                border(node.left, lista);
+            }
+            if (node.right != null) {
+                border(node.right, lista);
+            }
+        }
+        return lista;
+    }
+
+    //----------------------------------------------------------------------------------
 //      public boolean path(LinkedList camino) throws TreeException{
 //          if(isEmpty())
 //              throw new TreeException("no existe");          
@@ -384,35 +394,33 @@ public class LinkedBinaryTree implements BinaryTree {
 //          }
 //          return flag;
 //      }
-      public boolean path(LinkedList camino) throws TreeException {
-          if(isEmpty())
-              throw new TreeException("no existe");
+    public boolean path(LinkedList camino) throws TreeException {
+        if (isEmpty()) {
+            throw new TreeException("no existe");
+        }
         return path(this.root, camino, 0);
     }
-    
+
     public boolean path(BinaryNode node, LinkedList camino, int cont) {
-        
-        if(cont == camino.size()-1){
+
+        if (cont == camino.size() - 1) {
             return true;
         }
-        
-        if(!node.left.element.equals(camino.get(cont)) && !node.right.element.equals
-        (camino.get(cont))){
+
+        if (!node.left.element.equals(camino.get(cont)) && !node.right.element.equals(camino.get(cont))) {
             return false;
         }
-        
-        if(node.left.element.equals(camino.get(cont))){
+
+        if (node.left.element.equals(camino.get(cont))) {
             node = node.left;
             return path(node, camino, cont++);
-        } else if(node.right.element.equals(camino.get(cont))){
+        } else if (node.right.element.equals(camino.get(cont))) {
             node = node.right;
             return path(node, camino, cont++);
         }
         return false;
     }
 }
-      
-      //-------------------------------------------------------------------------------------
-      
 
+//-------------------------------------------------------------------------------------
 

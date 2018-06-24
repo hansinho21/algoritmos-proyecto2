@@ -15,6 +15,7 @@ import Domain.Usuario;
 import Logic.Cruds;
 import Logic.Datos;
 import Logic.Logica;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -74,7 +75,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form Mantenimiento
      */
-    public Mantenimiento() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Mantenimiento() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -2114,6 +2115,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 try {
                     new Mantenimiento().setVisible(true);
                 } catch (IOException | GraphException | ClassNotFoundException ex) {
+                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TreeException ex) {
                     Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

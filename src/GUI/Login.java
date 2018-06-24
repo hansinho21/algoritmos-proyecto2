@@ -8,6 +8,7 @@ package GUI;
 import Domain.Categoria;
 import Domain.Usuario;
 import Logic.Datos;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Login() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -142,6 +143,8 @@ public class Login extends javax.swing.JFrame {
                         dispose();
                     } catch (IOException | GraphException | ClassNotFoundException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (TreeException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     try {
@@ -149,6 +152,8 @@ public class Login extends javax.swing.JFrame {
                         panel.setVisible(true);
                         dispose();
                     } catch (IOException | GraphException | ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (TreeException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -190,6 +195,8 @@ public class Login extends javax.swing.JFrame {
                 try {
                     new Login().setVisible(true);
                 } catch (IOException | GraphException | ClassNotFoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TreeException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

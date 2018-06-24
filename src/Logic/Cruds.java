@@ -13,6 +13,7 @@ import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import TDA.BinaryTree.LinkedBinaryTree;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.FileNotFoundException;
@@ -33,7 +34,6 @@ import javax.swing.JOptionPane;
 public class Cruds implements Serializable{
 
     private Datos data;
-    private LinkedBinaryTree arbolProductosMayoristas;
     private LinkedList<Usuario> listaUsuarios;
     private AdjacencyMatrixGraph grafoBodegas;
     private HashMap<String, Categoria> hashMapCategoria;
@@ -43,10 +43,9 @@ public class Cruds implements Serializable{
     
     private LinkedList<ProductoMayorista> listaProductos;
 
-    public Cruds() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Cruds() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         this.data = new Datos();
         this.listaUsuarios = this.data.getListaUsuarios();
-        this.arbolProductosMayoristas = this.data.getArbolProductosMayoristas();
         this.grafoBodegas = this.data.getGrafoBodegas();
         this.hashMapCategoria = this.data.getHashMapCategoria();
         this.treeMapLote = this.data.getTreeMapLote();

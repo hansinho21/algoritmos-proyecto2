@@ -13,6 +13,7 @@ import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
 import TDA.BinaryTree.LinkedBinaryTree;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import java.io.BufferedReader;
@@ -51,7 +52,7 @@ public class Datos implements Serializable {
      *
      * @throws IOException
      */
-    public Datos() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Datos() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         if (grafoBodegas.isEmpty()) {
             llenarBodegas();
         }
@@ -121,12 +122,14 @@ public class Datos implements Serializable {
         this.linkedHashMapUnidadTransporte = this.archivos.leerArchivoUnidadesTransporte();
     }
 
-    private void llenarProductos() throws IOException, FileNotFoundException, ClassNotFoundException {
-//        listaProductos.add(new ProductoMayorista(1, "Procucto 1", "kg", 1, 22, "x", 1, 1, 213, ""));
-//        listaProductos.add(new ProductoMayorista(1, "Procucto 2", "kg", 1, 22, "x", 1, 1, 213, ""));
-//        listaProductos.add(new ProductoMayorista(1, "Procucto 3", "kg", 1, 22, "x", 1, 1, 213, ""));
-//        listaProductos.add(new ProductoMayorista(1, "Procucto 4", "kg", 1, 22, "x", 1, 1, 213, ""));
-        this.listaProductos = this.archivos.leerArchivoProductos();
+    private void llenarProductos() throws IOException, FileNotFoundException, ClassNotFoundException, TreeException {
+        this.arbolProductosMayoristas = this.archivos.leerArchivoProductos();
+        
+        this.arbolProductosMayoristas.postOrder(listaProductos);
+        System.out.println("*********PRODUCTOS*********");
+        for (int i = 0; i < listaProductos.size(); i++) {
+            System.out.println(listaProductos.get(i).toString());
+        }
     }
 
     private void llenarOrdenes() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -167,14 +170,6 @@ public class Datos implements Serializable {
     public void setLinkedHashMapUnidadTransporte(LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte) throws IOException {
 //        Datos.linkedHashMapUnidadTransporte = linkedHashMapUnidadTransporte;
         this.archivos.escribirArchivoUnidadesTransporte(linkedHashMapUnidadTransporte);
-    }
-
-    public LinkedBinaryTree getArbolProductosMayoristas() {
-        return arbolProductosMayoristas;
-    }
-
-    public void setArbolProductosMayoristas(LinkedBinaryTree arbolProductosMayoristas) {
-        Datos.arbolProductosMayoristas = arbolProductosMayoristas;
     }
 
     public AdjacencyMatrixGraph getGrafoBodegas() {

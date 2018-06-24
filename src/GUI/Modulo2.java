@@ -10,6 +10,7 @@ import Domain.Lote;
 import Domain.ProductoMayorista;
 import Logic.Datos;
 import Logic.Logica;
+import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -40,7 +41,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form Modulo2
      */
-    public Modulo2() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException {
+    public Modulo2() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.data = new Datos();
@@ -302,9 +303,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             Mantenimiento mantenimiento = new Mantenimiento();
             mantenimiento.setVisible(true);
             dispose();
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -425,6 +424,8 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
                 try {
                     new Modulo2().setVisible(true);
                 } catch (IOException | GraphException | ClassNotFoundException ex) {
+                    Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TreeException ex) {
                     Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
