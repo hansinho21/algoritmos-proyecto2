@@ -195,7 +195,7 @@ public class Archivos implements Serializable {
     }
     
     //Archivo Productos---------------------------------------------------
-    public LinkedBinaryTree leerArchivoProductos() throws FileNotFoundException, IOException, ClassNotFoundException, TreeException {
+    public LinkedList leerArchivoProductos() throws FileNotFoundException, IOException, ClassNotFoundException, TreeException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Productos.txt"));
         LinkedList linkedList = (LinkedList) objectIS.readObject();
         
@@ -204,7 +204,7 @@ public class Archivos implements Serializable {
             binaryTree.insert(linkedList.get(i));
         }
                 
-        return binaryTree;
+        return linkedList;
     }
 
     public void escribirArchivoProductos(LinkedList<ProductoMayorista> linkedList) throws FileNotFoundException, IOException {

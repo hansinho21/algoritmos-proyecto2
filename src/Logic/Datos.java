@@ -123,13 +123,14 @@ public class Datos implements Serializable {
     }
 
     private void llenarProductos() throws IOException, FileNotFoundException, ClassNotFoundException, TreeException {
-        this.arbolProductosMayoristas = this.archivos.leerArchivoProductos();
-        
-        this.arbolProductosMayoristas.postOrder(listaProductos);
-        System.out.println("*********PRODUCTOS*********");
-        for (int i = 0; i < listaProductos.size(); i++) {
-            System.out.println(listaProductos.get(i).toString());
-        }
+//        this.arbolProductosMayoristas = this.archivos.leerArchivoProductos();
+//        
+//        this.arbolProductosMayoristas.postOrder(listaProductos);
+//        System.out.println("*********PRODUCTOS*********");
+//        for (int i = 0; i < listaProductos.size(); i++) {
+//            System.out.println(listaProductos.get(i).toString());
+//        }
+        this.listaProductos = this.archivos.leerArchivoProductos();
     }
 
     private void llenarOrdenes() throws FileNotFoundException, IOException, ClassNotFoundException {
