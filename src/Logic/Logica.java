@@ -81,6 +81,23 @@ public class Logica implements Serializable {
         }
     }
     
+    public void agregarProductoM2(int idLote,DefaultTableModel tableModel,int contTable, LinkedList listaProductos){
+        for (int i = 0; i < listaProductos.size(); i++) {
+            ProductoMayorista p = (ProductoMayorista) listaProductos.get(i);
+            if(p.getIdLote()==idLote){
+                tableModel.insertRow(contTable, new Object[]{});
+                tableModel.setValueAt(p.getId(), contTable, 0);
+                tableModel.setValueAt(p.getNombre(), contTable, 1);
+                tableModel.setValueAt(p.getUnidadMedidas(), contTable, 2);
+                tableModel.setValueAt(p.getValorUnidad(), contTable, 3);
+                tableModel.setValueAt(p.getIdCategoria(), contTable, 4);
+                tableModel.setValueAt(p.getPrecioTotal(), contTable, 5);
+                tableModel.setValueAt(p.getPesoTotal(), contTable, 6);
+                break;       
+            }
+        }
+    }
+    
     public void agergarProducto(String nombreProducto, DefaultTableModel tableModel, int contTable, LinkedList listaProductos, int peso, double precio) {
         for (int i = 0; i < listaProductos.size(); i++) {
             ProductoMayorista auxProducto = (ProductoMayorista) listaProductos.get(i);

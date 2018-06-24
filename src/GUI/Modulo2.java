@@ -29,11 +29,12 @@ import javax.swing.table.DefaultTableModel;
  * @author jeison
  */
 public class Modulo2 extends javax.swing.JFrame implements Serializable {
-
+    
     private Datos data;
     private TreeMap<Integer, Lote> treeMapLote;
     private LinkedList<ProductoMayorista> listaProductos;
     private DefaultTableModel tableModel;
+    private DefaultTableModel tableModel1;
     private int contTable;
     private AdjacencyMatrixGraph grafoBodegas;
     private Logica logica;
@@ -45,7 +46,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         initComponents();
         this.setLocationRelativeTo(null);
         this.data = new Datos();
-        this.logica= new Logica();
+        this.logica = new Logica();
         this.treeMapLote = this.data.getTreeMapLote();
         this.listaProductos = this.data.getListaProductos();
         this.treeMapLote = this.data.getTreeMapLote();
@@ -55,7 +56,8 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         llenarComboLotesM2();
         llenarComboProductosM2();
         inicializarJTableBodegayFecha();
-
+        inicializarJTableProductoM2();
+        
     }
 
     /**
@@ -67,6 +69,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fondo3 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -94,9 +97,11 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel7 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         fondo5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        fondo3 = new javax.swing.JLabel();
+
+        fondo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -106,30 +111,32 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Seleccione un producto:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Código", "Fecha Empacado", "Fecha vencimiento"
+                " Id", "Nombre", "Unidad Medida", "Valor Unidad", "Categoria", "Precio Total", "Peso Total"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, -1, 210));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 170, 660, 210));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,7 +157,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, 210));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 250, 210));
 
         jButton4.setBackground(new java.awt.Color(0, 51, 51));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -173,7 +180,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel1.add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 180, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Indique el Id de lote :");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
 
@@ -189,7 +195,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
+        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -80, 960, 560));
 
         jTabbedPane1.addTab("Reporte de Lotes", jPanel1);
 
@@ -208,24 +214,24 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Producto", "Fecha"
+                "Producto", "Bodega", "Fecha"
             }
         ));
         jScrollPane3.setViewportView(jTable3);
 
-        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 660, 190));
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 660, 220));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel6.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 170, -1));
@@ -237,17 +243,14 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel6.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 170, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Lote:");
         jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Operador:");
         jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Categoria:");
         jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
 
@@ -269,16 +272,16 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         });
         jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 450, -1, -1));
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("CHART");
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, -1));
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
+        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 670, 370));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
         jTabbedPane1.addTab("Detalle", jPanel7);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 960, 510));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 960, 530));
 
         jButton3.setBackground(new java.awt.Color(0, 51, 51));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -290,9 +293,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             }
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 130, -1));
-
-        fondo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        getContentPane().add(fondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -307,26 +307,34 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void llenarComboProductosM2() {
         jComboBox4.removeAllItems();
         for (int i = 0; i < listaProductos.size(); i++) {
             ProductoMayorista productoMayorista = listaProductos.get(i);
-            if(Integer.parseInt((String) jComboBox5.getSelectedItem())==productoMayorista.getIdLote()){
-                 System.out.println("hans puto");
-                 jComboBox4.addItem(productoMayorista.getNombre());
-        }
-        
+            if (Integer.parseInt((String) jComboBox5.getSelectedItem()) == productoMayorista.getIdLote()) {
+                jComboBox4.addItem(productoMayorista.getNombre());
+            }
+            
         }
     }
     
     private void inicializarJTableBodegayFecha() {
         String x[][] = {};
         String columns[] = {"Bodega", "Fecha"};
-        tableModel = new DefaultTableModel(x, columns);
-        jTable2.setModel(tableModel);
+        tableModel1 = new DefaultTableModel(x, columns);
+        jTable2.setModel(tableModel1);
     }
-
+    
+    private void inicializarJTableProductoM2() {
+        String x[][] = {};
+        String columns[] = {"Id", "Nombre","Unidad de medida","Valor Unidad","Categoria","precio total","peso total",};
+        tableModel = new DefaultTableModel(x, columns);
+        jTable1.setModel(tableModel);
+    }
+    
+    
+    
     private void llenarComboLotesM2() {
         jComboBox5.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
@@ -334,10 +342,8 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             
         }
     }
-    
-    
-//        System.out.println(jComboBox5.getSelectedItem());
 
+//        System.out.println(jComboBox5.getSelectedItem());
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -348,31 +354,15 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             try {
-                int id=entry.getValue().getId();
-                this.logica.agregarBodega(id, tableModel, contTable, grafoBodegas);
-            }
-//        jTable2.setModel(tableModel);
-////        tableModel.insertRow(contTable, new Object[]{});
-//        
-//            try {
-//                
-//                for (int i = 0; i < grafoBodegas.getSize(); i++) {
-//                    Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
-//                    
-//                }
-//                
-//            }
-//            catch (GraphException ex) {
-//                Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-            catch (GraphException ex) {
+                int id = entry.getValue().getId();
+                this.logica.agregarBodega(id, tableModel1, contTable, grafoBodegas);
+            } catch (GraphException ex) {
                 Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-                        }
-                    
             
+        }
         
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -386,6 +376,10 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        for (int i = 0; i < listaProductos.size(); i++) {
+            int id = Integer.parseInt(jComboBox5.getSelectedItem().toString());
+            this.logica.agregarProductoM2(id, tableModel, contTable, listaProductos);      
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -454,6 +448,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
