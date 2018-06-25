@@ -6,8 +6,10 @@
 package GUI;
 
 import Domain.Bodega;
+import Domain.Categoria;
 import Domain.Lote;
 import Domain.ProductoMayorista;
+import Domain.Usuario;
 import Logic.Datos;
 import Logic.Logica;
 import TDA.BinaryTree.TreeException;
@@ -17,6 +19,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,9 +35,12 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     
     private Datos data;
     private TreeMap<Integer, Lote> treeMapLote;
+    private HashMap<String, Categoria> hashMapCategoria;
     private LinkedList<ProductoMayorista> listaProductos;
+    private LinkedList<Usuario> listaUsuarios;
     private DefaultTableModel tableModel;
     private DefaultTableModel tableModel1;
+    private DefaultTableModel tableModel2;
     private int contTable;
     private AdjacencyMatrixGraph grafoBodegas;
     private Logica logica;
@@ -50,13 +56,22 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         this.treeMapLote = this.data.getTreeMapLote();
         this.listaProductos = this.data.getListaProductos();
         this.treeMapLote = this.data.getTreeMapLote();
+        this.listaUsuarios = this.data.getListaUsuarios();
+        this.hashMapCategoria = this.data.getHashMapCategoria();
         this.grafoBodegas = this.data.getGrafoBodegas();
         this.tableModel = new DefaultTableModel();
+        this.tableModel1= new DefaultTableModel();
+        this.tableModel2= new DefaultTableModel();
         this.contTable = 0;
         llenarComboLotesM2();
         llenarComboProductosM2();
+        llenarComboLotesM2P2();
+        llenarComboCategoriasM2();
+        llenarComboUsuariosM2();
         inicializarJTableBodegayFecha();
         inicializarJTableProductoM2();
+        inicializarJTableProductosTotales();
+        this.logica.agregarTodosProductos(tableModel2, contTable, listaProductos);
         
     }
 
@@ -195,7 +210,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
-        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -80, 960, 560));
+        jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, 960, 540));
 
         jTabbedPane1.addTab("Reporte de Lotes", jPanel1);
 
@@ -240,6 +255,11 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel6.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 170, -1));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
         jPanel6.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 170, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -319,6 +339,24 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         }
     }
     
+    private void llenarComboUsuariosM2(){
+        jComboBox2.removeAllItems();
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            Usuario usuario = listaUsuarios.get(i);
+            if(usuario.getRol().equalsIgnoreCase("Operador")){
+                jComboBox2.addItem(usuario.getNombre());
+            }
+        }
+    }
+
+    
+    private void inicializarJTableProductosTotales(){
+        String x[][] = {};
+        String columns[] = {"Producto", "Bodega", "Fecha"};
+        tableModel2 = new DefaultTableModel(x, columns);
+        jTable3.setModel(tableModel2);
+    }
+    
     private void inicializarJTableBodegayFecha() {
         String x[][] = {};
         String columns[] = {"Bodega", "Fecha"};
@@ -333,7 +371,20 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTable1.setModel(tableModel);
     }
     
+    private void llenarComboCategoriasM2() {
+        jComboBox3.removeAllItems();
+        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet())  {
+            jComboBox3.addItem(String.valueOf(entry.getValue().getNombre()));        
+        }
+    }
     
+    private void llenarComboLotesM2P2() {
+        jComboBox1.removeAllItems();
+        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
+            jComboBox1.addItem(String.valueOf(entry.getValue().getId()));
+            
+        }
+    }
     
     private void llenarComboLotesM2() {
         jComboBox5.removeAllItems();
@@ -382,6 +433,12 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */

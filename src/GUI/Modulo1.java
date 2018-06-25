@@ -389,6 +389,7 @@ public class Modulo1 extends javax.swing.JFrame {
                 this.jProgressBar.setValue(progreso);
                 tableModel.removeRow(jTableProductos.getSelectedRow());
                 restarPrecioYPeso();
+                
             }
         }
 
