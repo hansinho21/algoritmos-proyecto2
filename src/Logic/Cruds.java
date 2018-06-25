@@ -72,8 +72,9 @@ public class Cruds implements Serializable{
         }
     }
 
-    public void editarCategoria(Categoria categoria) {
+    public void editarCategoria(Categoria categoria) throws IOException {
         hashMapCategoria.replace(categoria.getNombre(), categoria);
+        this.data.setHashMapCategoria(hashMapCategoria);
     }
 
     public void eliminarCategoria(Categoria categoria) throws IOException {
@@ -105,8 +106,9 @@ public class Cruds implements Serializable{
         }
     }
 
-    public void editarLote(Lote lote) {
+    public void editarLote(Lote lote) throws IOException {
         treeMapLote.replace(lote.getId(), lote);
+        this.data.setTreeMapLote(treeMapLote);
     }
 
     public void eliminarLote(Lote lote) throws IOException {
@@ -136,8 +138,9 @@ public class Cruds implements Serializable{
         }
     }
 
-    public void editarUnidadTransporte(UnidadTransporte unidadTransporte) {
+    public void editarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         linkedHashMapUnidadTransporte.replace(unidadTransporte.getId(), unidadTransporte);
+        this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
     }
 
     public void eliminarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {

@@ -456,7 +456,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonEditarUnidadTransporte = new javax.swing.JButton();
         jButtonEliminarUnidadTransporte = new javax.swing.JButton();
         jButtonLimpiarUnidadTransporte = new javax.swing.JButton();
-        jLabel21 = new javax.swing.JLabel();
         jButtonBuscarImagenBodega1 = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
@@ -515,6 +514,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jTextFieldCodigoOrden = new javax.swing.JTextField();
         fondo8 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
+        jButtonSalir1 = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -853,8 +853,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel6.add(jLabelIdUnidadTransporte2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel13.setText("Placa:");
-        jPanel6.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+        jLabel13.setText("Tipo de vehículo:");
+        jPanel6.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel14.setText("Capacidad:");
@@ -913,10 +913,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             }
         });
         jPanel6.add(jButtonLimpiarUnidadTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel21.setText("FileChooser en el url");
-        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
 
         jButtonBuscarImagenBodega1.setText("Buscar Imagen");
         jButtonBuscarImagenBodega1.addActionListener(new java.awt.event.ActionListener() {
@@ -1228,7 +1224,18 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 jButtonSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 100, 30));
+        getContentPane().add(jButtonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 10, 100, 30));
+
+        jButtonSalir1.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonSalir1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonSalir1.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSalir1.setText("Cargar nuevamente");
+        jButtonSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalir1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 220, 30));
 
         fondo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         getContentPane().add(fondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 580));
@@ -1428,6 +1435,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 llenarAutocompleterUnidadesTransporte();
             } catch (GraphException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButtonEditarUnidadTransporteActionPerformed
@@ -1509,6 +1518,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 llenarAutocompleterCategoria();
             } catch (GraphException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButtonEditarCategoriaActionPerformed
@@ -1589,17 +1600,20 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         if (validarInformacionLote() == true) {
             try {
                 Lote auxLote = new Lote();
-                Date date = new Date(2, 2, 2);
+
                 auxLote.setId(Integer.parseInt(jLabelIdLote.getText()));
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
-                auxLote.setFechaEmpacado(date);
-                auxLote.setFechaVecimiento(date);
+                auxLote.setFechaEmpacado(jDateChooser1.getDate());
+                auxLote.setFechaVecimiento(jDateChooser2.getDate());
+                auxLote.setIdBodega(this.logica.getIdBodega(jComboBoxBodegaLote.getSelectedItem().toString()));
 
                 cruds.editarLote(auxLote);
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
             } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -2088,6 +2102,17 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jTextFieldMontoOrdenKeyTyped
 
+    private void jButtonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalir1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            Mantenimiento mantenimiento = new Mantenimiento();
+            mantenimiento.setVisible(true);
+            dispose();
+        } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
+            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSalir1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2172,6 +2197,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonLimpiarUsuario;
     private javax.swing.JButton jButtonModificarUsuario;
     private javax.swing.JButton jButtonSalir;
+    private javax.swing.JButton jButtonSalir1;
     private javax.swing.JComboBox<String> jComboBoxBodegaDestinoOrden;
     private javax.swing.JComboBox<String> jComboBoxBodegaLote;
     private javax.swing.JComboBox<String> jComboBoxBodegaProcedenciaOrden;
@@ -2196,7 +2222,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
