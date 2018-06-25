@@ -6,9 +6,11 @@
 package GUI;
 
 import Domain.Bodega;
+import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.UnidadTransporte;
 import Domain.Usuario;
+import Logic.Cruds;
 import Logic.Datos;
 
 import Logic.Logica;
@@ -21,6 +23,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.MathContext;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -39,8 +43,12 @@ public class Modulo1 extends javax.swing.JFrame {
     //Clases
     private Datos data;
     private Logica logica;
+    private Cruds cruds;
 
     //TDA's
+    
+    private LinkedList<OrdenDistribucion> listaOrdenes;
+    private LinkedList<ProductoMayorista> auxListaProductos;
     private LinkedList<ProductoMayorista> listaProductos;
     private AdjacencyMatrixGraph grafoBodegas;
     private static LinkedHashMap<Integer, UnidadTransporte> linkedHashMapUnidadTransporte;
@@ -70,9 +78,12 @@ public class Modulo1 extends javax.swing.JFrame {
         //Clases
         this.data = new Datos();
         this.logica = new Logica();
+        this.cruds = new Cruds();
 
         //TDA's
+        auxListaProductos = new LinkedList<>();
         this.listaProductos = this.data.getListaProductos();
+        this.listaOrdenes = data.getListaOrdenes();
         this.grafoBodegas = this.data.getGrafoBodegas();
         this.linkedHashMapUnidadTransporte = this.data.getLinkedHashMapUnidadTransporte();
 
@@ -163,7 +174,6 @@ public class Modulo1 extends javax.swing.JFrame {
         urlMaps.add(url3);
         urlMaps.add(longitud);
         String url="";
-        System.out.println(urlMaps.get(0)+urlMaps.get(1)+urlMaps.get(2)+urlMaps.get(3)+urlMaps.get(4));
         browser.loadURL(urlMaps.get(0)+urlMaps.get(1)+urlMaps.get(2)+urlMaps.get(3)+urlMaps.get(4));
     }
 
@@ -309,6 +319,11 @@ public class Modulo1 extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Confirmar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
@@ -338,6 +353,11 @@ public class Modulo1 extends javax.swing.JFrame {
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
         String elemento = jListProductos.getSelectedValue();
         this.logica.agergarProducto(elemento, tableModel, contTable, listaProductos, pesoTotal, precioTotal);
+        for (int i = 0; i < listaProductos.size(); i++) {
+            ProductoMayorista p = listaProductos.get(i);
+            if(p.getNombre().equalsIgnoreCase(jListProductos.getSelectedValue()))
+                auxListaProductos.add(p);
+        }
         this.jProgressBar.setMaximum(1000);
         for (int i = 0; i < listaProductos.size(); i++) {
             ProductoMayorista auxProducto = (ProductoMayorista) listaProductos.get(i);
@@ -421,6 +441,50 @@ public class Modulo1 extends javax.swing.JFrame {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            int codigo = (int) (Math.random() * 900) + 1;
+            OrdenDistribucion orden = new OrdenDistribucion();
+            int id = 0;
+            if (listaOrdenes.isEmpty()) {
+                id = 1;
+            } else {
+                id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
+            }
+            orden.setId(id);
+            orden.setCodigo(String.valueOf(codigo));
+            for (int i = 0; i < grafoBodegas.getSize(); i++) {
+                Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
+                if(bodega.getNombre().equalsIgnoreCase("Bodega Central"))
+                    orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getId())));
+            }
+            orden.setIdBodegaDestino(this.logica.getIdBodega((String) jComboBox6.getSelectedItem()));
+            orden.setMontoTotal(Double.parseDouble(jLabelMontoTotal.getText()));
+            orden.setPesoTotal(Float.parseFloat(jLabelPesoTotal.getText()));
+            orden.setListaProductos(auxListaProductos);
+            orden.setIdOperador(2);
+            Date date = new Date();
+            date.getDate();
+            orden.setFecha(date);
+//            logica.
+            cruds.agregarOrden(orden);
+            
+        JOptionPane.showMessageDialog(null, "Orden confirmada!!");
+        try {
+            Modulo1 m = new Modulo1();
+            m.setVisible(true);
+            dispose();
+        } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
+            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        } catch (GraphException ex) {
+            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

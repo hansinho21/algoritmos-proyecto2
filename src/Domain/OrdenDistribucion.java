@@ -36,6 +36,8 @@ public class OrdenDistribucion implements Serializable {
         this.idOperador = idOperador;
         this.fecha = fecha;
     }
+    
+    
 
     public OrdenDistribucion() {
     }
