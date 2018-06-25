@@ -221,7 +221,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jButtonBuscrHistorial = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         fondo5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -379,10 +378,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTabbedPane1.addTab("Historial de productos", jPanel6);
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setText("CHART");
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
-        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 670, 420));
+        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 670, 420));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -502,7 +498,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private CategoryDataset createDataset1() {
 
         // row keys...
-        final String series1 = "Series 1";
+        final String series1 = "Primeros 6 meses";
         final String series2 = "";
 
         // column keys...
@@ -531,7 +527,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
         // row keys...
         final String series1 = "";
-        final String series2 = "Series 2";
+        final String series2 = "Segundos 6 meses";
 
         // column keys...
         final String category1 = "Arroz";
@@ -668,7 +664,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JComboBox<String> jComboBoxIdLoteReporte;
     private javax.swing.JComboBox<String> jComboBoxLoteHistorial;
     private javax.swing.JComboBox<String> jComboBoxOperadorHistorial;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
