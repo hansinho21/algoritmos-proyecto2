@@ -16,6 +16,7 @@ import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import com.sun.org.apache.xml.internal.serialize.HTMLdtd;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -502,7 +503,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
         // row keys...
         final String series1 = "Series 1";
-        final String series2 = "Dummy 1";
+        final String series2 = "";
 
         // column keys...
         final String category1 = "Arroz";
@@ -513,10 +514,10 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        dataset.addValue(1.0, series1, category1);
-        dataset.addValue(4.0, series1, category2);
-        dataset.addValue(3.0, series1, category3);
-        dataset.addValue(5.0, series1, category4);
+        dataset.addValue(100, series1, category1);
+        dataset.addValue(400, series1, category2);
+        dataset.addValue(300, series1, category3);
+        dataset.addValue(500, series1, category4);
 
         dataset.addValue(null, series2, category1);
         dataset.addValue(null, series2, category2);
@@ -529,7 +530,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private CategoryDataset createDataset2() {
 
         // row keys...
-        final String series1 = "Dummy 2";
+        final String series1 = "";
         final String series2 = "Series 2";
 
         // column keys...
@@ -557,7 +558,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private JFreeChart createChart(final CategoryDataset dataset1, final CategoryDataset dataset2) {
 
         final CategoryAxis domainAxis = new CategoryAxis("Producto");
-        final NumberAxis rangeAxis = new NumberAxis("Bodega");
+        final NumberAxis rangeAxis = new NumberAxis("Precio");
         final BarRenderer renderer1 = new BarRenderer();
         final CategoryPlot plot = new CategoryPlot(dataset1, domainAxis, rangeAxis, renderer1) {
 
@@ -591,7 +592,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
         plot.setDataset(1, dataset2);
         plot.mapDatasetToRangeAxis(1, 1);
-        final ValueAxis axis2 = new NumberAxis("fecha");
+        final ValueAxis axis2 = new NumberAxis("Cantidad");
         plot.setRangeAxis(1, axis2);
         plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
         final BarRenderer renderer2 = new BarRenderer();
