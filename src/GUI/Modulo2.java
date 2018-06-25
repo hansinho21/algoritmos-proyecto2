@@ -442,7 +442,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             LinkedList<ProductoMayorista> linkedList = this.logica.getListaProductosPorLote(lote.getId());
             Bodega bodega = this.logica.getBodegaPorIdBodega(lote.getIdBodega());
 
-            this.logica.agregarBodega(bodega, lote.getFechaEmpacado(), tableModelBodegasReporte, contTableBodegaReporte);
+            if(bodega != null){
+                this.logica.agregarBodega(bodega, lote.getFechaEmpacado(), tableModelBodegasReporte, contTableBodegaReporte);
+            }
             for (int i = 0; i < linkedList.size(); i++) {
                 this.logica.agregarTodosProductos(linkedList.get(i), tableModelProductosReporte, contTableProductoReporte);
             }
