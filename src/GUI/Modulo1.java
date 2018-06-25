@@ -45,6 +45,10 @@ public class Modulo1 extends javax.swing.JFrame {
     private Logica logica;
     private Cruds cruds;
 
+    
+    Browser browser = new Browser();
+    BrowserView view = new BrowserView(browser);
+    
     //TDA's
     
     private LinkedList<OrdenDistribucion> listaOrdenes;
@@ -55,6 +59,7 @@ public class Modulo1 extends javax.swing.JFrame {
 
     //JList
     private DefaultListModel listModel;
+    private DefaultListModel listModelBodegas;
 
     //JTable
     private DefaultTableModel tableModel;
@@ -89,6 +94,7 @@ public class Modulo1 extends javax.swing.JFrame {
 
         //JList
         this.listModel = new DefaultListModel();
+        this.listModelBodegas = new DefaultListModel();
         this.jListProductos.setModel(listModel);
         llenarJList();
 
@@ -96,29 +102,36 @@ public class Modulo1 extends javax.swing.JFrame {
         this.tableModel = new DefaultTableModel();
         this.contTable = 0;
         inicializarJTable();
+        llenarJListBodegas();
+        
 
         //Monto y peso
         this.precioTotal = 0;
         this.pesoTotal = 0;
 
+        
+        
 //        browser();
-        llenarComboBoxBodegas();
+//        llenarComboBoxBodegas();
 
     }
 
+    private void llenarJListBodegas() throws GraphException {
+        String[] bodegas= new String[grafoBodegas.getSize()];
+        for (int i = 0; i < this.grafoBodegas.getSize(); i++) {
+            Bodega b = (Bodega) this.grafoBodegas.getVertex(i);
+            bodegas[i]= b.getNombre();
+        }
+        jList1.setListData(bodegas);
+    }
+    
     private void llenarJList() {
         for (int i = 0; i < this.listaProductos.size(); i++) {
             this.listModel.addElement(this.listaProductos.get(i).getNombre());
         }
     }
 
-    private void llenarComboBoxBodegas() throws GraphException {
-        for (int i = 0; i < grafoBodegas.getSize(); i++) {
-            Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
-            jComboBox6.addItem(auxBodega.getNombre());
-        }
-
-    }
+    
 
     private void inicializarJTable() {
         String x[][] = {};
@@ -149,32 +162,31 @@ public class Modulo1 extends javax.swing.JFrame {
     }
 
     public void browser() throws GraphException {
-        Browser browser = new Browser();
-        BrowserView view = new BrowserView(browser);
+        
         jPanel14.setLayout(new BorderLayout());
         jPanel14.add(view, BorderLayout.CENTER);
         String latitud = "";
         String longitud = "";
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
-            if (jComboBox6.getSelectedItem().equals(auxBodega.getNombre())) {
-                System.out.println(jComboBox6.getSelectedItem());
+            if (jList1.getSelectedValue().equals(auxBodega.getNombre())) {
+//                System.out.println(jComboBox6.getSelectedItem());
                 latitud = auxBodega.getLatitud();
                 longitud = auxBodega.getLongitud();
 
             }
         }
-        String url1 = "http";
-        String url2 = "://maps.google.es/?q=loc:";
-        String url3 = "%20"; 
-        LinkedList<String> urlMaps = new LinkedList<>();
-        urlMaps.add(url1);
-        urlMaps.add(url2);
-        urlMaps.add(latitud);
-        urlMaps.add(url3);
-        urlMaps.add(longitud);
-        String url="";
-        browser.loadURL(urlMaps.get(0)+urlMaps.get(1)+urlMaps.get(2)+urlMaps.get(3)+urlMaps.get(4));
+        
+        String[] url = new String[4];
+        url[0] = "https:/"+""+"/www.google.com/maps/search/?api=1&query=";
+        url[1] = latitud;
+        url[2] = ",";
+        url[3] = longitud;; 
+        
+        
+        
+        browser.loadURL(url[0]+url[1]+url[2]+url[3]);
+        System.out.println(url[0]+url[1]+url[2]+url[3]);
     }
 
     /**
@@ -204,9 +216,10 @@ public class Modulo1 extends javax.swing.JFrame {
         fondo1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
         jPanel14 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         fondo2 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         fondo3 = new javax.swing.JLabel();
@@ -292,16 +305,6 @@ public class Modulo1 extends javax.swing.JFrame {
         jLabel2.setText("Seleccione la bodega:");
         jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jComboBox6.setBackground(new java.awt.Color(0, 51, 51));
-        jComboBox6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jComboBox6.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox6ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 190, 30));
-
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -325,6 +328,15 @@ public class Modulo1 extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
+
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jList1MousePressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jList1);
+
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 210, 220));
 
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -432,16 +444,6 @@ public class Modulo1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
-        try {
-            // TODO add your handling code here:
-            browser();
-
-        } catch (GraphException ex) {
-            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jComboBox6ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
@@ -460,7 +462,7 @@ public class Modulo1 extends javax.swing.JFrame {
                 if(bodega.getNombre().equalsIgnoreCase("Bodega Central"))
                     orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getId())));
             }
-            orden.setIdBodegaDestino(this.logica.getIdBodega((String) jComboBox6.getSelectedItem()));
+            orden.setIdBodegaDestino(this.logica.getIdBodega((String) jList1.getSelectedValue()));
             orden.setMontoTotal(Double.parseDouble(jLabelMontoTotal.getText()));
             orden.setPesoTotal(Float.parseFloat(jLabelPesoTotal.getText()));
             orden.setListaProductos(auxListaProductos);
@@ -485,6 +487,15 @@ public class Modulo1 extends javax.swing.JFrame {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jList1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MousePressed
+        try {
+            // TODO add your handling code here:
+            browser();
+        } catch (GraphException ex) {
+            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jList1MousePressed
 
     /**
      * @param args the command line arguments
@@ -537,7 +548,6 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonEliminar;
-    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -545,6 +555,7 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelCategoria;
     private javax.swing.JLabel jLabelMontoTotal;
     private javax.swing.JLabel jLabelPesoTotal;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jListProductos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
@@ -552,6 +563,7 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableProductos;
     // End of variables declaration//GEN-END:variables
