@@ -129,7 +129,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private void llenarComboBoxLoteHistorial() {
         jComboBoxLoteHistorial.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-            jComboBoxLoteHistorial.addItem(entry.getValue().getCodigoLote());
+            jComboBoxLoteHistorial.addItem(String.valueOf(entry.getValue().getId()));
         }
     }
 

@@ -331,7 +331,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void llenarComboBoxCategoria() {
         jComboBoxIdCategoriaProducto.removeAllItems();
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
-            jComboBoxIdCategoriaProducto.addItem(String.valueOf(entry.getValue().getId()));
+            jComboBoxIdCategoriaProducto.addItem(entry.getValue().getNombre());
 
         }
     }
@@ -958,8 +958,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel9.add(jLabelIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, -1, -1));
 
         jLabelIdCategoriaProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelIdCategoriaProducto.setText("Id Categoria");
-        jPanel9.add(jLabelIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
+        jLabelIdCategoriaProducto.setText("Categoria");
+        jPanel9.add(jLabelIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, -1, -1));
 
         jLabelPrecioProducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelPrecioProducto.setText("Precio total");
@@ -1082,7 +1082,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         });
         jPanel9.add(jButtonBuscarImagenBodega2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 120, 30));
 
-        jPanel9.add(jComboBoxIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 70, 30));
+        jPanel9.add(jComboBoxIdCategoriaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 150, 30));
 
         jPanel9.add(jComboBoxIdLoteProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 70, 30));
 
@@ -1714,13 +1714,15 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             } else {
                 id = listaProducto.get(listaProducto.size() - 1).getId() + 1;
             }
+            
+            Categoria categoria = this.logica.getCategoria(jComboBoxIdCategoriaProducto.getSelectedItem().toString());
 
             productoMayorista.setId(id);
             productoMayorista.setNombre(jTextFieldNombreProducto.getText());
             productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
             productoMayorista.setUnidadMedidas(jTextFieldMedidasProducto.getText());
             productoMayorista.setUrlFotografia(jTextFieldUrlProducto.getText());
-            productoMayorista.setIdCategoria(Integer.parseInt(jComboBoxIdCategoriaProducto.getSelectedItem().toString()));
+            productoMayorista.setIdCategoria(categoria.getId());
             productoMayorista.setIdLote(Integer.parseInt(jComboBoxIdLoteProducto.getSelectedItem().toString()));
             productoMayorista.setPesoTotal(Integer.parseInt(jTextFieldPesoProducto.getText()));
             productoMayorista.setPrecioTotal(Double.parseDouble(jTextFieldPrecioProducto.getText()));
@@ -1862,12 +1864,14 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             // TODO add your handling code here:
             ProductoMayorista productoMayorista = new ProductoMayorista();
 
+            Categoria categoria = this.logica.getCategoria(jComboBoxIdCategoriaProducto.getSelectedItem().toString());
+            
             productoMayorista.setId(Integer.parseInt(jLabelIdProducto.getText()));
             productoMayorista.setNombre(jTextFieldNombreProducto.getText());
             productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
             productoMayorista.setUnidadMedidas(jTextFieldMedidasProducto.getText());
             productoMayorista.setUrlFotografia(jTextFieldUrlProducto.getText());
-            productoMayorista.setIdCategoria(Integer.parseInt(jComboBoxIdCategoriaProducto.getSelectedItem().toString()));
+            productoMayorista.setIdCategoria(categoria.getId());
             productoMayorista.setIdLote(Integer.parseInt(jComboBoxIdLoteProducto.getSelectedItem().toString()));
             productoMayorista.setPesoTotal(Integer.parseInt(jTextFieldPesoProducto.getText()));
             productoMayorista.setPrecioTotal(Double.parseDouble(jTextFieldPrecioProducto.getText()));
@@ -1888,12 +1892,14 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             // TODO add your handling code here:
             ProductoMayorista productoMayorista = new ProductoMayorista();
 
+            Categoria categoria = this.logica.getCategoria(jComboBoxIdCategoriaProducto.getSelectedItem().toString());
+            
             productoMayorista.setId(Integer.parseInt(jLabelIdProducto.getText()));
             productoMayorista.setNombre(jTextFieldNombreProducto.getText());
             productoMayorista.setDescripcion(jTextFieldDescripcionProducto.getText());
             productoMayorista.setUnidadMedidas(jTextFieldMedidasProducto.getText());
             productoMayorista.setUrlFotografia(jTextFieldUrlProducto.getText());
-            productoMayorista.setIdCategoria(Integer.parseInt(jComboBoxIdCategoriaProducto.getSelectedItem().toString()));
+            productoMayorista.setIdCategoria(categoria.getId());
             productoMayorista.setIdLote(Integer.parseInt(jComboBoxIdLoteProducto.getSelectedItem().toString()));
             productoMayorista.setPesoTotal(Integer.parseInt(jTextFieldPesoProducto.getText()));
             productoMayorista.setPrecioTotal(Double.parseDouble(jTextFieldPrecioProducto.getText()));
