@@ -16,6 +16,8 @@ import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
 import TDA.Graph.GraphException;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -26,7 +28,22 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -93,6 +110,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         llenarComboLotesReporte();
         inicializarJTableBodegayFecha();
         inicializarJTableProductoReporte();
+        dualAxis();
 
 
 //        llenarComboLotesM2P2();
@@ -202,7 +220,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jButtonBuscrHistorial = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         fondo5 = new javax.swing.JLabel();
@@ -362,20 +379,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton6.setBackground(new java.awt.Color(0, 51, 51));
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Mantenimiento");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 450, -1, -1));
-
         jLabel2.setText("CHART");
         jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
-        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 670, 370));
+        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 670, 420));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -448,10 +454,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
     }//GEN-LAST:event_jButtonBuscarReporteActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
     private void jComboBoxIdLoteReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxIdLoteReporteActionPerformed
         // TODO add your handling code here:
 
@@ -493,7 +495,118 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonBuscrHistorialActionPerformed
+//--------------------------------CHART--------------------------------------------------------------------
+    private CategoryDataset createDataset1() {
 
+        // row keys...
+        final String series1 = "Series 1";
+        final String series2 = "Dummy 1";
+
+        // column keys...
+        final String category1 = "Arroz";
+        final String category2 = "Cafe";
+        final String category3 = "Leche";
+        final String category4 = "Naranjas";
+
+        // create the dataset...
+        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        dataset.addValue(1.0, series1, category1);
+        dataset.addValue(4.0, series1, category2);
+        dataset.addValue(3.0, series1, category3);
+        dataset.addValue(5.0, series1, category4);
+
+        dataset.addValue(null, series2, category1);
+        dataset.addValue(null, series2, category2);
+        dataset.addValue(null, series2, category3);
+        dataset.addValue(null, series2, category4);
+
+        return dataset;
+
+    }
+    private CategoryDataset createDataset2() {
+
+        // row keys...
+        final String series1 = "Dummy 2";
+        final String series2 = "Series 2";
+
+        // column keys...
+        final String category1 = "Arroz";
+        final String category2 = "Cafe";
+        final String category3 = "Leche";
+        final String category4 = "Naranjas";
+
+        // create the dataset...
+        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        dataset.addValue(null, series1, category1);
+        dataset.addValue(null, series1, category2);
+        dataset.addValue(null, series1, category3);
+        dataset.addValue(null, series1, category4);
+
+        dataset.addValue(75.0, series2, category1);
+        dataset.addValue(87.0, series2, category2);
+        dataset.addValue(96.0, series2, category3);
+        dataset.addValue(68.0, series2, category4);
+
+        return dataset;
+
+    }
+    private JFreeChart createChart(final CategoryDataset dataset1, final CategoryDataset dataset2) {
+
+        final CategoryAxis domainAxis = new CategoryAxis("Producto");
+        final NumberAxis rangeAxis = new NumberAxis("Bodega");
+        final BarRenderer renderer1 = new BarRenderer();
+        final CategoryPlot plot = new CategoryPlot(dataset1, domainAxis, rangeAxis, renderer1) {
+
+            public LegendItemCollection getLegendItems() {
+                final LegendItemCollection result = new LegendItemCollection();
+                final CategoryDataset data = getDataset();
+                if (data != null) {
+                    final CategoryItemRenderer r = getRenderer();
+                    if (r != null) {
+                        final LegendItem item = r.getLegendItem(0, 0);
+                        result.add(item);
+                    }
+                }
+                // the JDK 1.2.2 compiler complained about the name of this
+                // variable 
+                final CategoryDataset dset2 = getDataset(1);
+                if (dset2 != null) {
+                    final CategoryItemRenderer renderer2 = getRenderer(1);
+                    if (renderer2 != null) {
+                        final LegendItem item = renderer2.getLegendItem(1, 1);
+                        result.add(item);
+                    }
+                }
+                return result;
+            }  
+        };
+        final JFreeChart chart = new JFreeChart("Historial de Productos más solicitados", plot);
+        chart.setBackgroundPaint(Color.white);
+//        chart.getLegend().setAnchor(Legend.SOUTH);
+        plot.setBackgroundPaint(new Color(0xEE, 0xEE, 0xFF));
+        plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        plot.setDataset(1, dataset2);
+        plot.mapDatasetToRangeAxis(1, 1);
+        final ValueAxis axis2 = new NumberAxis("fecha");
+        plot.setRangeAxis(1, axis2);
+        plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
+        final BarRenderer renderer2 = new BarRenderer();
+        plot.setRenderer(1, renderer2);   
+        return chart;
+    }
+    
+    public void dualAxis(){
+        final CategoryDataset dataset1 = createDataset1();
+        final CategoryDataset dataset2 = createDataset2();
+        final JFreeChart chart = createChart(dataset1, dataset2);
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        jPanel2.removeAll();
+        jPanel2.add(chartPanel, BorderLayout.CENTER);
+        jPanel2.setVisible(true);
+    }
+    //----------------------------------------------------CHART------------------------------------------------
     /**
      * @param args the command line arguments
      */
@@ -546,7 +659,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonBuscarReporte;
     private javax.swing.JButton jButtonBuscrHistorial;
     private javax.swing.JComboBox<String> jComboBoxCategoriaHistorial;
