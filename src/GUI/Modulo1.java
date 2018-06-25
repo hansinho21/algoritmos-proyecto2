@@ -153,9 +153,18 @@ public class Modulo1 extends javax.swing.JFrame {
 
             }
         }
-        String url = "http://" + "maps.google.es/?q=loc:" + latitud + "%20" + longitud;
-        System.out.println(url);
-        browser.loadURL(url);
+        String url1 = "http";
+        String url2 = "://maps.google.es/?q=loc:";
+        String url3 = "%20"; 
+        LinkedList<String> urlMaps = new LinkedList<>();
+        urlMaps.add(url1);
+        urlMaps.add(url2);
+        urlMaps.add(latitud);
+        urlMaps.add(url3);
+        urlMaps.add(longitud);
+        String url="";
+        System.out.println(urlMaps.get(0)+urlMaps.get(1)+urlMaps.get(2)+urlMaps.get(3)+urlMaps.get(4));
+        browser.loadURL(urlMaps.get(0)+urlMaps.get(1)+urlMaps.get(2)+urlMaps.get(3)+urlMaps.get(4));
     }
 
     /**
