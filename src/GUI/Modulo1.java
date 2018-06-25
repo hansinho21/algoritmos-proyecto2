@@ -188,7 +188,6 @@ public class Modulo1 extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButtonAgregar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabelMontoTotal = new javax.swing.JLabel();
         jLabelPesoTotal = new javax.swing.JLabel();
         jLabelCategoria = new javax.swing.JLabel();
@@ -262,14 +261,6 @@ public class Modulo1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
-
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 450, -1, -1));
 
         jLabelMontoTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jPanel1.add(jLabelMontoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, 160, 20));
@@ -352,17 +343,21 @@ public class Modulo1 extends javax.swing.JFrame {
             ProductoMayorista auxProducto = (ProductoMayorista) listaProductos.get(i);
             if (auxProducto.getNombre().equals(jListProductos.getSelectedValue())) {
                 if (pesoTotal < 1000) {
+                    this.jLabelCategoria.setText("Liviano");
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
                 } else if (pesoTotal >= 1000 && pesoTotal < 5000) {
+                    this.jLabelCategoria.setText("Pick Up");
                     this.jProgressBar.setMaximum(5000);
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
                 } else if (pesoTotal >= 5000 && pesoTotal < 10000) {
+                    this.jLabelCategoria.setText("Camion Pequeño");
                     this.jProgressBar.setMaximum(10000);
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
                 } else if (pesoTotal >= 10000 && pesoTotal < 30000) {
+                    this.jLabelCategoria.setText("Camion Grande");
                     this.jProgressBar.setMaximum(30000);
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
@@ -404,12 +399,6 @@ public class Modulo1 extends javax.swing.JFrame {
 
 //        restarPrecioYPeso();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.progreso += 10;
-        this.jProgressBar.setValue(progreso);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
@@ -481,7 +470,6 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JLabel fondo2;
     private javax.swing.JLabel fondo3;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonEliminar;
