@@ -70,40 +70,21 @@ public class Logica implements Serializable {
         return false;
     }
 
-    public void agregarBodega(int idBodega, DefaultTableModel tableModel, int contTable, AdjacencyMatrixGraph grafoBodega) throws GraphException {
-//        for (int i = 0; i < tableModel.getRowCount(); i++) {
-//            tableModel.removeRow(i);
-//        }
-        for (int i = 0; i < grafoBodega.getSize(); i++) {
-            Bodega bodega = (Bodega) grafoBodega.getVertex(i);
-            if (bodega.getId() == idBodega) {
-                tableModel.insertRow(contTable, new Object[]{});
-                tableModel.setValueAt(bodega.getNombre(), contTable, 0);
-                break;
-            }
-
-        }
+    public void agregarBodega(Bodega bodega, Date date, DefaultTableModel tableModel, int contTable) throws GraphException {
+        tableModel.insertRow(contTable, new Object[]{});
+        tableModel.setValueAt(bodega.getNombre(), contTable, 0);
+        tableModel.setValueAt(date, contTable, 1);
     }
 
-    public void agregarTodosProductos(DefaultTableModel tableModel, int contTable, LinkedList listaProductos) throws GraphException {
-        for (int i = 0; i < listaProductos.size(); i++) {
-            ProductoMayorista p = (ProductoMayorista) listaProductos.get(i);
-            tableModel.insertRow(contTable, new Object[]{});
-            tableModel.setValueAt(p.getNombre(), contTable, 0);
-            for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-                Lote lote = new Lote();
-                lote.setId(p.getIdLote());
-                if (lote.getId() == (entry.getValue().getId())) {
-                    for (int j = 0; j < grafoBodegas.getSize(); j++) {
-                        Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
-                        if (bodega.getId() == entry.getValue().getIdBodega()) {
-                            tableModel.setValueAt(bodega.getNombre(), contTable, 1);
-                        }
-                    }
-                }
-            }
-
-        }
+    public void agregarTodosProductos(ProductoMayorista producto, DefaultTableModel tableModel, int contTable) throws GraphException {
+        tableModel.insertRow(contTable, new Object[]{});
+        tableModel.setValueAt(producto.getId(), contTable, 0);
+        tableModel.setValueAt(producto.getNombre(), contTable, 1);
+        tableModel.setValueAt(producto.getUnidadMedidas(), contTable, 2);
+        tableModel.setValueAt(producto.getValorUnidad(), contTable, 3);
+        tableModel.setValueAt(producto.getIdCategoria(), contTable, 4);
+        tableModel.setValueAt(producto.getPrecioTotal(), contTable, 5);
+        tableModel.setValueAt(producto.getPesoTotal(), contTable, 6);
     }
 
     public void agregarProductoM2(int idLote, DefaultTableModel tableModel, int contTable, LinkedList listaProductos) {
@@ -227,6 +208,17 @@ public class Logica implements Serializable {
         for (int i = 0; i < this.listaProductos.size(); i++) {
             ProductoMayorista producto = this.listaProductos.get(i);
             if (producto.getIdLote() == idLote && producto.getIdCategoria() == idCategoria) {
+                linkedList.add(producto);
+            }
+        }
+        return linkedList;
+    }
+
+    public LinkedList<ProductoMayorista> getListaProductosPorLote(int idLote) {
+        LinkedList<ProductoMayorista> linkedList = new LinkedList<>();
+        for (int i = 0; i < this.listaProductos.size(); i++) {
+            ProductoMayorista producto = this.listaProductos.get(i);
+            if (producto.getIdLote() == idLote) {
                 linkedList.add(producto);
             }
         }
