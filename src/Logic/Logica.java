@@ -100,10 +100,11 @@ public class Logica implements Serializable {
                     }
             }
         }
+          
         }
-        
     }
     
+   
     
     public void agregarProductoM2(int idLote,DefaultTableModel tableModel,int contTable, LinkedList listaProductos){
         for (int i = 0; i < listaProductos.size(); i++) {

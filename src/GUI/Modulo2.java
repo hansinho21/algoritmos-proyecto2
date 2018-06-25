@@ -435,7 +435,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
-        
+       
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     
@@ -470,7 +470,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() { 
             public void run() {
                 try {
                     new Modulo2().setVisible(true);
