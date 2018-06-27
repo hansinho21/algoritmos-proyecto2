@@ -79,6 +79,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         initComponents();
         this.setLocationRelativeTo(null);
 
+        //Labels ID
         this.jLabelIdUsuario2.setVisible(false);
         this.jLabelIdBodega2.setVisible(false);
         this.jLabelIdCategoria2.setVisible(false);
@@ -86,6 +87,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdUnidadTransporte2.setVisible(false);
         this.jLabelIdProducto2.setVisible(false);
         this.jLabelIdOrden2.setVisible(false);
+        
+        //DatePicker
+        this.jDateChooser1.setDate(null);
+        this.jDateChooser2.setDate(null);
+        this.jDateChooserFechaOrden.setDate(null);
 
         //instancias
         this.data = new Datos();
@@ -167,8 +173,8 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void limpiarInformacionLote() {
         jLabelIdLote.setText("");
         jTextFieldCodigoLote.setText("");
-        jDateChooser1.setDateFormatString("");
-        jDateChooser2.setDateFormatString("");
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
         jLabelIdLote2.setVisible(false);
     }
 
@@ -197,7 +203,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void limpiarInformacionOrden() {
         jLabelIdOrdenDistribucion.setText("");
         jTextFieldCodigoOrden.setText("");
-        jDateChooserFechaOrden.setDateFormatString("");
+        jDateChooserFechaOrden.setDate(null);
         jTextFieldPesoOrden.setText("");
         jTextFieldMontoOrden.setText("");
         listModel.clear();
@@ -438,10 +444,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonEditarLote = new javax.swing.JButton();
         jButtonEliminarLote = new javax.swing.JButton();
         jButtonLimpiarLote = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jComboBoxBodegaLote = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
+        jDateChooser1 = new org.jdesktop.swingx.JXDatePicker();
+        jDateChooser2 = new org.jdesktop.swingx.JXDatePicker();
         fondo5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabelIdUnidadTransporte2 = new javax.swing.JLabel();
@@ -498,7 +504,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jComboBoxOperadorOrden = new javax.swing.JComboBox<>();
         jComboBoxBodegaDestinoOrden = new javax.swing.JComboBox<>();
         jComboBoxProductosOrden = new javax.swing.JComboBox<>();
-        jDateChooserFechaOrden = new com.toedter.calendar.JDateChooser();
         jComboBoxBodegaProcedenciaOrden = new javax.swing.JComboBox<>();
         jTextFieldMontoOrden = new javax.swing.JTextField();
         jTextFieldPesoOrden = new javax.swing.JTextField();
@@ -512,6 +517,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonAgregarOrden = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jTextFieldCodigoOrden = new javax.swing.JTextField();
+        jDateChooserFechaOrden = new org.jdesktop.swingx.JXDatePicker();
         fondo8 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         jButtonSalir1 = new javax.swing.JButton();
@@ -832,14 +838,14 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             }
         });
         jPanel7.add(jButtonLimpiarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
-        jPanel7.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 180, -1));
-        jPanel7.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 180, -1));
 
         jPanel7.add(jComboBoxBodegaLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 180, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel22.setText("Código:");
         jPanel7.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+        jPanel7.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 180, -1));
+        jPanel7.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 180, -1));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -1127,7 +1133,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel10.add(jComboBoxBodegaDestinoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 200, -1));
 
         jPanel10.add(jComboBoxProductosOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 200, -1));
-        jPanel10.add(jDateChooserFechaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 200, -1));
 
         jPanel10.add(jComboBoxBodegaProcedenciaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 200, -1));
 
@@ -1207,6 +1212,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             }
         });
         jPanel10.add(jTextFieldCodigoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 200, -1));
+        jPanel10.add(jDateChooserFechaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 200, -1));
 
         fondo8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel10.add(fondo8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
@@ -2211,9 +2217,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JComboBox<String> jComboBoxOperadorOrden;
     private javax.swing.JComboBox<String> jComboBoxProductosOrden;
     private javax.swing.JComboBox<String> jComboBoxRolUsuario;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooserFechaOrden;
+    private org.jdesktop.swingx.JXDatePicker jDateChooser1;
+    private org.jdesktop.swingx.JXDatePicker jDateChooser2;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserFechaOrden;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
