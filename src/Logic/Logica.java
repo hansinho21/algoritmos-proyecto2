@@ -391,4 +391,13 @@ public class Logica implements Serializable {
         }
         return hashMap;
     }
+    
+    public String getCategoria(int idCategoria){
+        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
+            if (entry.getValue().getId() == idCategoria) {
+                return entry.getValue().getNombre();
+            }
+        }
+        return null;
+    }
 }

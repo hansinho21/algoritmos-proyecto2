@@ -133,8 +133,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         llenarComboBoxLote();
         llenarComboBoxUnidadMedida();
 
-        //ComboBox - Lote
-        llenarComboBoxBodega(jComboBoxBodegaLote);
 
         //ComboBox - Orden
         llenarComboBoxBodega(jComboBoxBodegaProcedenciaOrden);
@@ -442,7 +440,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         fondo6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabelIdLote2 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabelIdLote = new javax.swing.JLabel();
@@ -452,7 +449,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonEditarLote = new javax.swing.JButton();
         jButtonEliminarLote = new javax.swing.JButton();
         jButtonLimpiarLote = new javax.swing.JButton();
-        jComboBoxBodegaLote = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
         jDateChooser1 = new org.jdesktop.swingx.JXDatePicker();
         jDateChooser2 = new org.jdesktop.swingx.JXDatePicker();
@@ -791,10 +787,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jLabelIdLote2.setText("ID:");
         jPanel7.add(jLabelIdLote2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel17.setText("Bodega:");
-        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, -1, -1));
-
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel18.setText("Fecha de empacado:");
         jPanel7.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
@@ -846,8 +838,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             }
         });
         jPanel7.add(jButtonLimpiarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
-
-        jPanel7.add(jComboBoxBodegaLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 180, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel22.setText("Código:");
@@ -1333,7 +1323,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
                 limpiarInformacionBodega();
                 llenarAutocompleterBodegas();
-                llenarComboBoxBodega(jComboBoxBodegaLote);
             } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1407,7 +1396,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                     id = 1;
                 } else {
                     for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
-                        id = entry.getValue().getId() + 1;
+                        if(id <= entry.getValue().getId()){
+                            id = entry.getValue().getId()+1;
+                        }
                     }
                 }
                 auxUnidad.setId(id);
@@ -1494,7 +1485,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                     id = 1;
                 } else {
                     for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
-                        id = entry.getValue().getId() + 1;
+                        if(id <= entry.getValue().getId()){
+                            id = entry.getValue().getId()+1;
+                        }
                     }
                 }
                 auxCategoria.setId(id);
@@ -1524,7 +1517,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 auxCategoria.setId(Integer.parseInt(jLabelIdCategoria.getText()));
                 auxCategoria.setNombre(jTextFieldNombreCategoria.getText());
                 auxCategoria.setDescripcion(jTextFieldDescripcionCategoria.getText());
-
+                System.out.println("******************************");
+                System.out.println(auxCategoria.toString());
+                System.out.println("******************************");
                 cruds.editarCategoria(auxCategoria);
 
                 limpiarInformacionCategoria();
@@ -1563,15 +1558,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private void jTextFieldCodigoLoteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoLoteFocusGained
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
             if (jTextFieldCodigoLote.getText().equals(entry.getValue().getCodigoLote())) {
-                try {
                     jLabelIdLote.setText(String.valueOf(entry.getValue().getId()));
                     jDateChooser1.setDate(entry.getValue().getFechaEmpacado());
                     jDateChooser2.setDate(entry.getValue().getFechaVecimiento());
-                    jComboBoxBodegaLote.setSelectedItem(this.logica.getNombreBodega(entry.getValue().getIdBodega()));
                     jLabelIdLote2.setVisible(true);
-                } catch (GraphException ex) {
-                    Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
         }
     }//GEN-LAST:event_jTextFieldCodigoLoteFocusGained
@@ -1585,14 +1575,15 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                     id = 1;
                 } else {
                     for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-                        id = entry.getValue().getId() + 1;
+                        if(id <= entry.getValue().getId()){
+                            id = entry.getValue().getId()+1;
+                        }
                     }
                 }
                 auxLote.setId(id);
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(jDateChooser1.getDate());
                 auxLote.setFechaVecimiento(jDateChooser2.getDate());
-                auxLote.setIdBodega(this.logica.getIdBodega(jComboBoxBodegaLote.getSelectedItem().toString()));
 
                 if (this.logica.existeLote(auxLote) == true) {
                     JOptionPane.showMessageDialog(null, "Este lote ya existe");
@@ -1618,15 +1609,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 auxLote.setCodigoLote(jTextFieldCodigoLote.getText());
                 auxLote.setFechaEmpacado(jDateChooser1.getDate());
                 auxLote.setFechaVecimiento(jDateChooser2.getDate());
-                auxLote.setIdBodega(this.logica.getIdBodega(jComboBoxBodegaLote.getSelectedItem().toString()));
 
                 cruds.editarLote(auxLote);
 
                 limpiarInformacionLote();
                 llenarAutocompleterLote();
-            } catch (GraphException ex) {
-                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (GraphException | IOException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1959,7 +1947,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 jTextFieldDescripcionProducto.setText(productoMayorista.getDescripcion());
                 jComboBoxUnidadMedidaProducto.setSelectedItem(productoMayorista.getUnidadMedidas());
                 jTextFieldUrlProducto.setText(productoMayorista.getUrlFotografia());
-                jComboBoxIdCategoriaProducto.setSelectedItem(productoMayorista.getIdCategoria());
+                jComboBoxIdCategoriaProducto.setSelectedItem(this.logica.getCategoria(productoMayorista.getIdCategoria()));
                 jComboBoxIdLoteProducto.setSelectedItem(productoMayorista.getIdLote());
                 jTextFieldPesoProducto.setText(String.valueOf(productoMayorista.getPesoTotal()));
                 jTextFieldPrecioProducto.setText(String.valueOf(productoMayorista.getPrecioTotal()));
@@ -2217,7 +2205,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonSalir1;
     private javax.swing.JComboBox<String> jComboBoxBodegaDestinoOrden;
-    private javax.swing.JComboBox<String> jComboBoxBodegaLote;
     private javax.swing.JComboBox<String> jComboBoxBodegaProcedenciaOrden;
     private javax.swing.JComboBox<String> jComboBoxIdCategoriaProducto;
     private javax.swing.JComboBox<String> jComboBoxIdLoteProducto;
@@ -2236,7 +2223,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;

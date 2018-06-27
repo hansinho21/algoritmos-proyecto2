@@ -477,27 +477,26 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jComboBoxCategoriaHistorialActionPerformed
 
     private void jButtonBuscrHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscrHistorialActionPerformed
-        try {
-            tableModelHistorial.setRowCount(0);
-
-            LinkedList<ProductoMayorista> linkedList = new LinkedList<>();
-            Categoria categoria = this.logica.getCategoria(jComboBoxCategoriaHistorial.getSelectedItem().toString());
-            Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxLoteHistorial.getSelectedItem().toString()));
-            Bodega bodega = this.logica.getBodegaPorIdBodega(lote.getIdBodega());
-
-            linkedList = this.logica.getListaProductosPorCategoriaYLote(categoria.getId(), lote.getId());
-
-            if (linkedList.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No hay productos");
-            } else {
-                for (int i = 0; i < linkedList.size(); i++) {
-                    this.logica.agregarProductosATablaHistorial(linkedList.get(i), bodega.getNombre(), tableModelHistorial, lote.getFechaEmpacado(), contTableHistorial);
-                    contFilasTablaHistorial++;
-                }
-            }
-        } catch (GraphException ex) {
-            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            tableModelHistorial.setRowCount(0);
+//
+//            LinkedList<ProductoMayorista> linkedList = new LinkedList<>();
+//            Categoria categoria = this.logica.getCategoria(jComboBoxCategoriaHistorial.getSelectedItem().toString());
+//            Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxLoteHistorial.getSelectedItem().toString()));
+//
+//            linkedList = this.logica.getListaProductosPorCategoriaYLote(categoria.getId(), lote.getId());
+//
+//            if (linkedList.isEmpty()) {
+//                JOptionPane.showMessageDialog(null, "No hay productos");
+//            } else {
+//                for (int i = 0; i < linkedList.size(); i++) {
+//                    this.logica.agregarProductosATablaHistorial(linkedList.get(i), bodega.getNombre(), tableModelHistorial, lote.getFechaEmpacado(), contTableHistorial);
+//                    contFilasTablaHistorial++;
+//                }
+//            }
+//        } catch (GraphException ex) {
+//            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jButtonBuscrHistorialActionPerformed
 
     private void jButtonSeleccionarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarBodegaActionPerformed
