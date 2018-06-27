@@ -87,7 +87,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         this.data = new Datos();
         this.logica = new Logica();
         this.cruds = new Cruds();
-        
+
         //TDA's
         this.treeMapLote = this.data.getTreeMapLote();
         this.listaProductos = this.data.getListaProductos();
@@ -112,14 +112,12 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
         //Reporte
         llenarComboLotesReporte();
-        inicializarJTableBodegayFecha();
+        inicializarJTableBodega();
         inicializarJTableProductoReporte();
         dualAxis();
 
-
 //        llenarComboLotesM2P2();
 //        llenarComboCategoriasM2();
-
 //        this.logica.agregarTodosProductos(tableModelHistorial, contTable, listaProductos);
     }
 
@@ -154,9 +152,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTableHistorial.setModel(tableModelHistorial);
     }
 
-    private void inicializarJTableBodegayFecha() {
+    private void inicializarJTableBodega() {
         String x[][] = {};
-        String columns[] = {"Bodega", "Fecha"};
+        String columns[] = {"Bodega"};
         tableModelBodegasReporte = new DefaultTableModel(x, columns);
         jTableBodegaReporte.setModel(tableModelBodegasReporte);
     }
@@ -210,7 +208,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jButtonBuscarReporte = new javax.swing.JButton();
         jComboBoxIdLoteReporte = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        jButtonSeleccionarBodega = new javax.swing.JButton();
         fondo1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -260,28 +258,28 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             jTableProductosReporte.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 170, 660, 210));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 660, 210));
 
         jTableBodegaReporte.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Bodega", "Fecha Distribución"
+                "Bodega"
             }
         ));
         jScrollPane2.setViewportView(jTableBodegaReporte);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 250, 210));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 230, 210));
 
         jButtonBuscarReporte.setBackground(new java.awt.Color(0, 51, 51));
         jButtonBuscarReporte.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -305,16 +303,16 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jLabel6.setText("Indique el Id de lote :");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 51));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Seleccionar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSeleccionarBodega.setBackground(new java.awt.Color(0, 51, 51));
+        jButtonSeleccionarBodega.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonSeleccionarBodega.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSeleccionarBodega.setText("Seleccionar");
+        jButtonSeleccionarBodega.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonSeleccionarBodegaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
+        jPanel1.add(jButtonSeleccionarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 110, -1));
 
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, 960, 540));
@@ -446,25 +444,25 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButtonBuscarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarReporteActionPerformed
-        try {
-            tableModelBodegasReporte.setRowCount(0);
-            tableModelProductosReporte.setRowCount(0);
-            
-            Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxIdLoteReporte.getSelectedItem().toString()));
-            LinkedList<ProductoMayorista> linkedList = this.logica.getListaProductosPorLote(lote.getId());
-            Bodega bodega = this.logica.getBodegaPorIdBodega(lote.getIdBodega());
 
-            if(bodega != null){
-                this.logica.agregarBodega(bodega, lote.getFechaEmpacado(), tableModelBodegasReporte, contTableBodegaReporte);
-            }
-            for (int i = 0; i < linkedList.size(); i++) {
-                this.logica.agregarTodosProductos(linkedList.get(i), tableModelProductosReporte, contTableProductoReporte);
-            }
+        tableModelBodegasReporte.setRowCount(0);
+        tableModelProductosReporte.setRowCount(0);
 
-        } catch (GraphException ex) {
-            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+        Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxIdLoteReporte.getSelectedItem().toString()));
+        HashMap<Integer, LinkedList<ProductoMayorista>> hashMap = this.logica.getMapaBodegas(lote.getId());
+
+        if (hashMap.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Este lote no está en ninguna bodega");
+        } else {
+            for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
+                try {
+                    Bodega bodega = this.logica.getBodegaPorIdBodega(entry.getKey());
+                    this.logica.agregarBodega(bodega, tableModelBodegasReporte, contTableBodegaReporte);
+                } catch (GraphException ex) {
+                    Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
-
 
     }//GEN-LAST:event_jButtonBuscarReporteActionPerformed
 
@@ -472,14 +470,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jComboBoxIdLoteReporteActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        for (int i = 0; i < listaProductos.size(); i++) {
-            int id = Integer.parseInt(jComboBoxIdLoteReporte.getSelectedItem().toString());
-            this.logica.agregarProductoM2(id, tableModelProductosReporte, contTableHistorial, listaProductos);
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBoxCategoriaHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaHistorialActionPerformed
         // TODO add your handling code here:
@@ -509,7 +499,32 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonBuscrHistorialActionPerformed
+
+    private void jButtonSeleccionarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarBodegaActionPerformed
+        try {
+            tableModelProductosReporte.setRowCount(0);
+            
+            Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxIdLoteReporte.getSelectedItem().toString()));
+            HashMap<Integer, LinkedList<ProductoMayorista>> hashMap = this.logica.getMapaBodegas(lote.getId());
+            String bodegaSeleccionada = tableModelBodegasReporte.getValueAt(jTableBodegaReporte.getSelectedRow(), 0).toString();
+            int idBodegaSeleccionada = this.logica.getIdBodega(bodegaSeleccionada);
+            System.out.println(idBodegaSeleccionada);
+            for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
+                System.out.println("HashMap: " + entry.getKey());
+                if(entry.getKey() == idBodegaSeleccionada){
+                    System.out.println("toy aqui");
+                    System.out.println(entry.getValue().size());
+                    for (int i = 0; i < entry.getValue().size(); i++) {
+                        this.logica.agregarProductos(entry.getValue().get(i), tableModelProductosReporte, contTableProductoReporte);
+                    }
+                }
+            }
+        } catch (GraphException ex) {
+            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSeleccionarBodegaActionPerformed
 //--------------------------------CHART--------------------------------------------------------------------
+
     private CategoryDataset createDataset1() {
 
         // row keys...
@@ -538,6 +553,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         return dataset;
 
     }
+
     private CategoryDataset createDataset2() {
 
         // row keys...
@@ -566,6 +582,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         return dataset;
 
     }
+
     private JFreeChart createChart(final CategoryDataset dataset1, final CategoryDataset dataset2) {
 
         final CategoryAxis domainAxis = new CategoryAxis("Producto");
@@ -594,7 +611,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
                     }
                 }
                 return result;
-            }  
+            }
         };
         final JFreeChart chart = new JFreeChart("Historial de Productos más solicitados", plot);
         chart.setBackgroundPaint(Color.white);
@@ -607,11 +624,11 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         plot.setRangeAxis(1, axis2);
         plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
         final BarRenderer renderer2 = new BarRenderer();
-        plot.setRenderer(1, renderer2);   
+        plot.setRenderer(1, renderer2);
         return chart;
     }
-    
-    public void dualAxis(){
+
+    public void dualAxis() {
         final CategoryDataset dataset1 = createDataset1();
         final CategoryDataset dataset2 = createDataset2();
         final JFreeChart chart = createChart(dataset1, dataset2);
@@ -620,6 +637,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel2.add(chartPanel, BorderLayout.CENTER);
         jPanel2.setVisible(true);
     }
+
     //----------------------------------------------------CHART------------------------------------------------
     /**
      * @param args the command line arguments
@@ -672,9 +690,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel fondo5;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonBuscarReporte;
     private javax.swing.JButton jButtonBuscrHistorial;
+    private javax.swing.JButton jButtonSeleccionarBodega;
     private javax.swing.JComboBox<String> jComboBoxCategoriaHistorial;
     private javax.swing.JComboBox<String> jComboBoxIdLoteReporte;
     private javax.swing.JComboBox<String> jComboBoxLoteHistorial;
