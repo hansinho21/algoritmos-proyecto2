@@ -10,6 +10,7 @@ import Domain.Categoria;
 import Domain.Lote;
 import Domain.ProductoMayorista;
 import Domain.Usuario;
+import Logic.Cruds;
 import Logic.Datos;
 import Logic.Logica;
 import TDA.BinaryTree.TreeException;
@@ -55,6 +56,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     //Clases
     private Datos data;
     private Logica logica;
+    private Cruds cruds;
 
     //TDA's
     private TreeMap<Integer, Lote> treeMapLote;
@@ -84,7 +86,8 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         //Clases
         this.data = new Datos();
         this.logica = new Logica();
-
+        this.cruds = new Cruds();
+        
         //TDA's
         this.treeMapLote = this.data.getTreeMapLote();
         this.listaProductos = this.data.getListaProductos();
@@ -426,8 +429,20 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 //        System.out.println(jComboBox5.getSelectedItem());
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+        int salida = JOptionPane.showConfirmDialog(null,
+                "Realmente desea salir de la apilcación?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (salida == 0) {
+            try {
+                this.cruds.guardarEnArchivo();
+            } catch (IOException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            System.exit(0);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButtonBuscarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarReporteActionPerformed

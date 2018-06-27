@@ -32,8 +32,7 @@ import javax.swing.JOptionPane;
  * @author jeison
  */
 public class Cruds implements Serializable{
-
-    private Datos data;
+private Datos data;
     private LinkedList<Usuario> listaUsuarios;
     private AdjacencyMatrixGraph grafoBodegas;
     private HashMap<String, Categoria> hashMapCategoria;
@@ -58,7 +57,7 @@ public class Cruds implements Serializable{
     public void agregarCategoria(Categoria categoria) throws IOException {
         if (hashMapCategoria.isEmpty()) {
             hashMapCategoria.put(categoria.getNombre(), categoria);
-            this.data.setHashMapCategoria(hashMapCategoria);
+//            this.data.setHashMapCategoria(hashMapCategoria);
         } else {
             if (hashMapCategoria.containsKey(categoria.getNombre()) == true) {
                 JOptionPane.showMessageDialog(null, "La clave ya existe");
@@ -66,7 +65,7 @@ public class Cruds implements Serializable{
                 JOptionPane.showMessageDialog(null, "La categoria ya existe");
             } else {
                 hashMapCategoria.put(categoria.getNombre(), categoria);
-                this.data.setHashMapCategoria(hashMapCategoria);
+//                this.data.setHashMapCategoria(hashMapCategoria);
             }
 
         }
@@ -74,7 +73,7 @@ public class Cruds implements Serializable{
 
     public void editarCategoria(Categoria categoria) throws IOException {
         hashMapCategoria.replace(categoria.getNombre(), categoria);
-        this.data.setHashMapCategoria(hashMapCategoria);
+//        this.data.setHashMapCategoria(hashMapCategoria);
     }
 
     public void eliminarCategoria(Categoria categoria) throws IOException {
@@ -82,7 +81,7 @@ public class Cruds implements Serializable{
             JOptionPane.showMessageDialog(null, "La categoria no existe");
         } else {
             hashMapCategoria.remove(categoria.getNombre());
-            this.data.setHashMapCategoria(hashMapCategoria);
+//            this.data.setHashMapCategoria(hashMapCategoria);
         }
     }
 
@@ -90,7 +89,7 @@ public class Cruds implements Serializable{
     public void agregarLote(Lote lote) throws IOException {
         if (treeMapLote.isEmpty()) {
             treeMapLote.put(lote.getId(), lote);
-            this.data.setTreeMapLote(treeMapLote);
+//            this.data.setTreeMapLote(treeMapLote);
             JOptionPane.showMessageDialog(null, "Lote agregado");
         } else {
             if (treeMapLote.containsKey(lote.getId()) == true) {
@@ -99,7 +98,7 @@ public class Cruds implements Serializable{
                 JOptionPane.showMessageDialog(null, "El lote ya existe");
             } else {
                 treeMapLote.put(lote.getId(), lote);
-                this.data.setTreeMapLote(treeMapLote);
+//                this.data.setTreeMapLote(treeMapLote);
                 JOptionPane.showMessageDialog(null, "Lote agregado");
             }
 
@@ -108,7 +107,7 @@ public class Cruds implements Serializable{
 
     public void editarLote(Lote lote) throws IOException {
         treeMapLote.replace(lote.getId(), lote);
-        this.data.setTreeMapLote(treeMapLote);
+//        this.data.setTreeMapLote(treeMapLote);
     }
 
     public void eliminarLote(Lote lote) throws IOException {
@@ -116,7 +115,7 @@ public class Cruds implements Serializable{
             JOptionPane.showMessageDialog(null, "El lote no existe");
         } else {
             treeMapLote.remove(lote.getId());
-            this.data.setTreeMapLote(treeMapLote);
+//            this.data.setTreeMapLote(treeMapLote);
         }
     }
 
@@ -124,7 +123,7 @@ public class Cruds implements Serializable{
     public void agregarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         if (linkedHashMapUnidadTransporte.isEmpty()) {
             linkedHashMapUnidadTransporte.put(unidadTransporte.getId(), unidadTransporte);
-            this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
+//            this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
         } else {
             if (linkedHashMapUnidadTransporte.containsKey(unidadTransporte.getId()) == true) {
                 JOptionPane.showMessageDialog(null, "La clave ya existe");
@@ -132,7 +131,7 @@ public class Cruds implements Serializable{
                 JOptionPane.showMessageDialog(null, "La unidad de transporte ya existe");
             } else {
                 linkedHashMapUnidadTransporte.put(unidadTransporte.getId(), unidadTransporte);
-                this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
+//                this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
             }
 
         }
@@ -140,7 +139,7 @@ public class Cruds implements Serializable{
 
     public void editarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         linkedHashMapUnidadTransporte.replace(unidadTransporte.getId(), unidadTransporte);
-        this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
+//        this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
     }
 
     public void eliminarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
@@ -148,7 +147,7 @@ public class Cruds implements Serializable{
             JOptionPane.showMessageDialog(null, "La unidad de transporte no existe");
         } else {
             linkedHashMapUnidadTransporte.remove(unidadTransporte.getId());
-            this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
+//            this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
         }
     }
 
@@ -170,7 +169,7 @@ public class Cruds implements Serializable{
         boolean exist = false;
         if (grafoBodegas.isEmpty()) {
             grafoBodegas.insertVertex(bodega);
-            this.data.setGrafoBodegas(grafoBodegas);
+//            this.data.setGrafoBodegas(grafoBodegas);
         } else {
             for (int i = 0; i < grafoBodegas.getSize(); i++) {
                 Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
@@ -181,7 +180,7 @@ public class Cruds implements Serializable{
             }//for
             if (exist == false) {
                 grafoBodegas.insertVertex(bodega);
-                this.data.setGrafoBodegas(grafoBodegas);
+//                this.data.setGrafoBodegas(grafoBodegas);
             }
         }
     }
@@ -193,7 +192,7 @@ public class Cruds implements Serializable{
             if (auxBodega.getId() == bodega.getId()) {
                 exist = true;
                 grafoBodegas.setVertex(i, bodega);
-                this.data.setGrafoBodegas(grafoBodegas);
+//                this.data.setGrafoBodegas(grafoBodegas);
             }
         }
         if (exist == false) {
@@ -209,7 +208,7 @@ public class Cruds implements Serializable{
                 System.out.println(auxBodega.getNombre() + "<-------->" + bodega.getNombre());
                 exist = true;
                 grafoBodegas.deleteVertex(auxBodega);
-                this.data.setGrafoBodegas(grafoBodegas);
+//                this.data.setGrafoBodegas(grafoBodegas);
             }
         }
         if (exist == false) {
@@ -222,7 +221,7 @@ public class Cruds implements Serializable{
         boolean exist = false;
         if (listaUsuarios.isEmpty()) {
             listaUsuarios.add(usuario);
-            this.data.setListaUsuarios(listaUsuarios);
+//            this.data.setListaUsuarios(listaUsuarios);
             exist = true;
         } else {
             for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -234,7 +233,7 @@ public class Cruds implements Serializable{
         }
         if (exist == false) {
             listaUsuarios.add(usuario);
-            this.data.setListaUsuarios(listaUsuarios);
+//            this.data.setListaUsuarios(listaUsuarios);
         }
         System.out.println(listaUsuarios.size());
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -249,7 +248,7 @@ public class Cruds implements Serializable{
             if (listaUsuarios.get(i).getId() == (usuario.getId())) {
                 exist = true;
                 listaUsuarios.remove(i);
-                this.data.setListaUsuarios(listaUsuarios);
+//                this.data.setListaUsuarios(listaUsuarios);
                 JOptionPane.showMessageDialog(null, "user removed succesfull");
             }
         }
@@ -266,7 +265,7 @@ public class Cruds implements Serializable{
             if (listaUsuarios.get(i).getId() == (usuario.getId())) {
                 exist = true;
                 listaUsuarios.set(i, usuario);
-                data.setListaUsuarios(listaUsuarios);
+//                data.setListaUsuarios(listaUsuarios);
                 JOptionPane.showMessageDialog(null, "correctly modified user");
             }
         }
@@ -280,7 +279,7 @@ public class Cruds implements Serializable{
         boolean exist = false;
         if (listaProductos.isEmpty()) {
             listaProductos.add(producto);
-            this.data.setListaProductos(listaProductos);
+//            this.data.setListaProductos(listaProductos);
             exist = true;
         } else {
             for (int i = 0; i < listaProductos.size(); i++) {
@@ -292,7 +291,7 @@ public class Cruds implements Serializable{
         }
         if (exist == false) {
             listaProductos.add(producto);
-            this.data.setListaProductos(listaProductos);
+//            this.data.setListaProductos(listaProductos);
         }
         System.out.println(listaProductos.size());
         for (int i = 0; i < listaProductos.size(); i++) {
@@ -307,7 +306,7 @@ public class Cruds implements Serializable{
             if (listaProductos.get(i).getId() == (producto.getId())) {
                 exist = true;
                 listaProductos.remove(i);
-                this.data.setListaProductos(listaProductos);
+//                this.data.setListaProductos(listaProductos);
                 JOptionPane.showMessageDialog(null, "user removed succesfull");
             }
         }
@@ -324,7 +323,7 @@ public class Cruds implements Serializable{
             if (listaProductos.get(i).getId() == (producto.getId())) {
                 exist = true;
                 listaProductos.set(i, producto);
-                data.setListaProductos(listaProductos);
+//                data.setListaProductos(listaProductos);
                 JOptionPane.showMessageDialog(null, "correctly modified user");
             }
         }
@@ -338,7 +337,7 @@ public class Cruds implements Serializable{
         boolean exist = false;
         if (listaOrdenes.isEmpty()) {
             listaOrdenes.add(orden);
-            this.data.setListaOrdenes(listaOrdenes);
+//            this.data.setListaOrdenes(listaOrdenes);
             exist = true;
         } else {
             for (int i = 0; i < listaOrdenes.size(); i++) {
@@ -350,7 +349,7 @@ public class Cruds implements Serializable{
         }
         if (exist == false) {
             listaOrdenes.add(orden);
-            this.data.setListaOrdenes(listaOrdenes);
+//            this.data.setListaOrdenes(listaOrdenes);
         }
     }
 
@@ -361,7 +360,7 @@ public class Cruds implements Serializable{
             if (listaOrdenes.get(i).getId() == (orden.getId())) {
                 exist = true;
                 listaOrdenes.remove(i);
-                this.data.setListaOrdenes(listaOrdenes);
+//                this.data.setListaOrdenes(listaOrdenes);
                 JOptionPane.showMessageDialog(null, "user removed succesfull");
             }
         }
@@ -378,13 +377,23 @@ public class Cruds implements Serializable{
             if (listaOrdenes.get(i).getId() == (orden.getId())) {
                 exist = true;
                 listaOrdenes.set(i, orden);
-                data.setListaOrdenes(listaOrdenes);
+//                data.setListaOrdenes(listaOrdenes);
                 JOptionPane.showMessageDialog(null, "correctly modified user");
             }
         }
        if (exist == false) {
             JOptionPane.showMessageDialog(null, "The user does not exist, verify the information.");
         }
+    }
+    
+    public void guardarEnArchivo() throws IOException, FileNotFoundException, GraphException{
+        this.data.setHashMapCategoria(hashMapCategoria);
+        this.data.setTreeMapLote(treeMapLote);
+        this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
+        this.data.setGrafoBodegas(grafoBodegas);
+        data.setListaUsuarios(listaUsuarios);
+        data.setListaProductos(listaProductos);
+        data.setListaOrdenes(listaOrdenes);
     }
 
 }

@@ -1694,11 +1694,16 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 "Realmente desea salir de la apilcación?", "Confirmar salida",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (salida == 0) {
-            LinkedList<Usuario> listaUsuarios = this.data.getListaUsuarios();
+            try {
+                this.cruds.guardarEnArchivo();
+            } catch (IOException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (GraphException ex) {
+                Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             System.exit(0);
         }
-
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jButtonLimpiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarUsuarioActionPerformed
