@@ -23,6 +23,9 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -513,17 +516,28 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             HashMap<Integer, LinkedList<ProductoMayorista>> hashMap = this.logica.getMapaBodegas(lote.getId());
             String bodegaSeleccionada = tableModelBodegasReporte.getValueAt(jTableBodegaReporte.getSelectedRow(), 0).toString();
             int idBodegaSeleccionada = this.logica.getIdBodega(bodegaSeleccionada);
-            System.out.println(idBodegaSeleccionada);
-            for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
-                System.out.println("HashMap: " + entry.getKey());
-                if (entry.getKey() == idBodegaSeleccionada) {
-                    System.out.println("toy aqui");
-                    System.out.println(entry.getValue().size());
-                    for (int i = 0; i < entry.getValue().size(); i++) {
-                        this.logica.agregarProductos(entry.getValue().get(i), tableModelProductosReporte, contTableProductoReporte);
+
+            Date date = new Date();
+            if (lote.getFechaVecimiento().before(date)) {
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String expirationDate = dateFormat.format(lote.getFechaVecimiento());
+                JOptionPane.showMessageDialog(null, "La fecha de vencimiento del lote es: " + expirationDate
+                        + "\nLos productos asociados a este lote actualmente se encuentran vencidos");
+                for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
+
+                    if (entry.getKey() == idBodegaSeleccionada) {
+                        for (int i = 0; i < entry.getValue().size(); i++) {
+                            this.logica.agregarProductos(entry.getValue().get(i), tableModelProductosReporte, contTableProductoReporte);
+                        }
                     }
                 }
+            } else {
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String expirationDate = dateFormat.format(lote.getFechaVecimiento());
+                JOptionPane.showMessageDialog(null, "La fecha de vencimiento del lote es: " + expirationDate
+                        + "\nLos productos asociados a este lote actualmente no se encuentran vencidos");
             }
+
         } catch (GraphException ex) {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
