@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
@@ -40,9 +41,13 @@ import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.DatasetRenderingOrder;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.RefineryUtilities;
@@ -57,6 +62,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private Datos data;
     private Logica logica;
     private Cruds cruds;
+    
 
     //TDA's
     private TreeMap<Integer, Lote> treeMapLote;
@@ -82,7 +88,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     public Modulo2() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
-
+      
         //Clases
         this.data = new Datos();
         this.logica = new Logica();
@@ -379,7 +385,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTabbedPane1.addTab("Historial de productos", jPanel6);
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 670, 420));
+        jPanel7.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 670, 420));
 
         fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel7.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -502,7 +508,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private void jButtonSeleccionarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarBodegaActionPerformed
         try {
             tableModelProductosReporte.setRowCount(0);
-            
+
             Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxIdLoteReporte.getSelectedItem().toString()));
             HashMap<Integer, LinkedList<ProductoMayorista>> hashMap = this.logica.getMapaBodegas(lote.getId());
             String bodegaSeleccionada = tableModelBodegasReporte.getValueAt(jTableBodegaReporte.getSelectedRow(), 0).toString();
@@ -510,7 +516,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             System.out.println(idBodegaSeleccionada);
             for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
                 System.out.println("HashMap: " + entry.getKey());
-                if(entry.getKey() == idBodegaSeleccionada){
+                if (entry.getKey() == idBodegaSeleccionada) {
                     System.out.println("toy aqui");
                     System.out.println(entry.getValue().size());
                     for (int i = 0; i < entry.getValue().size(); i++) {
@@ -524,117 +530,74 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jButtonSeleccionarBodegaActionPerformed
 //--------------------------------CHART--------------------------------------------------------------------
 
-    private CategoryDataset createDataset1() {
+    private CategoryDataset createDataset1() throws GraphException {
 
         // row keys...
-        final String series1 = "Primeros 6 meses";
-        final String series2 = "";
+        final String series1 = "Abril";
+        final String series2 = "Mayo";
+        final String series3 = "Junio";
 
         // column keys...
-        final String category1 = "Arroz";
-        final String category2 = "Cafe";
-        final String category3 = "Leche";
-        final String category4 = "Naranjas";
+        String bodegas[] = new String[grafoBodegas.getSize()];
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega b = (Bodega) grafoBodegas.getVertex(i);
+            bodegas[i] = b.getNombre();
+        }
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        dataset.addValue(100, series1, category1);
-        dataset.addValue(400, series1, category2);
-        dataset.addValue(300, series1, category3);
-        dataset.addValue(500, series1, category4);
-
-        dataset.addValue(null, series2, category1);
-        dataset.addValue(null, series2, category2);
-        dataset.addValue(null, series2, category3);
-        dataset.addValue(null, series2, category4);
-
+        for (int i = 0; i < bodegas.length; i++) {
+            int numero = (int) (Math.random() * 50) + 1;
+            dataset.addValue(numero, series1, bodegas[i]);
+        }
+        for (int i = 0; i < bodegas.length; i++) {
+            int numero = (int) (Math.random() * 35) + 1;
+            dataset.addValue(numero, series2, bodegas[i]);
+        }
+        for (int i = 0; i < bodegas.length; i++) {
+            int numero = (int) (Math.random() * 40) + 1;
+            dataset.addValue(numero, series3, bodegas[i]);
+        }
         return dataset;
 
     }
 
-    private CategoryDataset createDataset2() {
-
-        // row keys...
-        final String series1 = "";
-        final String series2 = "Segundos 6 meses";
-
-        // column keys...
-        final String category1 = "Arroz";
-        final String category2 = "Cafe";
-        final String category3 = "Leche";
-        final String category4 = "Naranjas";
-
-        // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(null, series1, category1);
-        dataset.addValue(null, series1, category2);
-        dataset.addValue(null, series1, category3);
-        dataset.addValue(null, series1, category4);
-
-        dataset.addValue(75.0, series2, category1);
-        dataset.addValue(87.0, series2, category2);
-        dataset.addValue(96.0, series2, category3);
-        dataset.addValue(68.0, series2, category4);
-
-        return dataset;
-
-    }
-
-    private JFreeChart createChart(final CategoryDataset dataset1, final CategoryDataset dataset2) {
-
-        final CategoryAxis domainAxis = new CategoryAxis("Producto");
-        final NumberAxis rangeAxis = new NumberAxis("Precio");
-        final BarRenderer renderer1 = new BarRenderer();
-        final CategoryPlot plot = new CategoryPlot(dataset1, domainAxis, rangeAxis, renderer1) {
-
-            public LegendItemCollection getLegendItems() {
-                final LegendItemCollection result = new LegendItemCollection();
-                final CategoryDataset data = getDataset();
-                if (data != null) {
-                    final CategoryItemRenderer r = getRenderer();
-                    if (r != null) {
-                        final LegendItem item = r.getLegendItem(0, 0);
-                        result.add(item);
-                    }
-                }
-                // the JDK 1.2.2 compiler complained about the name of this
-                // variable 
-                final CategoryDataset dset2 = getDataset(1);
-                if (dset2 != null) {
-                    final CategoryItemRenderer renderer2 = getRenderer(1);
-                    if (renderer2 != null) {
-                        final LegendItem item = renderer2.getLegendItem(1, 1);
-                        result.add(item);
-                    }
-                }
-                return result;
-            }
-        };
-        final JFreeChart chart = new JFreeChart("Historial de Productos más solicitados", plot);
+    private JFreeChart createChart() throws GraphException {
+        final CategoryDataset dataset= createDataset1();
+        
+        final JFreeChart chart = ChartFactory.createBarChart("Reportes", "Bodegas", "Cantidad de lotes", dataset, PlotOrientation.VERTICAL, true, true, false
+        );
         chart.setBackgroundPaint(Color.white);
-//        chart.getLegend().setAnchor(Legend.SOUTH);
+        final CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(new Color(0xEE, 0xEE, 0xFF));
         plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
-        plot.setDataset(1, dataset2);
         plot.mapDatasetToRangeAxis(1, 1);
-        final ValueAxis axis2 = new NumberAxis("Cantidad");
-        plot.setRangeAxis(1, axis2);
-        plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
-        final BarRenderer renderer2 = new BarRenderer();
-        plot.setRenderer(1, renderer2);
-        return chart;
-    }
 
-    public void dualAxis() {
-        final CategoryDataset dataset1 = createDataset1();
-        final CategoryDataset dataset2 = createDataset2();
-        final JFreeChart chart = createChart(dataset1, dataset2);
+        final LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
+        renderer2.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        plot.setRenderer(1, renderer2);
+        plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
+
         final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        setContentPane(chartPanel);
+
         jPanel2.removeAll();
         jPanel2.add(chartPanel, BorderLayout.CENTER);
         jPanel2.setVisible(true);
+
+//        
+        return chart;
+    }
+
+    public void dualAxis() throws GraphException, IOException, FileNotFoundException, ClassNotFoundException, TreeException {
+
+        DualAxisDemo5 demo = new DualAxisDemo5("Reporte de lotes por Bodega",jPanel2);
+        demo.pack();
+        RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
+
     }
 
     //----------------------------------------------------CHART------------------------------------------------

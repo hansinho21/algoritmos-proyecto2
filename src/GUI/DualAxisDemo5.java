@@ -1,146 +1,120 @@
+package GUI;
 
-package gui;
 
+
+import Domain.Bodega;
+import Logic.Datos;
+import TDA.BinaryTree.TreeException;
+import TDA.Graph.AdjacencyMatrixGraph;
+import TDA.Graph.GraphException;
 import java.awt.Color;
+import java.awt.Panel;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.swing.JPanel;
 
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.plot.DatasetRenderingOrder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+
+/**
+ * A simple demonstration application showing how to create a dual axis chart based on data
+ * from two {@link CategoryDataset} instances.
+ *
+ */
 public class DualAxisDemo5 extends ApplicationFrame {
 
+    AdjacencyMatrixGraph grafoBodegas;
+    Datos datos;
     
     
-    public DualAxisDemo5(final String title) {
-       
+    /**
+     * Creates a new demo instance.
+     *
+     * @param title  the frame title.
+     */
+    public DualAxisDemo5(final String title, JPanel jPanel) throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
+
         super(title);
+        datos = new Datos();
+        grafoBodegas = datos.getGrafoBodegas();
         final CategoryDataset dataset1 = createDataset1();
-        final CategoryDataset dataset2 = createDataset2();
-        final JFreeChart chart = createChart(dataset1, dataset2);
-        final ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-        setContentPane(chartPanel);
-    }
-    private CategoryDataset createDataset1() {
 
-        // row keys...
-        final String series1 = "Series 1";
-        final String series2 = "Dummy 1";
-
-        // column keys...
-        final String category1 = "Arroz";
-        final String category2 = "Cafe";
-        final String category3 = "Leche";
-        final String category4 = "Naranjas";
-
-        // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(1.0, series1, category1);
-        dataset.addValue(4.0, series1, category2);
-        dataset.addValue(3.0, series1, category3);
-        dataset.addValue(5.0, series1, category4);
-
-        dataset.addValue(null, series2, category1);
-        dataset.addValue(null, series2, category2);
-        dataset.addValue(null, series2, category3);
-        dataset.addValue(null, series2, category4);
-
-        return dataset;
-
-    }
-    private CategoryDataset createDataset2() {
-
-        // row keys...
-        final String series1 = "Dummy 2";
-        final String series2 = "Series 2";
-
-        // column keys...
-        final String category1 = "Arroz";
-        final String category2 = "Cafe";
-        final String category3 = "Leche";
-        final String category4 = "Naranjas";
-
-        // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(null, series1, category1);
-        dataset.addValue(null, series1, category2);
-        dataset.addValue(null, series1, category3);
-        dataset.addValue(null, series1, category4);
-
-        dataset.addValue(75.0, series2, category1);
-        dataset.addValue(87.0, series2, category2);
-        dataset.addValue(96.0, series2, category3);
-        dataset.addValue(68.0, series2, category4);
-
-        return dataset;
-
-    }
-    private JFreeChart createChart(final CategoryDataset dataset1, final CategoryDataset dataset2) {
-
-        final CategoryAxis domainAxis = new CategoryAxis("Producto");
-        final NumberAxis rangeAxis = new NumberAxis("Bodega");
-        final BarRenderer renderer1 = new BarRenderer();
-        final CategoryPlot plot = new CategoryPlot(dataset1, domainAxis, rangeAxis, renderer1) {
-
-            public LegendItemCollection getLegendItems() {
-                final LegendItemCollection result = new LegendItemCollection();
-                final CategoryDataset data = getDataset();
-                if (data != null) {
-                    final CategoryItemRenderer r = getRenderer();
-                    if (r != null) {
-                        final LegendItem item = r.getLegendItem(0, 0);
-                        result.add(item);
-                    }
-                }
-                // the JDK 1.2.2 compiler complained about the name of this
-                // variable 
-                final CategoryDataset dset2 = getDataset(1);
-                if (dset2 != null) {
-                    final CategoryItemRenderer renderer2 = getRenderer(1);
-                    if (renderer2 != null) {
-                        final LegendItem item = renderer2.getLegendItem(1, 1);
-                        result.add(item);
-                    }
-                }
-                return result;
-            }  
-        };
-        final JFreeChart chart = new JFreeChart("Historial de Productos más solicitados", plot);
+        // create the chart...
+        final JFreeChart chart = ChartFactory.createBarChart(
+            "Reportes","Bodegas","Cantidad de lotes",dataset1,PlotOrientation.VERTICAL, true, true, false                    
+        );
         chart.setBackgroundPaint(Color.white);
-//        chart.getLegend().setAnchor(Legend.SOUTH);
+        final CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(new Color(0xEE, 0xEE, 0xFF));
         plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
-        plot.setDataset(1, dataset2);
         plot.mapDatasetToRangeAxis(1, 1);
-        final ValueAxis axis2 = new NumberAxis("fecha");
-        plot.setRangeAxis(1, axis2);
-        plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
-        final BarRenderer renderer2 = new BarRenderer();
-        plot.setRenderer(1, renderer2);   
-        return chart;
-    }
-    public static void main(final String[] args) {
 
-        final DualAxisDemo5 demo = new DualAxisDemo5("Dual Axis Demo 5");
-        demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
+        final LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
+        renderer2.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        plot.setRenderer(1, renderer2);
+        plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
+        // OPTIONAL CUSTOMISATION COMPLETED.
+
+        // add the chart to a panel...
+        final ChartPanel chartPanel = new ChartPanel(chart);
+//        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+//        setContentPane(chartPanel);
+        jPanel.add(chartPanel);
+
+    }
+
+//    DualAxisDemo5(String reporte_de_lotes_por_Bodega, JPanel jPanel2) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+    
+    /**
+     * Creates a sample dataset.
+     *
+     * @return  The dataset.
+     */
+    private CategoryDataset createDataset1() throws GraphException {
+
+        // row keys...
+        final String series1 = "Abril";
+        final String series2 = "Mayo";
+        final String series3 = "Junio";
+        
+        // column keys...
+        String bodegas[] = new String[grafoBodegas.getSize()];
+        for (int i = 0; i < grafoBodegas.getSize(); i++) {
+            Bodega b = (Bodega) grafoBodegas.getVertex(i);
+            bodegas[i]=b.getNombre();
+        }
+
+        // create the dataset...
+        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
+        
+        for (int i = 0; i < bodegas.length; i++) {
+            int numero= (int) (Math.random() * 50) + 1;
+            dataset.addValue(numero, series1, bodegas[i]);
+        }
+        for (int i = 0; i < bodegas.length; i++) {
+            int numero= (int) (Math.random() * 35) + 1;
+            dataset.addValue(numero, series2, bodegas[i]);
+        }
+        for (int i = 0; i < bodegas.length; i++) {
+            int numero= (int) (Math.random() * 40) + 1;
+            dataset.addValue(numero, series3, bodegas[i]);
+        }
+        return dataset;
+
     }
 }
-
-           
-       
