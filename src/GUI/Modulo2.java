@@ -530,74 +530,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jButtonSeleccionarBodegaActionPerformed
 //--------------------------------CHART--------------------------------------------------------------------
 
-    private CategoryDataset createDataset1() throws GraphException {
-
-        // row keys...
-        final String series1 = "Abril";
-        final String series2 = "Mayo";
-        final String series3 = "Junio";
-
-        // column keys...
-        String bodegas[] = new String[grafoBodegas.getSize()];
-        for (int i = 0; i < grafoBodegas.getSize(); i++) {
-            Bodega b = (Bodega) grafoBodegas.getVertex(i);
-            bodegas[i] = b.getNombre();
-        }
-
-        // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        for (int i = 0; i < bodegas.length; i++) {
-            int numero = (int) (Math.random() * 50) + 1;
-            dataset.addValue(numero, series1, bodegas[i]);
-        }
-        for (int i = 0; i < bodegas.length; i++) {
-            int numero = (int) (Math.random() * 35) + 1;
-            dataset.addValue(numero, series2, bodegas[i]);
-        }
-        for (int i = 0; i < bodegas.length; i++) {
-            int numero = (int) (Math.random() * 40) + 1;
-            dataset.addValue(numero, series3, bodegas[i]);
-        }
-        return dataset;
-
-    }
-
-    private JFreeChart createChart() throws GraphException {
-        final CategoryDataset dataset= createDataset1();
-        
-        final JFreeChart chart = ChartFactory.createBarChart("Reportes", "Bodegas", "Cantidad de lotes", dataset, PlotOrientation.VERTICAL, true, true, false
-        );
-        chart.setBackgroundPaint(Color.white);
-        final CategoryPlot plot = chart.getCategoryPlot();
-        plot.setBackgroundPaint(new Color(0xEE, 0xEE, 0xFF));
-        plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
-        plot.mapDatasetToRangeAxis(1, 1);
-
-        final LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
-        renderer2.setToolTipGenerator(new StandardCategoryToolTipGenerator());
-        plot.setRenderer(1, renderer2);
-        plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
-
-        final ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-        setContentPane(chartPanel);
-
-        jPanel2.removeAll();
-        jPanel2.add(chartPanel, BorderLayout.CENTER);
-        jPanel2.setVisible(true);
-
-//        
-        return chart;
-    }
-
     public void dualAxis() throws GraphException, IOException, FileNotFoundException, ClassNotFoundException, TreeException {
-
         DualAxisDemo5 demo = new DualAxisDemo5("Reporte de lotes por Bodega",jPanel2);
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
-
     }
 
     //----------------------------------------------------CHART------------------------------------------------

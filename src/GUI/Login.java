@@ -135,28 +135,25 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if (jTextFieldNombreUsuario.getText().equals(listaUsuarios.get(i).getUsuario())
-                    && jPasswordFieldContraseña.getText().equals(listaUsuarios.get(i).getContrasena())) {
+                    && jPasswordFieldContraseña.getText().equalsIgnoreCase(listaUsuarios.get(i).getContrasena())) {
                 if (listaUsuarios.get(i).getRol().equals("Operador")) {
                     try {
                         Modulo1 panel = new Modulo1();
                         panel.setVisible(true);
                         dispose();
-                    } catch (IOException | GraphException | ClassNotFoundException ex) {
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (TreeException ex) {
+                    } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else {
+                } else if (listaUsuarios.get(i).getRol().equalsIgnoreCase("Administrador")) {
                     try {
                         Modulo2 panel = new Modulo2();
                         panel.setVisible(true);
                         dispose();
-                    } catch (IOException | GraphException | ClassNotFoundException ex) {
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (TreeException ex) {
+                    } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                
             }
         }
 
@@ -194,9 +191,7 @@ public class Login extends javax.swing.JFrame {
             public void run() {
                 try {
                     new Login().setVisible(true);
-                } catch (IOException | GraphException | ClassNotFoundException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (TreeException ex) {
+                } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
