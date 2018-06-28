@@ -8,6 +8,7 @@ package GUI;
 import Domain.Bodega;
 import Domain.Categoria;
 import Domain.Lote;
+import Domain.OrdenDistribucion;
 import Domain.ProductoMayorista;
 import Domain.Usuario;
 import Logic.Cruds;
@@ -65,7 +66,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private Datos data;
     private Logica logica;
     private Cruds cruds;
-    
 
     //TDA's
     private TreeMap<Integer, Lote> treeMapLote;
@@ -73,6 +73,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private LinkedList<ProductoMayorista> listaProductos;
     private LinkedList<Usuario> listaUsuarios;
     private AdjacencyMatrixGraph grafoBodegas;
+    private static LinkedList<OrdenDistribucion> listaOrdenes;
 
     //TAble Model
     private DefaultTableModel tableModelProductosReporte;
@@ -91,7 +92,10 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     public Modulo2() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
-      
+
+        this.jXDatePickerDesdeHistorial.setDate(null);
+        this.jXDatePickerHastaHistorial.setDate(null);
+
         //Clases
         this.data = new Datos();
         this.logica = new Logica();
@@ -104,6 +108,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         this.listaUsuarios = this.data.getListaUsuarios();
         this.hashMapCategoria = this.data.getHashMapCategoria();
         this.grafoBodegas = this.data.getGrafoBodegas();
+        this.listaOrdenes = this.data.getListaOrdenes();
 
         //TAbleModel
         this.tableModelProductosReporte = new DefaultTableModel();
@@ -156,7 +161,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
     private void inicializarJTableHistorial() {
         String x[][] = {};
-        String columns[] = {"Producto", "Bodega", "Fecha"};
+        String columns[] = {"Bodega", "Producto", "Categoria", "Lote", "Operador"};
         tableModelHistorial = new DefaultTableModel(x, columns);
         jTableHistorial.setModel(tableModelHistorial);
     }
@@ -225,10 +230,15 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jComboBoxLoteHistorial = new javax.swing.JComboBox<>();
         jComboBoxOperadorHistorial = new javax.swing.JComboBox<>();
         jComboBoxCategoriaHistorial = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelLoteHistorial = new javax.swing.JLabel();
+        jLabelOperadorHistorial = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButtonBuscrHistorial = new javax.swing.JButton();
+        jXDatePickerDesdeHistorial = new org.jdesktop.swingx.JXDatePicker();
+        jXDatePickerHastaHistorial = new org.jdesktop.swingx.JXDatePicker();
+        jLabel7 = new javax.swing.JLabel();
+        jLabelCategoiaHistorial = new javax.swing.JLabel();
+        jButtonFiltrarHistorial = new javax.swing.JButton();
         fondo4 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -332,47 +342,47 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
         jTableHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Producto", "Bodega", "Fecha"
+                "Bodega", "Producto", "Fecha", "Title 4", "Title 5"
             }
         ));
         jScrollPane3.setViewportView(jTableHistorial);
 
-        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 660, 220));
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 900, 220));
 
-        jPanel6.add(jComboBoxLoteHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 170, -1));
+        jPanel6.add(jComboBoxLoteHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 170, -1));
 
-        jPanel6.add(jComboBoxOperadorHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 170, -1));
+        jPanel6.add(jComboBoxOperadorHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 170, -1));
 
         jComboBoxCategoriaHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriaHistorialActionPerformed(evt);
             }
         });
-        jPanel6.add(jComboBoxCategoriaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 170, -1));
+        jPanel6.add(jComboBoxCategoriaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 170, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Lote:");
-        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
+        jLabelLoteHistorial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelLoteHistorial.setText("Lote:");
+        jPanel6.add(jLabelLoteHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Operador:");
-        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, -1, -1));
+        jLabelOperadorHistorial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelOperadorHistorial.setText("Operador:");
+        jPanel6.add(jLabelOperadorHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setText("Categoria:");
-        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
+        jLabel5.setText("Desde:");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
 
         jButtonBuscrHistorial.setText("Buscar");
         jButtonBuscrHistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -380,7 +390,20 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
                 jButtonBuscrHistorialActionPerformed(evt);
             }
         });
-        jPanel6.add(jButtonBuscrHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 70, -1));
+        jPanel6.add(jButtonBuscrHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 70, -1));
+        jPanel6.add(jXDatePickerDesdeHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+        jPanel6.add(jXDatePickerHastaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel7.setText("Hasta:");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
+
+        jLabelCategoiaHistorial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelCategoiaHistorial.setText("Categoria:");
+        jPanel6.add(jLabelCategoiaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, -1, -1));
+
+        jButtonFiltrarHistorial.setText("Filtrar");
+        jPanel6.add(jButtonFiltrarHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, -1, -1));
 
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -486,26 +509,21 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jComboBoxCategoriaHistorialActionPerformed
 
     private void jButtonBuscrHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscrHistorialActionPerformed
-//        try {
-//            tableModelHistorial.setRowCount(0);
-//
-//            LinkedList<ProductoMayorista> linkedList = new LinkedList<>();
-//            Categoria categoria = this.logica.getCategoria(jComboBoxCategoriaHistorial.getSelectedItem().toString());
-//            Lote lote = this.logica.getLotePorIdLote(Integer.parseInt(jComboBoxLoteHistorial.getSelectedItem().toString()));
-//
-//            linkedList = this.logica.getListaProductosPorCategoriaYLote(categoria.getId(), lote.getId());
-//
-//            if (linkedList.isEmpty()) {
-//                JOptionPane.showMessageDialog(null, "No hay productos");
-//            } else {
-//                for (int i = 0; i < linkedList.size(); i++) {
-//                    this.logica.agregarProductosATablaHistorial(linkedList.get(i), bodega.getNombre(), tableModelHistorial, lote.getFechaEmpacado(), contTableHistorial);
-//                    contFilasTablaHistorial++;
-//                }
-//            }
-//        } catch (GraphException ex) {
-//            Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        for (int i = 0; i < listaOrdenes.size(); i++) {
+            LinkedList<ProductoMayorista> productos = listaOrdenes.get(i).getListaProductos();
+            for (int j = 0; j < productos.size(); j++) {
+                Lote lote = this.logica.getLotePorIdLote(productos.get(j).getIdLote());
+                if (lote.getFechaEmpacado().after(jXDatePickerDesdeHistorial.getDate())
+                        && lote.getFechaVecimiento().before(jXDatePickerHastaHistorial.getDate())) {
+                    try {
+                        this.logica.agregarTablaHistorial(listaOrdenes.get(i), productos.get(j), tableModelHistorial, contTableHistorial);
+                    } catch (GraphException ex) {
+                        Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            }
+        }
     }//GEN-LAST:event_jButtonBuscrHistorialActionPerformed
 
     private void jButtonSeleccionarBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarBodegaActionPerformed
@@ -519,10 +537,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
             Date date = new Date();
             if (lote.getFechaVecimiento().before(date)) {
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String expirationDate = dateFormat.format(lote.getFechaVecimiento());
-                JOptionPane.showMessageDialog(null, "La fecha de vencimiento del lote es: " + expirationDate
-                        + "\nLos productos asociados a este lote actualmente se encuentran vencidos");
+
                 for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
 
                     if (entry.getKey() == idBodegaSeleccionada) {
@@ -531,11 +546,30 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
                         }
                     }
                 }
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String expirationDate = dateFormat.format(lote.getFechaVecimiento());
+                JOptionPane.showMessageDialog(null,
+                        "La fecha de vencimiento del lote es: " + expirationDate
+                        + "\nLos productos asociados a este lote actualmente se encuentran vencidos");
+
             } else {
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 String expirationDate = dateFormat.format(lote.getFechaVecimiento());
-                JOptionPane.showMessageDialog(null, "La fecha de vencimiento del lote es: " + expirationDate
-                        + "\nLos productos asociados a este lote actualmente no se encuentran vencidos");
+                int salida = JOptionPane.showConfirmDialog(null,
+                        "La fecha de vencimiento del lote es: " + expirationDate
+                        + "\nLos productos asociados a este lote actualmente no se encuentran vencidos"
+                        + "\n¿Desea visualizarlos?", "Confirmar salida",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (salida == 0) {
+                    for (Map.Entry<Integer, LinkedList<ProductoMayorista>> entry : hashMap.entrySet()) {
+
+                        if (entry.getKey() == idBodegaSeleccionada) {
+                            for (int i = 0; i < entry.getValue().size(); i++) {
+                                this.logica.agregarProductos(entry.getValue().get(i), tableModelProductosReporte, contTableProductoReporte);
+                            }
+                        }
+                    }
+                }
             }
 
         } catch (GraphException ex) {
@@ -545,7 +579,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 //--------------------------------CHART--------------------------------------------------------------------
 
     public void dualAxis() throws GraphException, IOException, FileNotFoundException, ClassNotFoundException, TreeException {
-        DualAxisDemo5 demo = new DualAxisDemo5("Reporte de lotes por Bodega",jPanel2);
+        DualAxisDemo5 demo = new DualAxisDemo5("Reporte de lotes por Bodega", jPanel2);
         demo.pack();
     }
 
@@ -603,15 +637,18 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonBuscarReporte;
     private javax.swing.JButton jButtonBuscrHistorial;
+    private javax.swing.JButton jButtonFiltrarHistorial;
     private javax.swing.JButton jButtonSeleccionarBodega;
     private javax.swing.JComboBox<String> jComboBoxCategoriaHistorial;
     private javax.swing.JComboBox<String> jComboBoxIdLoteReporte;
     private javax.swing.JComboBox<String> jComboBoxLoteHistorial;
     private javax.swing.JComboBox<String> jComboBoxOperadorHistorial;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelCategoiaHistorial;
+    private javax.swing.JLabel jLabelLoteHistorial;
+    private javax.swing.JLabel jLabelOperadorHistorial;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
@@ -623,5 +660,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JTable jTableBodegaReporte;
     private javax.swing.JTable jTableHistorial;
     private javax.swing.JTable jTableProductosReporte;
+    private org.jdesktop.swingx.JXDatePicker jXDatePickerDesdeHistorial;
+    private org.jdesktop.swingx.JXDatePicker jXDatePickerHastaHistorial;
     // End of variables declaration//GEN-END:variables
 }

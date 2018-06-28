@@ -364,11 +364,13 @@ public class Logica implements Serializable {
      * @param date
      * @param contTable
      */
-    public void agregarProductosATablaHistorial(ProductoMayorista producto, String bodega, DefaultTableModel tableModel, Date date, int contTable) {
+    public void agregarTablaHistorial(OrdenDistribucion orden, ProductoMayorista producto, DefaultTableModel tableModel, int contTable) throws GraphException {
         tableModel.insertRow(contTable, new Object[]{});
-        tableModel.setValueAt(producto.getNombre(), contTable, 0);
-        tableModel.setValueAt(bodega, contTable, 1);
-        tableModel.setValueAt(date, contTable, 2);
+        tableModel.setValueAt(getNombreBodega(orden.getIdBodegaDestino()), contTable, 0);
+        tableModel.setValueAt(producto.getNombre(), contTable, 1);
+        tableModel.setValueAt(getCategoria(producto.getIdCategoria()), contTable, 2);
+        tableModel.setValueAt(getLotePorIdLote(producto.getIdLote()).getCodigoLote(), contTable, 3);
+        tableModel.setValueAt(getNombreOperador(orden.getIdOperador()), contTable, 4);
         contTable++;
     }
 
@@ -384,15 +386,15 @@ public class Logica implements Serializable {
                     existe = true;
                 }
             }
-            if(existe == true){
+            if (existe == true) {
                 hashMap.put(listaOrdenes.get(i).getIdBodegaDestino(), linkedList);
             }
             existe = false;
         }
         return hashMap;
     }
-    
-    public String getCategoria(int idCategoria){
+
+    public String getCategoria(int idCategoria) {
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             if (entry.getValue().getId() == idCategoria) {
                 return entry.getValue().getNombre();
@@ -400,4 +402,5 @@ public class Logica implements Serializable {
         }
         return null;
     }
+
 }
