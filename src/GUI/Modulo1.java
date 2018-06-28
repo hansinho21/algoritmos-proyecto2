@@ -297,7 +297,7 @@ public class Modulo1 extends javax.swing.JFrame {
         fondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel1.add(fondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
-        jTabbedPane1.addTab("Página 1", jPanel1);
+        jTabbedPane1.addTab("Selección de Productos", jPanel1);
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -341,7 +341,7 @@ public class Modulo1 extends javax.swing.JFrame {
         fondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel5.add(fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
 
-        jTabbedPane1.addTab("Página 2", jPanel5);
+        jTabbedPane1.addTab("Bodega destino", jPanel5);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 960, 540));
 
@@ -498,6 +498,7 @@ public class Modulo1 extends javax.swing.JFrame {
     private void jList1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MousePressed
         try {
             // TODO add your handling code here:
+            
             browser();
         } catch (GraphException ex) {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
