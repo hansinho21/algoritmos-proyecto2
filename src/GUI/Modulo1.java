@@ -154,29 +154,39 @@ public class Modulo1 extends javax.swing.JFrame {
     }
 
     public void browser() throws GraphException {
-
+//https://www.google.com/maps/dir/33.54255,-112.071399/33.53809,-112.04725/@33.5402732,-112.0765951
+//https://maps.google.com/maps?saddr=9.8273563,-83.8706482&daddr=9.9995228-84.1252958
+//http://maps.google.com/maps?saddr=33.542550,-112.071399&daddr=33.538090,-112.047250
         jPanel14.setLayout(new BorderLayout());
         jPanel14.add(view, BorderLayout.CENTER);
-        String latitud = "";
-        String longitud = "";
+        String latitudBodegaCentral = "9.8273563";
+        String longitudBodegaCentral = "-83.8706482";
+        String latitudDestino="";
+        String longitudDestino="";
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
             Bodega auxBodega = (Bodega) grafoBodegas.getVertex(i);
             if (jList1.getSelectedValue().equals(auxBodega.getNombre())) {
-//                System.out.println(jComboBox6.getSelectedItem());
-                latitud = auxBodega.getLatitud();
-                longitud = auxBodega.getLongitud();
+                latitudDestino = auxBodega.getLatitud();
+                longitudDestino = auxBodega.getLongitud();
 
             }
         }
 
-        String[] url = new String[4];
-        url[0] = "https:/" + "" + "/www.google.com/maps/search/?api=1&query=";
-        url[1] = latitud;
+        String[] url = new String[8];
+        url[0] = "https:/" + "" + "/maps.google.com/maps?saddr=";
+        url[1] = latitudBodegaCentral;
         url[2] = ",";
-        url[3] = longitud;;
+        url[3] = longitudBodegaCentral;;
+        url[4]= "&daddr=";
+        url[5] = latitudDestino;
+        url[6] = ",";
+        url[7] = longitudDestino;
+        
 
-        browser.loadURL(url[0] + url[1] + url[2] + url[3]);
-        System.out.println(url[0] + url[1] + url[2] + url[3]);
+        browser.loadURL(url[0] + url[1] + url[2] + url[3]+ url[4]+ url[5]+ url[6]+ url[7]);
+        System.out.println(url[0] + url[1] + url[2] + url[3]+ url[4]+ url[5]+ url[6]+ url[7]);
+        Bodega b = (Bodega) grafoBodegas.getVertex(4);
+        System.out.println(b.getNombre());
     }
 
     /**
@@ -320,6 +330,9 @@ public class Modulo1 extends javax.swing.JFrame {
         jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jList1MousePressed(evt);
             }
@@ -462,11 +475,11 @@ public class Modulo1 extends javax.swing.JFrame {
                         id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
                     }
                     orden.setId(id);
-                    orden.setCodigo(String.valueOf(codigo));
+                    orden.setCodigo(String.valueOf(codigo));                  
                     for (int i = 0; i < grafoBodegas.getSize(); i++) {
                         Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
-                        if (bodega.getNombre().equalsIgnoreCase("Bodega Central")) {
-                            orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getId())));
+                        if (bodega.getId()==5) {
+                            orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getNombre())));
                         }
                     }
                     orden.setIdBodegaDestino(this.logica.getIdBodega((String) jList1.getSelectedValue()));
@@ -507,6 +520,10 @@ public class Modulo1 extends javax.swing.JFrame {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jList1MousePressed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList1MouseClicked
 
     /**
      * @param args the command line arguments
