@@ -45,12 +45,10 @@ public class Modulo1 extends javax.swing.JFrame {
     private Logica logica;
     private Cruds cruds;
 
-    
     Browser browser = new Browser();
     BrowserView view = new BrowserView(browser);
-    
+
     //TDA's
-    
     private LinkedList<OrdenDistribucion> listaOrdenes;
     private LinkedList<ProductoMayorista> auxListaProductos;
     private LinkedList<ProductoMayorista> listaProductos;
@@ -103,35 +101,29 @@ public class Modulo1 extends javax.swing.JFrame {
         this.contTable = 0;
         inicializarJTable();
         llenarJListBodegas();
-        
 
         //Monto y peso
         this.precioTotal = 0;
         this.pesoTotal = 0;
 
-        
-        
 //        browser();
 //        llenarComboBoxBodegas();
-
     }
 
     private void llenarJListBodegas() throws GraphException {
-        String[] bodegas= new String[grafoBodegas.getSize()];
+        String[] bodegas = new String[grafoBodegas.getSize()];
         for (int i = 0; i < this.grafoBodegas.getSize(); i++) {
             Bodega b = (Bodega) this.grafoBodegas.getVertex(i);
-            bodegas[i]= b.getNombre();
+            bodegas[i] = b.getNombre();
         }
         jList1.setListData(bodegas);
     }
-    
+
     private void llenarJList() {
         for (int i = 0; i < this.listaProductos.size(); i++) {
             this.listModel.addElement(this.listaProductos.get(i).getNombre());
         }
     }
-
-    
 
     private void inicializarJTable() {
         String x[][] = {};
@@ -162,7 +154,7 @@ public class Modulo1 extends javax.swing.JFrame {
     }
 
     public void browser() throws GraphException {
-        
+
         jPanel14.setLayout(new BorderLayout());
         jPanel14.add(view, BorderLayout.CENTER);
         String latitud = "";
@@ -176,17 +168,15 @@ public class Modulo1 extends javax.swing.JFrame {
 
             }
         }
-        
+
         String[] url = new String[4];
-        url[0] = "https:/"+""+"/www.google.com/maps/search/?api=1&query=";
+        url[0] = "https:/" + "" + "/www.google.com/maps/search/?api=1&query=";
         url[1] = latitud;
         url[2] = ",";
-        url[3] = longitud;; 
-        
-        
-        
-        browser.loadURL(url[0]+url[1]+url[2]+url[3]);
-        System.out.println(url[0]+url[1]+url[2]+url[3]);
+        url[3] = longitud;;
+
+        browser.loadURL(url[0] + url[1] + url[2] + url[3]);
+        System.out.println(url[0] + url[1] + url[2] + url[3]);
     }
 
     /**
@@ -367,8 +357,9 @@ public class Modulo1 extends javax.swing.JFrame {
         this.logica.agergarProducto(elemento, tableModel, contTable, listaProductos, pesoTotal, precioTotal);
         for (int i = 0; i < listaProductos.size(); i++) {
             ProductoMayorista p = listaProductos.get(i);
-            if(p.getNombre().equalsIgnoreCase(jListProductos.getSelectedValue()))
+            if (p.getNombre().equalsIgnoreCase(jListProductos.getSelectedValue())) {
                 auxListaProductos.add(p);
+            }
         }
         this.jProgressBar.setMaximum(1000);
         for (int i = 0; i < listaProductos.size(); i++) {
@@ -409,23 +400,23 @@ public class Modulo1 extends javax.swing.JFrame {
             if (pesoTotal > 0) {
                 pesoTotal -= (Integer) tableModel.getValueAt(jTableProductos.getSelectedRow(), 2);
                 precioTotal -= (Double) tableModel.getValueAt(jTableProductos.getSelectedRow(), 1);
-                if(pesoTotal >= 10000 && pesoTotal < 30000){
-                jProgressBar.setMaximum(30000);
+                if (pesoTotal >= 10000 && pesoTotal < 30000) {
+                    jProgressBar.setMaximum(30000);
                 }
-                if(pesoTotal >= 5000 && pesoTotal < 10000){
-                jProgressBar.setMaximum(10000);
+                if (pesoTotal >= 5000 && pesoTotal < 10000) {
+                    jProgressBar.setMaximum(10000);
                 }
-                if(pesoTotal >= 1000 && pesoTotal < 5000){
-                jProgressBar.setMaximum(5000);
+                if (pesoTotal >= 1000 && pesoTotal < 5000) {
+                    jProgressBar.setMaximum(5000);
                 }
-                if(pesoTotal < 1000 ){
-                jProgressBar.setMaximum(1000);
+                if (pesoTotal < 1000) {
+                    jProgressBar.setMaximum(1000);
                 }
                 this.progreso -= (Integer) tableModel.getValueAt(jTableProductos.getSelectedRow(), 2);
                 this.jProgressBar.setValue(progreso);
                 tableModel.removeRow(jTableProductos.getSelectedRow());
                 restarPrecioYPeso();
-                
+
             }
         }
 
@@ -453,52 +444,64 @@ public class Modulo1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            // TODO add your handling code here:
-            int codigo = (int) (Math.random() * 900) + 1;
-            OrdenDistribucion orden = new OrdenDistribucion();
-            int id = 0;
-            if (listaOrdenes.isEmpty()) {
-                id = 1;
-            } else {
-                id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
-            }
-            orden.setId(id);
-            orden.setCodigo(String.valueOf(codigo));
-            for (int i = 0; i < grafoBodegas.getSize(); i++) {
-                Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
-                if(bodega.getNombre().equalsIgnoreCase("Bodega Central"))
-                    orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getId())));
-            }
-            orden.setIdBodegaDestino(this.logica.getIdBodega((String) jList1.getSelectedValue()));
-            orden.setMontoTotal(Double.parseDouble(jLabelMontoTotal.getText()));
-            orden.setPesoTotal(Float.parseFloat(jLabelPesoTotal.getText()));
-            orden.setListaProductos(auxListaProductos);
-            orden.setIdOperador(2);
-            Date date = new Date();
-            date.getDate();
-            orden.setFecha(date);
+            if (pesoTotal < 30000) {
+                int salida = JOptionPane.showConfirmDialog(null,
+                        "Aun tiene espacio en el vehiculo, desea continuar?", "Confirmar Orden",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (salida != 0) {
+                    JOptionPane.showMessageDialog(null, "Vuelva a la pantalla anterior y complete su orden");
+                } else {
+
+                    // TODO add your handling code here:
+                    int codigo = (int) (Math.random() * 900) + 1;
+                    OrdenDistribucion orden = new OrdenDistribucion();
+                    int id = 0;
+                    if (listaOrdenes.isEmpty()) {
+                        id = 1;
+                    } else {
+                        id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
+                    }
+                    orden.setId(id);
+                    orden.setCodigo(String.valueOf(codigo));
+                    for (int i = 0; i < grafoBodegas.getSize(); i++) {
+                        Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
+                        if (bodega.getNombre().equalsIgnoreCase("Bodega Central")) {
+                            orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getId())));
+                        }
+                    }
+                    orden.setIdBodegaDestino(this.logica.getIdBodega((String) jList1.getSelectedValue()));
+                    orden.setMontoTotal(Double.parseDouble(jLabelMontoTotal.getText()));
+                    orden.setPesoTotal(Float.parseFloat(jLabelPesoTotal.getText()));
+                    orden.setListaProductos(auxListaProductos);
+                    orden.setIdOperador(2);
+                    Date date = new Date();
+                    date.getDate();
+                    orden.setFecha(date);
 //            logica.
-            cruds.agregarOrden(orden);
-            
-        JOptionPane.showMessageDialog(null, "Orden confirmada!!");
-        try {
-            Modulo1 m = new Modulo1();
-            m.setVisible(true);
-            dispose();
-        } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
-            Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                    cruds.agregarOrden(orden);
+
+                    JOptionPane.showMessageDialog(null, "Orden confirmada!!");
+                    try {
+                        Modulo1 m = new Modulo1();
+                        m.setVisible(true);
+                        dispose();
+                    } catch (IOException | GraphException | ClassNotFoundException | TreeException ex) {
+                        Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
         } catch (GraphException ex) {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jList1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MousePressed
         try {
             // TODO add your handling code here:
-            
+
             browser();
         } catch (GraphException ex) {
             Logger.getLogger(Modulo1.class.getName()).log(Level.SEVERE, null, ex);
