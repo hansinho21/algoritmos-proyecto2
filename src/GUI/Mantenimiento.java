@@ -71,7 +71,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private TextAutoCompleter textAutoCompleterOrden;
 
     private DefaultListModel listModel;
-
+    private Bodega central;
     /**
      * Creates new form Mantenimiento
      */
@@ -115,8 +115,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.textAutoCompleterUnidadTransorte = new TextAutoCompleter(jTextFieldPlacaUnidadTransporte);
         this.textAutoCompleterProducto = new TextAutoCompleter(jTextFieldNombreProducto);
         this.textAutoCompleterOrden = new TextAutoCompleter(jTextFieldCodigoOrden);
-
+        
         this.listModel = new DefaultListModel();
+        this.central = new Bodega(700, "B. Central", "9.8273563", "-83.8706482", 0, "bodega.jpg");
         this.jListProductosOrden.setModel(listModel);
 
         //llenar autocompleters
@@ -135,7 +136,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
 
         //ComboBox - Orden
-        llenarComboBoxBodega(jComboBoxBodegaProcedenciaOrden);
         llenarComboBoxBodega(jComboBoxBodegaDestinoOrden);
         llenarComboBoxProductos(jComboBoxProductosOrden);
         llenarComboBoxOperador(jComboBoxOperadorOrden);
@@ -508,7 +508,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jComboBoxOperadorOrden = new javax.swing.JComboBox<>();
         jComboBoxBodegaDestinoOrden = new javax.swing.JComboBox<>();
         jComboBoxProductosOrden = new javax.swing.JComboBox<>();
-        jComboBoxBodegaProcedenciaOrden = new javax.swing.JComboBox<>();
         jTextFieldMontoOrden = new javax.swing.JTextField();
         jTextFieldPesoOrden = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -522,6 +521,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jLabel29 = new javax.swing.JLabel();
         jTextFieldCodigoOrden = new javax.swing.JTextField();
         jDateChooserFechaOrden = new org.jdesktop.swingx.JXDatePicker();
+        jLabel17 = new javax.swing.JLabel();
         fondo8 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         jButtonSalir1 = new javax.swing.JButton();
@@ -1131,8 +1131,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
         jPanel10.add(jComboBoxProductosOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 180, 200, -1));
 
-        jPanel10.add(jComboBoxBodegaProcedenciaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 200, -1));
-
         jTextFieldMontoOrden.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldMontoOrdenKeyTyped(evt);
@@ -1210,6 +1208,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         });
         jPanel10.add(jTextFieldCodigoOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 200, -1));
         jPanel10.add(jDateChooserFechaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 200, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setText("B. Central");
+        jPanel10.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 126, -1, 30));
 
         fondo8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel10.add(fondo8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 500));
@@ -1965,7 +1968,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
                 try {
                     jTextFieldCodigoOrden.setText(listaOrdenes.get(i).getCodigo());
                     jLabelIdOrdenDistribucion.setText(String.valueOf(listaOrdenes.get(i).getId()));
-                    jComboBoxBodegaProcedenciaOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaProcedencia()));
                     jComboBoxBodegaDestinoOrden.setSelectedItem(this.logica.getNombreBodega(listaOrdenes.get(i).getIdBodegaDestino()));
                     jDateChooserFechaOrden.setDate(listaOrdenes.get(i).getFecha());
                     jComboBoxOperadorOrden.setSelectedItem(this.logica.getNombreOperador(listaOrdenes.get(i).getIdOperador()));
@@ -1995,7 +1997,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
             ordenDistribucion.setId(id);
             ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
-            ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
+            ordenDistribucion.setIdBodegaProcedencia(central.getId());
             ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
             ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
             ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
@@ -2025,7 +2027,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
             ordenDistribucion.setId(Integer.parseInt(jLabelIdOrdenDistribucion.getText()));
             ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
-            ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
+            ordenDistribucion.setIdBodegaProcedencia(central.getId());
             ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
             ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
             ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
@@ -2055,7 +2057,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
 
             ordenDistribucion.setId(Integer.parseInt(jLabelIdOrdenDistribucion.getText()));
             ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
-            ordenDistribucion.setIdBodegaProcedencia(this.logica.getIdBodega(jComboBoxBodegaProcedenciaOrden.getSelectedItem().toString()));
+            ordenDistribucion.setIdBodegaProcedencia(central.getId());
             ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
             ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
             ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
@@ -2205,7 +2207,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonSalir1;
     private javax.swing.JComboBox<String> jComboBoxBodegaDestinoOrden;
-    private javax.swing.JComboBox<String> jComboBoxBodegaProcedenciaOrden;
     private javax.swing.JComboBox<String> jComboBoxIdCategoriaProducto;
     private javax.swing.JComboBox<String> jComboBoxIdLoteProducto;
     private javax.swing.JComboBox<String> jComboBoxOperadorOrden;
@@ -2223,6 +2224,7 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
