@@ -372,6 +372,11 @@ public class Logica implements Serializable {
         contTable++;
     }
 
+    /**
+     * Carga un hashmap con una bodega y la lista de productos que estén asociados al id de lote pasado como parametro
+     * @param idLote idLote
+     * @return Retorna un hashMap con la información.
+     */
     public HashMap getMapaBodegas(int idLote) {
         HashMap<Integer, LinkedList<ProductoMayorista>> hashMap = new HashMap<>();
         boolean existe = false;
@@ -392,6 +397,11 @@ public class Logica implements Serializable {
         return hashMap;
     }
 
+    /**
+     * Retorna el nombre de una categoria segun su id
+     * @param idCategoria
+     * @return Retorna el nombre de la categoria
+     */
     public String getCategoria(int idCategoria) {
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
             if (entry.getValue().getId() == idCategoria) {

@@ -144,6 +144,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 //        this.logica.agregarTodosProductos(tableModelHistorial, contTable, listaProductos);
     }
 
+    /**
+     * Inicializa el JTable del historial.
+     */
     private void inicializarJTableHistorial() {
         String x[][] = {};
         String columns[] = {"Bodega", "Producto", "Categoria", "Lote", "Operador"};
@@ -151,6 +154,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTableHistorial.setModel(tableModelHistorial);
     }
 
+    /**
+     * Inicializa el JTable de la bodega.
+     */
     private void inicializarJTableBodega() {
         String x[][] = {};
         String columns[] = {"Bodega"};
@@ -158,6 +164,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTableBodegaReporte.setModel(tableModelBodegasReporte);
     }
 
+    /**
+     * Inicializa el JTable del reporte de productos.
+     */
     private void inicializarJTableProductoReporte() {
         String x[][] = {};
         String columns[] = {"Id", "Nombre", "Unidad de medida", "Valor Unidad", "Categoria", "Precio total", "Peso total"};
@@ -165,6 +174,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jTableProductosReporte.setModel(tableModelProductosReporte);
     }
 
+    /**
+     * Llena el comboBox de lotes.
+     */
     private void llenarComboLotesReporte() {
         jComboBoxIdLoteReporte.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
