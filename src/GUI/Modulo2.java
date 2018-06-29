@@ -604,10 +604,10 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jTextFieldFiltroOperadorKeyTyped
 
     private void jTextFieldFiltroProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroProductoKeyTyped
-        jTextFieldFiltroBodega.addKeyListener(new KeyAdapter() {
+        jTextFieldFiltroProducto.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroBodega.getText(), 0));
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroProducto.getText(), 1));
                 //El "(?i)" es para que funcione con mayusculas y minusculas
             }
 
@@ -618,10 +618,12 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jTextFieldFiltroProductoKeyTyped
 
     private void jTextFieldFiltroBodegaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroBodegaKeyTyped
-        jTextFieldFiltroProducto.addKeyListener(new KeyAdapter() {
+        
+        
+        jTextFieldFiltroBodega.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroProducto.getText(), 1));
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroBodega.getText(), 0));
                 //El "(?i)" es para que funcione con mayusculas y minusculas
             }
 

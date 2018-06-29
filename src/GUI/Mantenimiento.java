@@ -500,7 +500,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonEliminarBodega = new javax.swing.JButton();
         jButtonLimpiarBodega = new javax.swing.JButton();
         jTextFieldUrlBodega = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
         jButtonBuscarImagenBodega = new javax.swing.JButton();
         fondo2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -521,7 +520,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jLabel19 = new javax.swing.JLabel();
         jLabelIdLote = new javax.swing.JLabel();
         jTextFieldCodigoLote = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jButtonAgregarLote = new javax.swing.JButton();
         jButtonEditarLote = new javax.swing.JButton();
         jButtonEliminarLote = new javax.swing.JButton();
@@ -594,7 +592,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jButtonEditarOrden = new javax.swing.JButton();
         jButtonEliminarOrden = new javax.swing.JButton();
         jButtonLimpiarOrden = new javax.swing.JButton();
-        jButtonAgregarOrden = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jTextFieldCodigoOrden = new javax.swing.JTextField();
         jDateChooserFechaOrden = new org.jdesktop.swingx.JXDatePicker();
@@ -781,10 +778,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel5.add(jButtonLimpiarBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 430, -1, -1));
         jPanel5.add(jTextFieldUrlBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 370, 150, 30));
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel20.setText("FileChooser en el url");
-        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 210, 30));
-
         jButtonBuscarImagenBodega.setText("Buscar Imagen");
         jButtonBuscarImagenBodega.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -879,10 +872,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             }
         });
         jPanel7.add(jTextFieldCodigoLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 180, 30));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setText("Hay que hacer bien los date");
-        jPanel7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 260, 40));
 
         jButtonAgregarLote.setText("Agregar");
         jButtonAgregarLote.addActionListener(new java.awt.event.ActionListener() {
@@ -1266,14 +1255,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         });
         jPanel10.add(jButtonLimpiarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, -1, -1));
 
-        jButtonAgregarOrden.setText("Agregar");
-        jButtonAgregarOrden.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarOrdenActionPerformed(evt);
-            }
-        });
-        jPanel10.add(jButtonAgregarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, -1, -1));
-
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel29.setText("Bodega Procedencia:");
         jPanel10.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
@@ -1287,7 +1268,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jPanel10.add(jDateChooserFechaOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 200, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("B. Central");
         jPanel10.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 126, -1, 30));
 
@@ -2062,42 +2042,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }//GEN-LAST:event_jTextFieldCodigoOrdenFocusGained
 
-    private void jButtonAgregarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarOrdenActionPerformed
-        try {
-            OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
-            int id = 0;
-            if (listaOrdenes.isEmpty()) {
-                id = 1;
-            } else {
-                id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
-            }
-
-            ordenDistribucion.setId(id);
-            ordenDistribucion.setCodigo(jTextFieldCodigoOrden.getText());
-            ordenDistribucion.setIdBodegaProcedencia(central.getId());
-            ordenDistribucion.setIdBodegaDestino(this.logica.getIdBodega(jComboBoxBodegaDestinoOrden.getSelectedItem().toString()));
-            ordenDistribucion.setFecha(jDateChooserFechaOrden.getDate());
-            ordenDistribucion.setIdOperador(this.logica.getIdOperador(jComboBoxOperadorOrden.getSelectedItem().toString()));
-            ordenDistribucion.setPesoTotal(Float.parseFloat(jTextFieldPesoOrden.getText()));
-            ordenDistribucion.setMontoTotal(Double.parseDouble(jTextFieldMontoOrden.getText()));
-
-            LinkedList<ProductoMayorista> linkedList = new LinkedList<ProductoMayorista>();
-            for (int i = 0; i < listModel.size(); i++) {
-                linkedList.add(this.logica.getProducto(listModel.get(i).toString()));
-            }
-
-            ordenDistribucion.setListaProductos(linkedList);
-
-            this.cruds.agregarOrden(ordenDistribucion);
-
-            llenarAutocompleterOrden();
-            limpiarInformacionOrden();
-
-        } catch (IOException | GraphException ex) {
-            Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButtonAgregarOrdenActionPerformed
-
     private void jButtonEditarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarOrdenActionPerformed
         try {
             OrdenDistribucion ordenDistribucion = new OrdenDistribucion();
@@ -2251,7 +2195,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButtonAgregarBodega;
     private javax.swing.JButton jButtonAgregarCategoria;
     private javax.swing.JButton jButtonAgregarLote;
-    private javax.swing.JButton jButtonAgregarOrden;
     private javax.swing.JButton jButtonAgregarProducto;
     private javax.swing.JButton jButtonAgregarProductoOrden;
     private javax.swing.JButton jButtonAgregarUnidadTransporte;
@@ -2305,7 +2248,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -2317,7 +2259,6 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
