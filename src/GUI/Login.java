@@ -125,6 +125,10 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * boton salir
+     * @param evt action event
+     */
     private void jButtonSalirLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirLoginActionPerformed
         // TODO add your handling code here:
         int salida = JOptionPane.showConfirmDialog(null,
@@ -137,6 +141,10 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonSalirLoginActionPerformed
 
+    /**
+     * boton ingresar
+     * @param evt action event
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         for (int i = 0; i < listaUsuarios.size(); i++) {
             if (jTextFieldNombreUsuario.getText().equals(listaUsuarios.get(i).getUsuario())

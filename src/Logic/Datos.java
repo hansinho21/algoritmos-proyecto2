@@ -80,67 +80,82 @@ public class Datos implements Serializable {
         }
     }
 
+    /**
+     * llenar la lista de usuarios
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     private void llenarListaUsuarios() throws FileNotFoundException, IOException, ClassNotFoundException {
-//        listaUsuarios.add(new Usuario(1, "jans", "Administrador", "jansino", "jansino21"));
-//        listaUsuarios.add(new Usuario(2, "juam", "Operador", "panchito", "jansino21"));
-//        listaUsuarios.add(new Usuario(3, "julia", "Administrador", "juli", "jansino21"));
-//        listaUsuarios.add(new Usuario(4, "allana", "Operador", "ali", "jansino21"));
-
         this.listaUsuarios = this.archivos.leerArchivoUsuarios();
     }
 
+    /**
+     * llenar el grafo bodegas
+     * @throws GraphException grafo
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     private void llenarBodegas() throws GraphException, FileNotFoundException, IOException, ClassNotFoundException {
-//        grafoBodegas.insertVertex(new Bodega(23, "Bodega Test", "9.8273563", "-83.8706482", 23, "url bodega 1"));
-//        grafoBodegas.insertVertex(new Bodega(24, "Bodega sdf", "234.678", "3542", 55, "url bodega 2"));
-//        grafoBodegas.insertVertex(new Bodega(35, "Bodega dgdf", "4262.7", "55555", 6, "url bodega 3"));
-//        grafoBodegas.insertVertex(new Bodega(47, "Bodega jfjhgjh", "65675", "464.77", 122, "url bodega 4"));
         this.grafoBodegas = this.archivos.leerArchivoBodegas();
     }
 
+    /**
+     * llenar tda categorias
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     private void llenarCategorias() throws FileNotFoundException, IOException, ClassNotFoundException {
-//        hashMapCategoria.put("Categoria 1", new Categoria(1, "Enlatados", "aaaa"));
-//        hashMapCategoria.put("Categoria 2", new Categoria(2, "Legumbres", "bbbb"));
-//        hashMapCategoria.put("Categoria 3", new Categoria(3, "Lacteos", "cccc"));
-//        hashMapCategoria.put("Categoria 4", new Categoria(4, "Liquidos", "dddd"));
-
         this.hashMapCategoria = this.archivos.leerArchivoCategorias();
     }
 
+    /**
+     * llenar  tda lotes
+     * @throws IOException io
+     * @throws FileNotFoundException archivo
+     * @throws ClassNotFoundException clase
+     */
     private void llenarLotes() throws IOException, FileNotFoundException, ClassNotFoundException {
-//        Date date = new Date(1, 2, 3);
-//        treeMapLote.put(1, new Lote(1, "A123", date, date));
-//        treeMapLote.put(2, new Lote(2, "B456", date, date));
-//        treeMapLote.put(3, new Lote(3, "C789", date, date));
-//        treeMapLote.put(4, new Lote(4, "A433", date, date));
-
         this.treeMapLote = this.archivos.leerArchivoLotes();
     }
 
+    /**
+     * llenar tda unidades transporte
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     private void llenarUnidadesTransporte() throws FileNotFoundException, IOException, ClassNotFoundException {
-//        linkedHashMapUnidadTransporte.put(1, new UnidadTransporte(1, "123-A", "100", "url Unidad 1"));
-//        linkedHashMapUnidadTransporte.put(2, new UnidadTransporte(2, "456-B", "11", "url Unidad 2"));
-//        linkedHashMapUnidadTransporte.put(3, new UnidadTransporte(3, "789-C", "45", "url Unidad 3"));
-//        linkedHashMapUnidadTransporte.put(4, new UnidadTransporte(4, "0234-D", "65", "url Unidad 4"));
-//        linkedHashMapUnidadTransporte.put(5, new UnidadTransporte(4, "1657-E", "77", "url Unidad 5"));
-
         this.linkedHashMapUnidadTransporte = this.archivos.leerArchivoUnidadesTransporte();
     }
 
+    /**
+     * llenar tda pro
+     * @throws IOException io
+     * @throws FileNotFoundException file
+     * @throws ClassNotFoundException clase
+     * @throws TreeException arbol
+     */
     private void llenarProductos() throws IOException, FileNotFoundException, ClassNotFoundException, TreeException {
-//        this.arbolProductosMayoristas = this.archivos.leerArchivoProductos();
-//        
-//        this.arbolProductosMayoristas.postOrder(listaProductos);
-//        System.out.println("*********PRODUCTOS*********");
-//        for (int i = 0; i < listaProductos.size(); i++) {
-//            System.out.println(listaProductos.get(i).toString());
-//        }
         this.listaProductos = this.archivos.leerArchivoProductos();
     }
 
+    /**
+     *  llenar tda ordenes
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     private void llenarOrdenes() throws FileNotFoundException, IOException, ClassNotFoundException {
         this.listaOrdenes = this.archivos.leerArchivoOrdenes();
     }
 
+    /**
+     * geters y seters
+     * @return LinkedList
+     */
     public LinkedList<ProductoMayorista> getListaProductos() {
         return listaProductos;
     }
