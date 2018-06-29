@@ -44,9 +44,11 @@ public class Modulo1 extends javax.swing.JFrame {
     private Datos data;
     private Logica logica;
     private Cruds cruds;
+    private Bodega central;
 
     Browser browser = new Browser();
     BrowserView view = new BrowserView(browser);
+    
 
     //TDA's
     private LinkedList<OrdenDistribucion> listaOrdenes;
@@ -106,8 +108,7 @@ public class Modulo1 extends javax.swing.JFrame {
         this.precioTotal = 0;
         this.pesoTotal = 0;
 
-//        browser();
-//        llenarComboBoxBodegas();
+        this.central = new Bodega(700, "B. Central", "9.8273563", "-83.8706482", 0, "bodega.jpg");
     }
 
     private void llenarJListBodegas() throws GraphException {
@@ -154,9 +155,6 @@ public class Modulo1 extends javax.swing.JFrame {
     }
 
     public void browser() throws GraphException {
-//https://www.google.com/maps/dir/33.54255,-112.071399/33.53809,-112.04725/@33.5402732,-112.0765951
-//https://maps.google.com/maps?saddr=9.8273563,-83.8706482&daddr=9.9995228-84.1252958
-//http://maps.google.com/maps?saddr=33.542550,-112.071399&daddr=33.538090,-112.047250
         jPanel14.setLayout(new BorderLayout());
         jPanel14.add(view, BorderLayout.CENTER);
         String latitudBodegaCentral = "9.8273563";
@@ -185,8 +183,6 @@ public class Modulo1 extends javax.swing.JFrame {
 
         browser.loadURL(url[0] + url[1] + url[2] + url[3]+ url[4]+ url[5]+ url[6]+ url[7]);
         System.out.println(url[0] + url[1] + url[2] + url[3]+ url[4]+ url[5]+ url[6]+ url[7]);
-        Bodega b = (Bodega) grafoBodegas.getVertex(4);
-        System.out.println(b.getNombre());
     }
 
     /**
@@ -475,13 +471,14 @@ public class Modulo1 extends javax.swing.JFrame {
                         id = listaOrdenes.get(listaOrdenes.size() - 1).getId() + 1;
                     }
                     orden.setId(id);
-                    orden.setCodigo(String.valueOf(codigo));                  
-                    for (int i = 0; i < grafoBodegas.getSize(); i++) {
-                        Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
-                        if (bodega.getId()==5) {
-                            orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getNombre())));
-                        }
-                    }
+                    orden.setCodigo(String.valueOf(codigo)); 
+                    orden.setIdBodegaProcedencia(central.getId());
+//                    for (int i = 0; i < grafoBodegas.getSize(); i++) {
+//                        Bodega bodega = (Bodega) grafoBodegas.getVertex(i);
+//                        if (bodega.getId()==5) {
+//                            orden.setIdBodegaProcedencia(logica.getIdBodega(String.valueOf(bodega.getNombre())));
+//                        }
+//                    }
                     orden.setIdBodegaDestino(this.logica.getIdBodega((String) jList1.getSelectedValue()));
                     orden.setMontoTotal(Double.parseDouble(jLabelMontoTotal.getText()));
                     orden.setPesoTotal(Float.parseFloat(jLabelPesoTotal.getText()));
