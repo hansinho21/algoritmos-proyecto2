@@ -118,7 +118,7 @@ public class Modulo1 extends javax.swing.JFrame {
 
     /**
      * llenar jlist de bodega
-     * @throws GraphException 
+     * @throws GraphException grafo
      */
     private void llenarJListBodegas() throws GraphException {
         String[] bodegas = new String[grafoBodegas.getSize()];
@@ -129,12 +129,18 @@ public class Modulo1 extends javax.swing.JFrame {
         jList1.setListData(bodegas);
     }
 
+    /**
+     * Llena el jlist de productos con todos los productos existentes.
+     */
     private void llenarJList() {
         for (int i = 0; i < this.listaProductos.size(); i++) {
             this.listModel.addElement(this.listaProductos.get(i).getNombre());
         }
     }
 
+    /**
+     * Inicializa el JTable de la orden.
+     */
     private void inicializarJTable() {
         String x[][] = {};
         String columns[] = {"Producto", "Monto", "Peso"};
@@ -142,6 +148,9 @@ public class Modulo1 extends javax.swing.JFrame {
         jTableProductos.setModel(tableModel);
     }
 
+    /**
+     * Realiza la suma de precio y peso.
+     */
     private void sumarPrecioYPeso() {
         if (pesoTotal < 30000) {
             for (int i = 0; i < listaProductos.size(); i++) {
@@ -158,11 +167,18 @@ public class Modulo1 extends javax.swing.JFrame {
         jLabelMontoTotal.setText(String.valueOf(precioTotal));
     }
 
+    /**
+     * Realiza la resta de precio y peso.
+     */
     private void restarPrecioYPeso() {
         jLabelPesoTotal.setText(String.valueOf(pesoTotal));
         jLabelMontoTotal.setText(String.valueOf(precioTotal));
     }
 
+    /**
+     * Metodo para el funcionamiento del jbrowser.
+     * @throws GraphException grafo
+     */
     public void browser() throws GraphException {
         jPanel14.setLayout(new BorderLayout());
         jPanel14.add(view, BorderLayout.CENTER);
