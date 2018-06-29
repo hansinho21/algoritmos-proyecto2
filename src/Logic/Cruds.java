@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * 
  * @author jeison
  */
 public class Cruds implements Serializable{
@@ -101,7 +101,11 @@ private Datos data;
     }
 
     //CRUDs Lotes ---------------------------------------------------------------------------------------
-    
+    /**
+     * Agrega un lote 
+     * @param lote lote
+     * @throws IOException io
+     */
     public void agregarLote(Lote lote) throws IOException {
         if (treeMapLote.isEmpty()) {
             treeMapLote.put(lote.getId(), lote);
@@ -121,11 +125,21 @@ private Datos data;
         }
     }
 
+    /**
+     * Edita un lote
+     * @param lote lote
+     * @throws IOException io 
+     */
     public void editarLote(Lote lote) throws IOException {
         treeMapLote.replace(lote.getId(), lote);
 //        this.data.setTreeMapLote(treeMapLote);
     }
 
+    /**
+     * Elimina un lote
+     * @param lote lote
+     * @throws IOException io 
+     */
     public void eliminarLote(Lote lote) throws IOException {
         if (treeMapLote.containsKey(lote.getId()) == false) {
             JOptionPane.showMessageDialog(null, "El lote no existe");
@@ -136,6 +150,11 @@ private Datos data;
     }
 
     //CRUDs Unidades de transporte ----------------------------------------------------------------------------------------
+    /**
+     * Agrega una unidad de transporte
+     * @param unidadTransporte unidad de transporte
+     * @throws IOException io
+     */
     public void agregarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         if (linkedHashMapUnidadTransporte.isEmpty()) {
             linkedHashMapUnidadTransporte.put(unidadTransporte.getId(), unidadTransporte);
@@ -153,11 +172,21 @@ private Datos data;
         }
     }
 
+    /**
+     * Edita una unidad de transporte
+     * @param unidadTransporte unidad de transporte
+     * @throws IOException io
+     */
     public void editarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         linkedHashMapUnidadTransporte.replace(unidadTransporte.getId(), unidadTransporte);
 //        this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
     }
 
+    /**
+     * Elimina una unidad de transporte
+     * @param unidadTransporte unidad de transporte
+     * @throws IOException io
+     */
     public void eliminarUnidadTransporte(UnidadTransporte unidadTransporte) throws IOException {
         if (linkedHashMapUnidadTransporte.containsKey(unidadTransporte.getId()) == false) {
             JOptionPane.showMessageDialog(null, "La unidad de transporte no existe");
@@ -168,6 +197,12 @@ private Datos data;
     }
 
     //CRUDs Bodegas ----------------------------------------------------------------------------------------
+    /**
+     * Agrega una bodega
+     * @param bodega bodega
+     * @throws GraphException grafo
+     * @throws IOException io
+     */
     public void agregarBodega(Bodega bodega) throws GraphException, IOException {
         boolean exist = false;
         if (grafoBodegas.isEmpty()) {
@@ -188,6 +223,12 @@ private Datos data;
         }
     }
 
+    /**
+     * Edita una bodega
+     * @param bodega bodega
+     * @throws GraphException grafo
+     * @throws IOException io
+     */
     public void editarBodega(Bodega bodega) throws GraphException, IOException {
         boolean exist = false;
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
@@ -203,6 +244,12 @@ private Datos data;
         }
     }
 
+    /**
+     * Elimina una bodega
+     * @param bodega bodega
+     * @throws GraphException grafo
+     * @throws IOException io
+     */
     public void eliminarBodega(Bodega bodega) throws GraphException, IOException {
         boolean exist = false;
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
@@ -220,6 +267,11 @@ private Datos data;
     }
 
     //CRUDs Usuario ----------------------------------------------------------------------------------------
+    /**
+     * Agrega un usuario
+     * @param usuario usuario
+     * @throws IOException io
+     */
     public void agregarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         if (listaUsuarios.isEmpty()) {
@@ -244,6 +296,11 @@ private Datos data;
         }
     }
 
+    /**
+     * Elimina un usuario
+     * @param usuario usuario
+     * @throws IOException io
+     */
     public void eliminarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         System.out.println(listaUsuarios.size() + "Inicio");
@@ -261,7 +318,11 @@ private Datos data;
         }
     }
     
-
+    /**
+     * Edita un usuario
+     * @param usuario usuario
+     * @throws IOException io
+     */
     public void editarUsuario(Usuario usuario) throws IOException {
         boolean exist = false;
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -278,6 +339,11 @@ private Datos data;
     }
     
     //CRUDs Producto ----------------------------------------------------------------------------------------
+    /**
+     * Agrega un producto
+     * @param producto producto
+     * @throws IOException io
+     */
     public void agregarProducto(ProductoMayorista producto) throws IOException {
         boolean exist = false;
         if (listaProductos.isEmpty()) {
@@ -302,6 +368,11 @@ private Datos data;
         }
     }
 
+    /**
+     * Elimina un producto
+     * @param producto producto
+     * @throws IOException io
+     */
     public void eliminarProducto(ProductoMayorista producto) throws IOException {
         boolean exist = false;
         System.out.println(listaProductos.size() + "Inicio");
@@ -319,7 +390,11 @@ private Datos data;
         }
     }
     
-
+    /**
+     * Edita un producto
+     * @param producto producto
+     * @throws IOException io
+     */
     public void editarProducto(ProductoMayorista producto) throws IOException {
         boolean exist = false;
         for (int i = 0; i < listaProductos.size(); i++) {
@@ -336,6 +411,11 @@ private Datos data;
     }
     
     //CRUDs Orden ----------------------------------------------------------------------------------------
+    /**
+     * Agrega una orden
+     * @param orden orden
+     * @throws IOException io
+     */
     public void agregarOrden(OrdenDistribucion orden) throws IOException{
         boolean exist = false;
         if (listaOrdenes.isEmpty()) {
@@ -356,6 +436,11 @@ private Datos data;
         }
     }
 
+    /**
+     * Elimina una orden
+     * @param orden orden
+     * @throws IOException io
+     */
     public void eliminarOrden(OrdenDistribucion orden) throws IOException{
         boolean exist = false;
         System.out.println(listaOrdenes.size() + "Inicio");
@@ -373,7 +458,11 @@ private Datos data;
         }
     }
     
-
+    /**
+     * Edita una orden
+     * @param orden orden
+     * @throws IOException io
+     */
     public void editarOrden(OrdenDistribucion orden) throws IOException {
         boolean exist = false;
         for (int i = 0; i < listaOrdenes.size(); i++) {
@@ -389,6 +478,12 @@ private Datos data;
         }
     }
     
+    /**
+     * Guarda el contenido de todos los tda en los respectivos archivos
+     * @throws IOException io
+     * @throws FileNotFoundException file
+     * @throws GraphException grafo
+     */
     public void guardarEnArchivo() throws IOException, FileNotFoundException, GraphException{
         this.data.setHashMapCategoria(hashMapCategoria);
         this.data.setTreeMapLote(treeMapLote);

@@ -8,11 +8,12 @@ package Domain;
 import java.io.Serializable;
 
 /**
+ * Objeto donde se guardan los datos de cada Usuario
  *
  * @author jeison
  */
-public class Usuario implements Serializable{ 
-    
+public class Usuario implements Serializable {
+
     private int id;//autoincremental
     private String nombre;
     private String rol;//operador o administrador
@@ -74,7 +75,5 @@ public class Usuario implements Serializable{
     public String toString() {
         return id + ";" + nombre + ";" + rol + ";" + usuario + ";" + contrasena;
     }
-    
-    
-    
+
 }

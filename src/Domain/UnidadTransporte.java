@@ -8,10 +8,12 @@ package Domain;
 import java.io.Serializable;
 
 /**
+ * Objeto donde se guardan los datos de cada Unidad de transporte
  *
  * @author jeison
  */
-public class UnidadTransporte implements Serializable{//LinkedHashMap Java - clave: id, valor: UnidadTransporte
+public class UnidadTransporte implements Serializable {//LinkedHashMap Java - clave: id, valor: UnidadTransporte
+
     private int id;//autoincremental
     private String placa;
     private int capacidad;
@@ -61,8 +63,7 @@ public class UnidadTransporte implements Serializable{//LinkedHashMap Java - cla
 
     @Override
     public String toString() {
-        return  id + ";" + placa + ";" + capacidad + ";" + urlFotografia;
+        return id + ";" + placa + ";" + capacidad + ";" + urlFotografia;
     }
-    
-    
+
 }

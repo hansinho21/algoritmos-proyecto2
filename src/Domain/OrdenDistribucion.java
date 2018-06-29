@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 /**
+ * Objeto donde se guardan los datos de cada Orden de Distribución
  *
  * @author jeison
  */
@@ -36,8 +37,6 @@ public class OrdenDistribucion implements Serializable {
         this.idOperador = idOperador;
         this.fecha = fecha;
     }
-    
-    
 
     public OrdenDistribucion() {
     }
@@ -118,7 +117,5 @@ public class OrdenDistribucion implements Serializable {
     public String toString() {
         return "OrdenDistribucion{" + "id=" + id + ", codigo=" + codigo + ", idBodegaProcedencia=" + idBodegaProcedencia + ", idBodegaDestino=" + idBodegaDestino + ", montoTotal=" + montoTotal + ", pesoTotal=" + pesoTotal + ", listaProductos=" + listaProductos + ", idOperador=" + idOperador + ", fecha=" + fecha + '}';
     }
-
-    
 
 }

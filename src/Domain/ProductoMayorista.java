@@ -8,11 +8,12 @@ package Domain;
 import java.io.Serializable;
 
 /**
+ * Objeto donde se guardan los datos de cada Producto Mayorista
  *
  * @author jeison
  */
-public class ProductoMayorista implements Serializable{ //Arbol binario
-    
+public class ProductoMayorista implements Serializable { //Arbol binario
+
     private int id;
     private String nombre;
     private String unidadMedidas;
@@ -123,15 +124,10 @@ public class ProductoMayorista implements Serializable{ //Arbol binario
     @Override
     public String toString() {
         return "ProductoMayorista{" + "id=" + id + ", nombre=" + nombre + ", unidadMedidas="
-                + unidadMedidas + ", valorUnidad=" + valorUnidad + ", pesoTotal=" 
-                + pesoTotal + ", descripcion=" + descripcion + ", idLote=" + idLote 
-                + ", idCategoria=" + idCategoria + ", precioTotal=" + precioTotal 
+                + unidadMedidas + ", valorUnidad=" + valorUnidad + ", pesoTotal="
+                + pesoTotal + ", descripcion=" + descripcion + ", idLote=" + idLote
+                + ", idCategoria=" + idCategoria + ", precioTotal=" + precioTotal
                 + ", urlFotografia=" + urlFotografia + '}';
     }
-    
-    
 
-
-
-    
 }

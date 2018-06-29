@@ -9,11 +9,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * Objeto donde se guardan los datos de cada Lote
  *
  * @author jeison
  */
-public class Lote implements Serializable{//TreeMap Java - clave: id, valor: Lote
-    
+public class Lote implements Serializable {//TreeMap Java - clave: id, valor: Lote
+
     private int id;//autoincremental
     private String codigoLote;
     private Date fechaEmpacado;//fecha y hora
@@ -70,15 +71,9 @@ public class Lote implements Serializable{//TreeMap Java - clave: id, valor: Lot
 //    public void setIdBodega(int idBodega) {
 //        this.idBodega = idBodega;
 //    }
-
     @Override
     public String toString() {
         return "Lote{" + "id=" + id + ", codigoLote=" + codigoLote + ", fechaEmpacado=" + fechaEmpacado + ", fechaVecimiento=" + fechaVecimiento + ", idBodega=" + idBodega + '}';
     }
 
-    
-
-
-    
 }
-

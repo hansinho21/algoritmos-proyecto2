@@ -8,11 +8,12 @@ package Domain;
 import java.io.Serializable;
 
 /**
+ * Objeto donde se guardan los datos de cada Categoria
  *
  * @author jeison
  */
-public class Categoria implements Serializable{ //HashMap Java - clave: String (nombre), valor: Objeto Categoria
-    
+public class Categoria implements Serializable { //HashMap Java - clave: String (nombre), valor: Objeto Categoria
+
     private int id;//autoincremental
     private String nombre;
     private String descripcion;
@@ -52,8 +53,7 @@ public class Categoria implements Serializable{ //HashMap Java - clave: String (
 
     @Override
     public String toString() {
-        return  id + ";" + nombre + ";" + descripcion;
+        return id + ";" + nombre + ";" + descripcion;
     }
-    
-    
+
 }

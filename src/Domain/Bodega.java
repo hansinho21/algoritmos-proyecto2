@@ -8,11 +8,12 @@ package Domain;
 import java.io.Serializable;
 
 /**
+ * Objeto donde se guardan los datos de cada Bodega
  *
  * @author jeison
  */
-public class Bodega implements Serializable{//Grafo con matriz de adyacencia
-    
+public class Bodega implements Serializable {//Grafo con matriz de adyacencia
+
     private int id;//autoincremental
     private String nombre;
     private String latitud;
@@ -82,9 +83,8 @@ public class Bodega implements Serializable{//Grafo con matriz de adyacencia
 
     @Override
     public String toString() {
-        return id + ";" + nombre + ";" + latitud + ";" + longitud + ";" +
-                distanciaCentroOperaciones + ";" + urlFotografia;
+        return id + ";" + nombre + ";" + latitud + ";" + longitud + ";"
+                + distanciaCentroOperaciones + ";" + urlFotografia;
     }
 
-    
 }
