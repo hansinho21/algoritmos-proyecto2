@@ -616,7 +616,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 //--------------------------------CHART--------------------------------------------------------------------
 
     public void dualAxis() throws GraphException, IOException, FileNotFoundException, ClassNotFoundException, TreeException {
-        DualAxisDemo5 demo = new DualAxisDemo5("Reporte de lotes por Bodega", jPanel2);
+        Grafico demo = new Grafico("Reporte de lotes por Bodega", jPanel2);
         demo.pack();
     }
 

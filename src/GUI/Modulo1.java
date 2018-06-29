@@ -379,17 +379,17 @@ public class Modulo1 extends javax.swing.JFrame {
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
                 } else if (pesoTotal >= 1000 && pesoTotal < 5000) {
-                    this.jLabelCategoria.setText("Pick Up");
+                    this.jLabelCategoria.setText("mediano");
                     this.jProgressBar.setMaximum(5000);
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
                 } else if (pesoTotal >= 5000 && pesoTotal < 10000) {
-                    this.jLabelCategoria.setText("Camion Pequeño");
+                    this.jLabelCategoria.setText("Camion");
                     this.jProgressBar.setMaximum(10000);
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);
                 } else if (pesoTotal >= 10000 && pesoTotal < 30000) {
-                    this.jLabelCategoria.setText("Camion Grande");
+                    this.jLabelCategoria.setText("Furgon");
                     this.jProgressBar.setMaximum(30000);
                     this.progreso += auxProducto.getPesoTotal();
                     this.jProgressBar.setValue(progreso);

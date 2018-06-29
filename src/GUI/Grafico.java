@@ -3,6 +3,7 @@ package GUI;
 
 
 import Domain.Bodega;
+import Domain.OrdenDistribucion;
 import Logic.Datos;
 import TDA.BinaryTree.TreeException;
 import TDA.Graph.AdjacencyMatrixGraph;
@@ -11,6 +12,7 @@ import java.awt.Color;
 import java.awt.Panel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -33,8 +35,9 @@ import org.jfree.ui.RefineryUtilities;
  * from two {@link CategoryDataset} instances.
  *
  */
-public class DualAxisDemo5 extends ApplicationFrame {
-
+public class Grafico extends ApplicationFrame {
+    
+    LinkedList<OrdenDistribucion> listaOrdenes;
     AdjacencyMatrixGraph grafoBodegas;
     Datos datos;
     
@@ -44,11 +47,12 @@ public class DualAxisDemo5 extends ApplicationFrame {
      *
      * @param title  the frame title.
      */
-    public DualAxisDemo5(final String title, JPanel jPanel) throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
+    public Grafico(final String title, JPanel jPanel) throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
 
         super(title);
         datos = new Datos();
         grafoBodegas = datos.getGrafoBodegas();
+        listaOrdenes = datos.getListaOrdenes();
         final CategoryDataset dataset1 = createDataset1();
 
         // create the chart...
@@ -69,15 +73,10 @@ public class DualAxisDemo5 extends ApplicationFrame {
 
         // add the chart to a panel...
         final ChartPanel chartPanel = new ChartPanel(chart);
-//        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-//        setContentPane(chartPanel);
         jPanel.add(chartPanel);
 
     }
 
-//    DualAxisDemo5(String reporte_de_lotes_por_Bodega, JPanel jPanel2) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
     
     /**
      * Creates a sample dataset.
@@ -100,18 +99,17 @@ public class DualAxisDemo5 extends ApplicationFrame {
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        
+
         for (int i = 0; i < bodegas.length; i++) {
-            int numero= (int) (Math.random() * 50) + 1;
+            int numero= (int) (Math.random() * listaOrdenes.size()) + 1;
             dataset.addValue(numero, series1, bodegas[i]);
         }
         for (int i = 0; i < bodegas.length; i++) {
-            int numero= (int) (Math.random() * 35) + 1;
+            int numero= (int) (Math.random() * listaOrdenes.size()) + 1;
             dataset.addValue(numero, series2, bodegas[i]);
         }
         for (int i = 0; i < bodegas.length; i++) {
-            int numero= (int) (Math.random() * 40) + 1;
+            int numero= (int) (Math.random() * listaOrdenes.size()) + 1;
             dataset.addValue(numero, series3, bodegas[i]);
         }
         return dataset;
