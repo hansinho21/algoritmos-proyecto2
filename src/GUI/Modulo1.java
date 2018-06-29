@@ -72,9 +72,14 @@ public class Modulo1 extends javax.swing.JFrame {
     private double precioTotal;
     private int pesoTotal;
 
-    /**
-     * Creates new form Modulo1
-     */
+   /**
+    * constructor
+    * @throws IOException io
+    * @throws GraphException grafo
+    * @throws FileNotFoundException archivo
+    * @throws ClassNotFoundException clase
+    * @throws TreeException arbol
+    */
     public Modulo1() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -111,6 +116,10 @@ public class Modulo1 extends javax.swing.JFrame {
         this.central = new Bodega(700, "B. Central", "9.8273563", "-83.8706482", 0, "bodega.jpg");
     }
 
+    /**
+     * llenar jlist de bodega
+     * @throws GraphException 
+     */
     private void llenarJListBodegas() throws GraphException {
         String[] bodegas = new String[grafoBodegas.getSize()];
         for (int i = 0; i < this.grafoBodegas.getSize(); i++) {
@@ -402,7 +411,10 @@ public class Modulo1 extends javax.swing.JFrame {
         }
         sumarPrecioYPeso();
     }//GEN-LAST:event_jButtonAgregarActionPerformed
-
+/**
+ * boton eliminar
+ * @param evt 
+ */
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         System.out.println(tableModel.getValueAt(jTableProductos.getSelectedRow(), 2));
         if (jTableProductos.getSelectedRow() != -1) {

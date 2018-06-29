@@ -69,20 +69,38 @@ public class Archivos implements Serializable {
         }
     }
 
-    //Archivo Usuarios---------------------------------------------------
+    /**
+     * lee el achivo de usuarios
+     * @return LinkedList usuarios
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     public LinkedList leerArchivoUsuarios() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Usuarios.txt"));
         LinkedList linkedList = (LinkedList) objectIS.readObject();
         return linkedList;
     }
 
+    /**
+     * escribe en el archivo de usuarios
+     * @param linkedList lista
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     */
     public void escribirArchivoUsuarios(LinkedList<Usuario> linkedList) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Usuarios.txt"));
         objectOS.writeObject(linkedList);
         objectOS.close();
     }
 
-    //Archivo Categorias---------------------------------------------------
+    /**
+     * lee archivo categorias
+     * @return HashMap mapa
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException  clase
+     */
     public HashMap leerArchivoCategorias() throws FileNotFoundException, IOException, ClassNotFoundException {
 
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Categorias.txt"));
@@ -97,6 +115,12 @@ public class Archivos implements Serializable {
         return hashMap;
     }
 
+    /**
+     * escribe en el archivo categorias 
+     * @param hashMap mapa
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     */
     public void escribirArchivoCategorias(HashMap<String, Categoria> hashMap) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Categorias.txt"));
 
@@ -111,7 +135,13 @@ public class Archivos implements Serializable {
         objectOS.close();
     }
 
-    //Archivo Lote---------------------------------------------------
+    /**
+     * lee en el archivo lotes
+     * @return TreeMap mapa
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     public TreeMap leerArchivoLotes() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Lotes.txt"));
         LinkedList<Lote> linkedList = (LinkedList) objectIS.readObject();
@@ -125,6 +155,12 @@ public class Archivos implements Serializable {
         return treeMap;
     }
 
+    /**
+     * escribe en el earchivo lotes
+     * @param treeMap mapa
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     */
     public void escribirArchivoLotes(TreeMap<Integer, Lote> treeMap) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Lotes.txt"));
 
@@ -139,7 +175,13 @@ public class Archivos implements Serializable {
         objectOS.close();
     }
 
-    //Archivo Lote---------------------------------------------------
+    /**
+     * lee ael archivo transporte
+     * @return LinkedHashMap lista
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase 
+     */
     public LinkedHashMap leerArchivoUnidadesTransporte() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("UnidadesTransporte.txt"));
         LinkedList<UnidadTransporte> linkedList = (LinkedList) objectIS.readObject();
@@ -153,6 +195,12 @@ public class Archivos implements Serializable {
         return linkedHashMap;
     }
 
+    /**
+     * escribe en el archivo transporte
+     * @param treeMap mapa
+     * @throws FileNotFoundException archivo
+     * @throws IOException  io
+     */
     public void escribirArchivoUnidadesTransporte(LinkedHashMap<Integer, UnidadTransporte> treeMap) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("UnidadesTransporte.txt"));
 
@@ -167,7 +215,14 @@ public class Archivos implements Serializable {
         objectOS.close();
     }
 
-    //Archivo Bodegas---------------------------------------------------
+    /**
+     * lee en el archivo bodegas
+     * @return AdjacencyMatrixGraph grafo
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase
+     * @throws GraphException  grafo
+     */
     public AdjacencyMatrixGraph leerArchivoBodegas() throws FileNotFoundException, IOException, ClassNotFoundException, GraphException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Bodegas.txt"));
         LinkedList linkedList = (LinkedList) objectIS.readObject();
@@ -180,6 +235,13 @@ public class Archivos implements Serializable {
         return grafo;
     }
 
+    /**
+     * escribe en archivo bodegas
+     * @param grafo grafo
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws GraphException grafo 
+     */
     public void escribirArchivoBodegas(AdjacencyMatrixGraph grafo) throws FileNotFoundException, IOException, GraphException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Bodegas.txt"));
 
@@ -194,7 +256,14 @@ public class Archivos implements Serializable {
         objectOS.close();
     }
     
-    //Archivo Productos---------------------------------------------------
+    /**
+     * lee en archivo productos
+     * @return LinkedList lista
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase
+     * @throws TreeException arbol
+     */
     public LinkedList leerArchivoProductos() throws FileNotFoundException, IOException, ClassNotFoundException, TreeException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Productos.txt"));
         LinkedList linkedList = (LinkedList) objectIS.readObject();
@@ -207,19 +276,37 @@ public class Archivos implements Serializable {
         return linkedList;
     }
 
+    /**
+     * escribe en archivo productos
+     * @param linkedList lista
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     */
     public void escribirArchivoProductos(LinkedList<ProductoMayorista> linkedList) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Productos.txt"));
         objectOS.writeObject(linkedList);
         objectOS.close();
     }
     
-    //Archivo Usuarios---------------------------------------------------
+    /**
+     * lee en archivo usuarios
+     * @return LinkedList lista
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     * @throws ClassNotFoundException clase
+     */
     public LinkedList leerArchivoOrdenes() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream objectIS = new ObjectInputStream(new FileInputStream("Ordenes.txt"));
         LinkedList linkedList = (LinkedList) objectIS.readObject();
         return linkedList;
     }
 
+    /**
+     * escribe en archivo usuarios
+     * @param linkedList lista
+     * @throws FileNotFoundException archivo
+     * @throws IOException io
+     */
     public void escribirArchivoOrdenes(LinkedList<OrdenDistribucion> linkedList) throws FileNotFoundException, IOException {
         ObjectOutputStream objectOS = new ObjectOutputStream(new FileOutputStream("Ordenes.txt"));
         objectOS.writeObject(linkedList);

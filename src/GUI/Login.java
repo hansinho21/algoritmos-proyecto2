@@ -31,7 +31,12 @@ public class Login extends javax.swing.JFrame {
     private LinkedList<Usuario> listaUsuarios;
 
     /**
-     * Creates new form Login
+     * constructor de la clase
+     * @throws IOException io
+     * @throws GraphException grafo
+     * @throws FileNotFoundException archivo
+     * @throws ClassNotFoundException clase
+     * @throws TreeException arbol
      */
     public Login() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();

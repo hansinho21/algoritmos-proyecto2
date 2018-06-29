@@ -93,8 +93,13 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     //Filtro tabla
     private TableRowSorter trs;
 
-    /**
-     * Creates new form Modulo2
+    /**constructor
+     * 
+     * @throws IOException io
+     * @throws GraphException grafo
+     * @throws FileNotFoundException archivo
+     * @throws ClassNotFoundException clase
+     * @throws TreeException arbol
      */
     public Modulo2() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();

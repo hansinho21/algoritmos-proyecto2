@@ -43,9 +43,14 @@ public class Grafico extends ApplicationFrame {
     
     
     /**
-     * Creates a new demo instance.
-     *
-     * @param title  the frame title.
+     * Metodo que genera el bar chart de 3 variables
+     * @param title String
+     * @param jPanel JPanel
+     * @throws IOException excepcion tipo IO
+     * @throws GraphException excepcion en el grafo
+     * @throws FileNotFoundException excepcion en el archivo
+     * @throws ClassNotFoundException excepcion de la clase
+     * @throws TreeException excepcion del arbol
      */
     public Grafico(final String title, JPanel jPanel) throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
 

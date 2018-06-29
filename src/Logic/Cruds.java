@@ -54,6 +54,11 @@ private Datos data;
     }
 
     //CRUDs Categorías ----------------------------------------------------------------------------------------
+   /**
+    * agregar categoria
+    * @param categoria categoria
+    * @throws IOException io
+    */
     public void agregarCategoria(Categoria categoria) throws IOException {
         if (hashMapCategoria.isEmpty()) {
             hashMapCategoria.put(categoria.getNombre(), categoria);
@@ -71,11 +76,21 @@ private Datos data;
         }
     }
 
+    /**
+     * editar categoria
+     * @param categoria categoria
+     * @throws IOException io
+     */
     public void editarCategoria(Categoria categoria) throws IOException {
         hashMapCategoria.replace(categoria.getNombre(), categoria);
 //        this.data.setHashMapCategoria(hashMapCategoria);
     }
 
+    /**
+     * eliminar categoria
+     * @param categoria categoria
+     * @throws IOException io
+     */
     public void eliminarCategoria(Categoria categoria) throws IOException {
         if (hashMapCategoria.containsKey(categoria.getNombre()) == false) {
             JOptionPane.showMessageDialog(null, "La categoria no existe");
@@ -86,6 +101,7 @@ private Datos data;
     }
 
     //CRUDs Lotes ---------------------------------------------------------------------------------------
+    
     public void agregarLote(Lote lote) throws IOException {
         if (treeMapLote.isEmpty()) {
             treeMapLote.put(lote.getId(), lote);
@@ -149,19 +165,6 @@ private Datos data;
             linkedHashMapUnidadTransporte.remove(unidadTransporte.getId());
 //            this.data.setLinkedHashMapUnidadTransporte(linkedHashMapUnidadTransporte);
         }
-    }
-
-    //CRUDs Productos ----------------------------------------------------------------------------------------
-    public void agregarProductoMayorista(ProductoMayorista productoMayorista) {
-
-    }
-
-    public void editarProductoMayorista(ProductoMayorista productoMayorista) {
-
-    }
-
-    public void eliminarProductoMayorista(ProductoMayorista productoMayorista) {
-
     }
 
     //CRUDs Bodegas ----------------------------------------------------------------------------------------

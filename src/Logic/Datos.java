@@ -49,8 +49,12 @@ public class Datos implements Serializable {
     private static LinkedList<ProductoMayorista> listaProductos = new LinkedList<>();
 
     /**
-     *
-     * @throws IOException
+     * constructor
+     * @throws IOException io
+     * @throws GraphException grafo
+     * @throws FileNotFoundException archivo
+     * @throws ClassNotFoundException clase
+     * @throws TreeException arbol
      */
     public Datos() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         if (grafoBodegas.isEmpty()) {

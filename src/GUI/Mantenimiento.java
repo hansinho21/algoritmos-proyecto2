@@ -73,7 +73,12 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
     private DefaultListModel listModel;
     private Bodega central;
     /**
-     * Creates new form Mantenimiento
+     * constructor de mantenimiento
+     * @throws IOException io
+     * @throws GraphException grafo
+     * @throws FileNotFoundException archivo
+     * @throws ClassNotFoundException clase
+     * @throws TreeException arbol
      */
     public Mantenimiento() throws IOException, GraphException, FileNotFoundException, ClassNotFoundException, TreeException {
         initComponents();
@@ -141,6 +146,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         llenarComboBoxOperador(jComboBoxOperadorOrden);
     }
 
+    
+    /**
+     * Metodo para limpiar la informacion de un usuario
+     */
     private void limpiarInformacionUsuario() {
         jLabelIdUsuario.setText("");
         jTextFieldNombreUsuario.setText("");
@@ -150,6 +159,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdUsuario2.setVisible(false);
     }
 
+    /**
+     * Metodo para limpiar la informacion de una bodega
+     */
     private void limpiarInformacionBodega() {
         jLabelIdBodega.setText("");
         jTextFieldLatitudBodega.setText("");
@@ -161,6 +173,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdBodega2.setVisible(false);
     }
 
+    
+    /**
+     * Metodo para limpiar la informacion de una categoria
+     */
     private void limpiarInformacionCategoria() {
         jLabelIdCategoria.setText("");
         jTextFieldNombreCategoria.setText("");
@@ -169,6 +185,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jLabelIdCategoria2.setVisible(false);
     }
 
+    /**
+     * metodo para limpiar la informacion de un lote
+     */
     private void limpiarInformacionLote() {
         jLabelIdLote.setText("");
         jTextFieldCodigoLote.setText("");
@@ -177,6 +196,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jLabelIdLote2.setVisible(false);
     }
 
+    /**
+     * metodo para limpiar la informacion de una unidad
+     */
     private void limpiarInformacionUnidadTransporte() {
         jLabelIdUnidadTransporte.setText("");
         jTextFieldPlacaUnidadTransporte.setText("");
@@ -186,6 +208,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdUnidadTransporte2.setVisible(false);
     }
 
+    /**
+     * metodo para limpiar la informacion de un producto
+     */
     private void limpiarInformacionProducto() {
         jLabelIdProducto.setText("");
         jTextFieldNombreProducto.setText("");
@@ -198,6 +223,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdProducto2.setVisible(false);
     }
 
+    /**
+     * 
+     * Metodo para limpiar la informacion de una orden
+     */
     private void limpiarInformacionOrden() {
         jLabelIdOrdenDistribucion.setText("");
         jTextFieldCodigoOrden.setText("");
@@ -209,6 +238,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         this.jLabelIdOrden2.setVisible(false);
     }
 
+    /**
+     * metodo para validar la informacion de una bodega
+     * @return boolean
+     */
     private boolean validarInformacionBodega() {
         if (jTextFieldLatitudBodega.getText().equals("")
                 || jTextFieldLongitudBodega.getText().equals("")
@@ -221,6 +254,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * metodo para validar la informacion de una categoria
+     * @return boolean
+     */
     private boolean validarInformacionCategoria() {
         if (jTextFieldNombreCategoria.getText().equals("")
                 || jTextFieldDescripcionCategoria.getText().equals("")) {
@@ -230,6 +267,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * metodo para validar la informacion de un lote
+     * @return boolean
+     */
     private boolean validarInformacionLote() {
         if (jTextFieldCodigoLote.getText().equals("")
                 || jDateChooser1.toString().equals("")
@@ -240,6 +281,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * metodo para validar la informacion de una unidad de transporte
+     * @return boolean
+     */
     private boolean validarInformacionUnidadTransporte() {
         if (jTextFieldPlacaUnidadTransporte.getText().equals("")
                 || jTextFieldCapacidadUnidadTransporte.getText().equals("")
@@ -264,6 +309,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * 
+     * llenar autocompleter usuarios
+     */
     private void llenarAutocompleterUsuarios() {
         System.out.println("----USUARIOS----");
         textAutoCompleterUsuario.removeAllItems();
@@ -313,7 +362,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
             textAutoCompleterUnidadTransorte.addItem(entry.getValue().getPlaca());
         }
     }
-
+    /**
+     * llenar autocompleter de productos
+     */
     private void llenarAutocompleterProductos() {
         System.out.println("----PRODUCTOS----");
         textAutoCompleterProducto.removeAllItems();
@@ -323,6 +374,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * llenar autocompleter de orden
+     */
     private void llenarAutocompleterOrden() {
         System.out.println("----ORDENES----");
         textAutoCompleterOrden.removeAllItems();
@@ -332,6 +386,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * llenar combobox categoria
+     */
     private void llenarComboBoxCategoria() {
         jComboBoxIdCategoriaProducto.removeAllItems();
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
@@ -340,6 +397,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * llenar combobox lote
+     */
     private void llenarComboBoxLote() {
         jComboBoxIdLoteProducto.removeAllItems();
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
@@ -348,6 +408,9 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * llenar combobox unidad de medida
+     */
     private void llenarComboBoxUnidadMedida() {
         jComboBoxUnidadMedidaProducto.removeAllItems();
         jComboBoxUnidadMedidaProducto.addItem("Unidades");
@@ -356,6 +419,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         jComboBoxUnidadMedidaProducto.addItem("Tarimas");
     }
 
+    /**
+     * llenar combobox bodega
+     * @param comboBox
+     * @throws GraphException 
+     */
     private void llenarComboBoxBodega(JComboBox comboBox) throws GraphException {
         comboBox.removeAllItems();
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
@@ -364,6 +432,10 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    /**
+     * llenar combobox productos
+     * @param comboBox 
+     */
     private void llenarComboBoxProductos(JComboBox comboBox) {
         comboBox.removeAllItems();
         for (int i = 0; i < listaProducto.size(); i++) {
@@ -371,6 +443,11 @@ public class Mantenimiento extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    
+    /**
+     * llenar combobox operador
+     * @param comboBox 
+     */
     private void llenarComboBoxOperador(JComboBox comboBox) {
         comboBox.removeAllItems();
         for (int i = 0; i < listaUsuarios.size(); i++) {

@@ -75,12 +75,10 @@ public class Logica implements Serializable {
 
     /**
      * Agrega una bodega a la tabla de la clase Modulo2
-     *
-     * @param bodega
-     * @param date
-     * @param tableModel
-     * @param contTable
-     * @throws GraphException
+     * @param bodega Bodega
+     * @param tableModel tabla
+     * @param contTable  contador
+     * @throws GraphException grafo
      */
     public void agregarBodega(Bodega bodega, DefaultTableModel tableModel, int contTable) throws GraphException {
         tableModel.insertRow(contTable, new Object[]{});
@@ -90,10 +88,10 @@ public class Logica implements Serializable {
     /**
      * Agrega un producto a la tabla de la clase Modulo2
      *
-     * @param producto
-     * @param tableModel
-     * @param contTable
-     * @throws GraphException
+     * @param producto Producto
+     * @param tableModel tabla
+     * @param contTable contador
+     * @throws GraphException grafo
      */
     public void agregarProductos(ProductoMayorista producto, DefaultTableModel tableModel, int contTable) throws GraphException {
         tableModel.insertRow(contTable, new Object[]{});
@@ -109,12 +107,12 @@ public class Logica implements Serializable {
     /**
      * Agrega un producto a la tabla de la clase Modulo1
      *
-     * @param nombreProducto
-     * @param tableModel
-     * @param contTable
-     * @param listaProductos
-     * @param peso
-     * @param precio
+     * @param nombreProducto String
+     * @param tableModel tabla
+     * @param contTable contador
+     * @param listaProductos lsta
+     * @param peso int
+     * @param precio double
      */
     public void agergarProducto(String nombreProducto, DefaultTableModel tableModel, int contTable, LinkedList listaProductos, int peso, double precio) {
         for (int i = 0; i < listaProductos.size(); i++) {
@@ -135,8 +133,8 @@ public class Logica implements Serializable {
     /**
      * Valida si existe una unidad de transporte
      *
-     * @param unidadTransporte
-     * @return
+     * @param unidadTransporte Unidad
+     * @return boolean
      */
     public boolean existeUnidadTransporte(UnidadTransporte unidadTransporte) {
         for (Map.Entry<Integer, UnidadTransporte> entry : linkedHashMapUnidadTransporte.entrySet()) {
@@ -150,8 +148,8 @@ public class Logica implements Serializable {
     /**
      * Valida si esxiste una categoria
      *
-     * @param categoria
-     * @return
+     * @param categoria categoria
+     * @return boolean
      */
     public boolean existeCategoria(Categoria categoria) {
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
@@ -165,8 +163,8 @@ public class Logica implements Serializable {
     /**
      * Valida si existe un lote
      *
-     * @param lote
-     * @return
+     * @param lote lote
+     * @return boolean
      */
     public boolean existeLote(Lote lote) {
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
@@ -180,8 +178,8 @@ public class Logica implements Serializable {
     /**
      * Valida si existe un usuario
      *
-     * @param usuario
-     * @return
+     * @param usuario String
+     * @return boolean
      */
     public boolean existeUsuario(Usuario usuario) {
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -195,9 +193,9 @@ public class Logica implements Serializable {
     /**
      * Obtiene el id de una bodega mediante el nombre de la bodega
      *
-     * @param nombre
-     * @return
-     * @throws GraphException
+     * @param nombre String
+     * @return int
+     * @throws GraphException grafo
      */
     public int getIdBodega(String nombre) throws GraphException {
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
@@ -212,9 +210,9 @@ public class Logica implements Serializable {
     /**
      * Obtiene el nombre de una bodega mediante el id de la bodega
      *
-     * @param id
-     * @return
-     * @throws GraphException
+     * @param id int
+     * @return String
+     * @throws GraphException grafo
      */
     public String getNombreBodega(int id) throws GraphException {
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
@@ -229,8 +227,8 @@ public class Logica implements Serializable {
     /**
      * Obtiene el id de un operador mediante el nombre del operador
      *
-     * @param nombre
-     * @return
+     * @param nombre String
+     * @return String
      */
     public int getIdOperador(String nombre) {
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -244,8 +242,8 @@ public class Logica implements Serializable {
     /**
      * Obtiene el nombre de un operador mediante el id del operador
      *
-     * @param id
-     * @return
+     * @param id int
+     * @return String
      */
     public String getNombreOperador(int id) {
         for (int i = 0; i < listaUsuarios.size(); i++) {
@@ -259,8 +257,8 @@ public class Logica implements Serializable {
     /**
      * Obtiene un objeto tipo Producto Mayorista mediante el nombre del producto
      *
-     * @param nombre
-     * @return
+     * @param nombre String
+     * @return Producto
      */
     public ProductoMayorista getProducto(String nombre) {
         for (int i = 0; i < listaProductos.size(); i++) {
@@ -275,9 +273,9 @@ public class Logica implements Serializable {
      * Obtiene una lista de productos filtrandolos por el id de categoria y el
      * id de lote
      *
-     * @param idCategoria
-     * @param idLote
-     * @return
+     * @param idCategoria int
+     * @param idLote int
+     * @return LinkedList
      */
     public LinkedList<ProductoMayorista> getListaProductosPorCategoriaYLote(int idCategoria, int idLote) {
         LinkedList<ProductoMayorista> linkedList = new LinkedList<>();
@@ -294,8 +292,8 @@ public class Logica implements Serializable {
      * Obtiene una lista de Productos Mayoristas que están asociados al id lote
      * pasado como parametro
      *
-     * @param idLote
-     * @return
+     * @param idLote int
+     * @return LinkedList
      */
     public LinkedList<ProductoMayorista> getListaProductosPorLote(int idLote) {
         LinkedList<ProductoMayorista> linkedList = new LinkedList<>();
@@ -311,9 +309,9 @@ public class Logica implements Serializable {
     /**
      * Obtiene un objeto tipo Bodega mediante el id de una bodega
      *
-     * @param idBodega
-     * @return
-     * @throws GraphException
+     * @param idBodega int
+     * @return int id
+     * @throws GraphException grafo
      */
     public Bodega getBodegaPorIdBodega(int idBodega) throws GraphException {
         for (int i = 0; i < grafoBodegas.getSize(); i++) {
@@ -328,8 +326,8 @@ public class Logica implements Serializable {
     /**
      * Obtiene un objeto tipo Lote mediante el id
      *
-     * @param idLote
-     * @return
+     * @param idLote int
+     * @return int id
      */
     public Lote getLotePorIdLote(int idLote) {
         for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
@@ -343,8 +341,8 @@ public class Logica implements Serializable {
     /**
      * Obtiene un objeto tipo categoria mediante el nombre
      *
-     * @param nombre
-     * @return
+     * @param nombre String
+     * @return Categoria
      */
     public Categoria getCategoria(String nombre) {
         for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
@@ -355,14 +353,14 @@ public class Logica implements Serializable {
         return null;
     }
 
+
     /**
-     * Agrega un producto a la tabla de Historial de Productos
-     *
-     * @param producto
-     * @param bodega
-     * @param tableModel
-     * @param date
-     * @param contTable
+     * agragar un producto
+     * @param orden Orden distribucion
+     * @param producto lista
+     * @param tableModel tabla
+     * @param contTable int
+     * @throws GraphException grafo
      */
     public void agregarTablaHistorial(OrdenDistribucion orden, ProductoMayorista producto, DefaultTableModel tableModel, int contTable) throws GraphException {
         tableModel.insertRow(contTable, new Object[]{});
