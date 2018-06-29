@@ -21,6 +21,8 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import com.sun.org.apache.xml.internal.serialize.HTMLdtd;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -35,7 +37,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -85,6 +89,9 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
     //----
     private int contFilasTablaHistorial;
+    
+    //Filtro tabla
+    private TableRowSorter trs;
 
     /**
      * Creates new form Modulo2
@@ -119,10 +126,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         this.contTableProductoReporte = 0;
 
         //Historial
-        llenarComboUsuariosHistorial();
         inicializarJTableHistorial();
-        llenarComboBoxCategoriaHistorial();
-        llenarComboBoxLoteHistorial();
 
         //Reporte
         llenarComboLotesReporte();
@@ -133,30 +137,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 //        llenarComboLotesM2P2();
 //        llenarComboCategoriasM2();
 //        this.logica.agregarTodosProductos(tableModelHistorial, contTable, listaProductos);
-    }
-
-    private void llenarComboBoxCategoriaHistorial() {
-        jComboBoxCategoriaHistorial.removeAllItems();
-        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
-            jComboBoxCategoriaHistorial.addItem(entry.getValue().getNombre());
-        }
-    }
-
-    private void llenarComboBoxLoteHistorial() {
-        jComboBoxLoteHistorial.removeAllItems();
-        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-            jComboBoxLoteHistorial.addItem(String.valueOf(entry.getValue().getId()));
-        }
-    }
-
-    private void llenarComboUsuariosHistorial() {
-        jComboBoxOperadorHistorial.removeAllItems();
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            Usuario usuario = listaUsuarios.get(i);
-            if (usuario.getRol().equalsIgnoreCase("Operador")) {
-                jComboBoxOperadorHistorial.addItem(usuario.getNombre());
-            }
-        }
     }
 
     private void inicializarJTableHistorial() {
@@ -178,21 +158,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         String columns[] = {"Id", "Nombre", "Unidad de medida", "Valor Unidad", "Categoria", "Precio total", "Peso total"};
         tableModelProductosReporte = new DefaultTableModel(x, columns);
         jTableProductosReporte.setModel(tableModelProductosReporte);
-    }
-
-    private void llenarComboCategoriasM2() {
-        jComboBoxCategoriaHistorial.removeAllItems();
-        for (Map.Entry<String, Categoria> entry : hashMapCategoria.entrySet()) {
-            jComboBoxCategoriaHistorial.addItem(String.valueOf(entry.getValue().getNombre()));
-        }
-    }
-
-    private void llenarComboLotesM2P2() {
-        jComboBoxLoteHistorial.removeAllItems();
-        for (Map.Entry<Integer, Lote> entry : treeMapLote.entrySet()) {
-            jComboBoxLoteHistorial.addItem(String.valueOf(entry.getValue().getId()));
-
-        }
     }
 
     private void llenarComboLotesReporte() {
@@ -227,18 +192,16 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableHistorial = new javax.swing.JTable();
-        jComboBoxLoteHistorial = new javax.swing.JComboBox<>();
-        jComboBoxOperadorHistorial = new javax.swing.JComboBox<>();
-        jComboBoxCategoriaHistorial = new javax.swing.JComboBox<>();
-        jLabelLoteHistorial = new javax.swing.JLabel();
-        jLabelOperadorHistorial = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButtonBuscrHistorial = new javax.swing.JButton();
         jXDatePickerDesdeHistorial = new org.jdesktop.swingx.JXDatePicker();
         jXDatePickerHastaHistorial = new org.jdesktop.swingx.JXDatePicker();
         jLabel7 = new javax.swing.JLabel();
-        jLabelCategoiaHistorial = new javax.swing.JLabel();
-        jButtonFiltrarHistorial = new javax.swing.JButton();
+        jTextFieldFiltroCategoria = new javax.swing.JTextField();
+        jTextFieldFiltroLote = new javax.swing.JTextField();
+        jTextFieldFiltroOperador = new javax.swing.JTextField();
+        jTextFieldFiltroProducto = new javax.swing.JTextField();
+        jTextFieldFiltroBodega = new javax.swing.JTextField();
         fondo4 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -359,26 +322,7 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         ));
         jScrollPane3.setViewportView(jTableHistorial);
 
-        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 900, 220));
-
-        jPanel6.add(jComboBoxLoteHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 170, -1));
-
-        jPanel6.add(jComboBoxOperadorHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 170, -1));
-
-        jComboBoxCategoriaHistorial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCategoriaHistorialActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jComboBoxCategoriaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 170, -1));
-
-        jLabelLoteHistorial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelLoteHistorial.setText("Lote:");
-        jPanel6.add(jLabelLoteHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
-
-        jLabelOperadorHistorial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelOperadorHistorial.setText("Operador:");
-        jPanel6.add(jLabelOperadorHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, -1));
+        jPanel6.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 900, 220));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Desde:");
@@ -390,20 +334,48 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
                 jButtonBuscrHistorialActionPerformed(evt);
             }
         });
-        jPanel6.add(jButtonBuscrHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 70, -1));
-        jPanel6.add(jXDatePickerDesdeHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
-        jPanel6.add(jXDatePickerHastaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
+        jPanel6.add(jButtonBuscrHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 70, -1));
+        jPanel6.add(jXDatePickerDesdeHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 140, -1));
+        jPanel6.add(jXDatePickerHastaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 140, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Hasta:");
         jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
 
-        jLabelCategoiaHistorial.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelCategoiaHistorial.setText("Categoria:");
-        jPanel6.add(jLabelCategoiaHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, -1, -1));
+        jTextFieldFiltroCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroCategoriaKeyTyped(evt);
+            }
+        });
+        jPanel6.add(jTextFieldFiltroCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 140, -1));
 
-        jButtonFiltrarHistorial.setText("Filtrar");
-        jPanel6.add(jButtonFiltrarHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, -1, -1));
+        jTextFieldFiltroLote.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroLoteKeyTyped(evt);
+            }
+        });
+        jPanel6.add(jTextFieldFiltroLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 140, -1));
+
+        jTextFieldFiltroOperador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroOperadorKeyTyped(evt);
+            }
+        });
+        jPanel6.add(jTextFieldFiltroOperador, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 180, 140, -1));
+
+        jTextFieldFiltroProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroProductoKeyTyped(evt);
+            }
+        });
+        jPanel6.add(jTextFieldFiltroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 140, -1));
+
+        jTextFieldFiltroBodega.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroBodegaKeyTyped(evt);
+            }
+        });
+        jPanel6.add(jTextFieldFiltroBodega, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 140, -1));
 
         fondo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondo.png"))); // NOI18N
         jPanel6.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 510));
@@ -503,11 +475,6 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
 
     }//GEN-LAST:event_jComboBoxIdLoteReporteActionPerformed
 
-    private void jComboBoxCategoriaHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaHistorialActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jComboBoxCategoriaHistorialActionPerformed
-
     private void jButtonBuscrHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscrHistorialActionPerformed
         for (int i = 0; i < listaOrdenes.size(); i++) {
             LinkedList<ProductoMayorista> productos = listaOrdenes.get(i).getListaProductos();
@@ -576,6 +543,76 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(Modulo2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonSeleccionarBodegaActionPerformed
+
+    private void jTextFieldFiltroCategoriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroCategoriaKeyTyped
+        jTextFieldFiltroCategoria.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroCategoria.getText(), 2));
+                //El "(?i)" es para que funcione con mayusculas y minusculas
+            }
+
+        });
+
+        trs = new TableRowSorter(tableModelHistorial);
+        jTableHistorial.setRowSorter(trs);
+    }//GEN-LAST:event_jTextFieldFiltroCategoriaKeyTyped
+
+    private void jTextFieldFiltroLoteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroLoteKeyTyped
+        jTextFieldFiltroLote.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroLote.getText(), 3));
+                //El "(?i)" es para que funcione con mayusculas y minusculas
+            }
+
+        });
+
+        trs = new TableRowSorter(tableModelHistorial);
+        jTableHistorial.setRowSorter(trs);
+    }//GEN-LAST:event_jTextFieldFiltroLoteKeyTyped
+
+    private void jTextFieldFiltroOperadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroOperadorKeyTyped
+        jTextFieldFiltroOperador.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroOperador.getText(), 4));
+                //El "(?i)" es para que funcione con mayusculas y minusculas
+            }
+
+        });
+
+        trs = new TableRowSorter(tableModelHistorial);
+        jTableHistorial.setRowSorter(trs);
+    }//GEN-LAST:event_jTextFieldFiltroOperadorKeyTyped
+
+    private void jTextFieldFiltroProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroProductoKeyTyped
+        jTextFieldFiltroBodega.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroBodega.getText(), 0));
+                //El "(?i)" es para que funcione con mayusculas y minusculas
+            }
+
+        });
+
+        trs = new TableRowSorter(tableModelHistorial);
+        jTableHistorial.setRowSorter(trs);
+    }//GEN-LAST:event_jTextFieldFiltroProductoKeyTyped
+
+    private void jTextFieldFiltroBodegaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroBodegaKeyTyped
+        jTextFieldFiltroProducto.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldFiltroProducto.getText(), 1));
+                //El "(?i)" es para que funcione con mayusculas y minusculas
+            }
+
+        });
+
+        trs = new TableRowSorter(tableModelHistorial);
+        jTableHistorial.setRowSorter(trs);
+    }//GEN-LAST:event_jTextFieldFiltroBodegaKeyTyped
 //--------------------------------CHART--------------------------------------------------------------------
 
     public void dualAxis() throws GraphException, IOException, FileNotFoundException, ClassNotFoundException, TreeException {
@@ -613,6 +650,10 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -637,18 +678,11 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonBuscarReporte;
     private javax.swing.JButton jButtonBuscrHistorial;
-    private javax.swing.JButton jButtonFiltrarHistorial;
     private javax.swing.JButton jButtonSeleccionarBodega;
-    private javax.swing.JComboBox<String> jComboBoxCategoriaHistorial;
     private javax.swing.JComboBox<String> jComboBoxIdLoteReporte;
-    private javax.swing.JComboBox<String> jComboBoxLoteHistorial;
-    private javax.swing.JComboBox<String> jComboBoxOperadorHistorial;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabelCategoiaHistorial;
-    private javax.swing.JLabel jLabelLoteHistorial;
-    private javax.swing.JLabel jLabelOperadorHistorial;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
@@ -660,6 +694,11 @@ public class Modulo2 extends javax.swing.JFrame implements Serializable {
     private javax.swing.JTable jTableBodegaReporte;
     private javax.swing.JTable jTableHistorial;
     private javax.swing.JTable jTableProductosReporte;
+    private javax.swing.JTextField jTextFieldFiltroBodega;
+    private javax.swing.JTextField jTextFieldFiltroCategoria;
+    private javax.swing.JTextField jTextFieldFiltroLote;
+    private javax.swing.JTextField jTextFieldFiltroOperador;
+    private javax.swing.JTextField jTextFieldFiltroProducto;
     private org.jdesktop.swingx.JXDatePicker jXDatePickerDesdeHistorial;
     private org.jdesktop.swingx.JXDatePicker jXDatePickerHastaHistorial;
     // End of variables declaration//GEN-END:variables
